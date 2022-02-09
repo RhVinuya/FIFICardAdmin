@@ -1,6 +1,11 @@
 {
   "hosting": {
-    "site": "fifi-greetings",
-    "public": "src"
+    "public": "dist/fificardadmin",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   }
 }

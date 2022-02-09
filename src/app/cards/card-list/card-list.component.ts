@@ -41,6 +41,9 @@ export class CardListComponent implements OnInit {
         this.withRecords = false;
       }
       this.initalizing = false;
+    }).catch(reason =>{
+      this.withRecords = false;
+      this.initalizing = false;
     });
   }
   
