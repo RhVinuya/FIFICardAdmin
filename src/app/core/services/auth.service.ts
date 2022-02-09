@@ -7,17 +7,22 @@ import 'rxjs/add/operator/delay';
 
 import { environment } from '../../../environments/environment';
 import { of, EMPTY } from 'rxjs';
+import { UsersService } from 'src/app/services/users.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationService {
+    userService: UsersService;
 
-    constructor(private http: HttpClient,
+    constructor(private _userService: UsersService,
+        private http: HttpClient,
         @Inject('LOCALSTORAGE') private localStorage: Storage) {
+        this.userService = this.userService;
     }
 
-    login(email: string, password: string) {
+    login(user: string, password: string) {
+
         return of(true).delay(1000)
             .pipe(map((/*response*/) => {
                 // set token property
@@ -45,8 +50,8 @@ export class AuthenticationService {
 
     getCurrentUser(): any {
         // TODO: Enable after implementation
-        // return JSON.parse(this.localStorage.getItem('currentUser'));
-        return {
+        return JSON.parse(this.localStorage.getItem('currentUser'));
+        /*return {
             token: 'aisdnaksjdn,axmnczm',
             isAdmin: true,
             email: 'john.doe@gmail.com',
@@ -54,7 +59,7 @@ export class AuthenticationService {
             alias: 'john.doe@gmail.com'.split('@')[0],
             expiration: moment().add(1, 'days').toDate(),
             fullName: 'John Doe'
-        };
+        };*/
     }
 
     passwordResetRequest(email: string) {

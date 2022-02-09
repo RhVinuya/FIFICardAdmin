@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { User } from '../models/user';
 import { firestore } from "firebase";
@@ -88,5 +88,24 @@ export class UsersService {
     });
   }
 
-  
+  async getUserByEmail(email: string): Promise<User>{
+    return new Promise((resolve, rejects) => {
+      this.db.collection('users').ref.where("email","==",email).get().then(value => {
+        let user: User = value.docs[0].data() as User;
+        resolve(user);
+      }).catch(reason => {
+        rejects(reason);
+      })
+    });
+  }
+
+  async signIn(email: string, password: string): Promise<boolean>{
+    return new Promise((resolve, rejects) => {
+      this.auth.auth.signInWithEmailAndPassword(email, password).then(data => {
+        resolve(true);
+      }).catch(reason => {
+        rejects(reason);
+      })
+    });
+  }
 }

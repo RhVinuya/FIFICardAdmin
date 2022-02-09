@@ -5,6 +5,7 @@ import { CardsService } from 'src/app/services/cards.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { Card } from 'src/app/models/card';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-card-list',
@@ -21,7 +22,7 @@ export class CardListComponent implements OnInit {
 
   constructor(private _service: CardsService,
     private logger: NGXLogger,
-    private titleService: Title) { 
+    private titleService: Title) {
     this.service = _service;
     this.initalizing = true;
     this.withRecords = true;
