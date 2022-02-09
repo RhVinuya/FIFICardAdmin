@@ -1,0 +1,43 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="70%">
+        <mat-card>
+            <mat-card-content>
+            <h2>Card Details</h2>
+            
+            <form [formGroup]="cardForm" (ngSubmit)="saveCard()">
+                <mat-card-content>
+                    <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Name" formControlName="name">
+                    </mat-form-field>
+            
+                    <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Description</mat-label>
+                    <input matInput placeholder="Description" formControlName="description">
+                    </mat-form-field>
+            
+                    <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Details</mat-label>
+                    <textarea matInput rows="10" placeholder="Details" formControlName="details"></textarea>
+                    </mat-form-field>
+            
+                    <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Price</mat-label>
+                    <input matInput type="number" placeholder="Price" formControlName="price">
+                    </mat-form-field>
+            
+                    <mat-slide-toggle formControlName="active" color="primary">Active</mat-slide-toggle>
+            
+                </mat-card-content>
+
+                <mat-card-actions align="end">
+                <button mat-raised-button color="primary" type="submit" [disabled]="isSaving">{{isSaving? 'Saving...' : 'Save'}}</button>
+                </mat-card-actions>
+            </form>  
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+<app-upload *ngIf="id != 'new'" id="{{id}}"></app-upload>

@@ -1,0 +1,24 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="70%">
+        <mat-card>
+            <mat-card-content>
+                <h2>Images</h2>
+                <mat-card-actions align="end" >
+                    <mat-progress-spinner mode="determinate" diameter="37" *ngIf=isUploading value="{{progress | number:'1.0-0' }}"></mat-progress-spinner>
+                    <input type="file" class="file-upload" (change)="uploadFile($event)" #fileUpload style="display: none;">
+                    <button mat-raised-button color="primary" type="button" (click)="fileUpload.click()" [disabled]="isUploading">{{isUploading? 'Uploading...' : 'Upload'}}</button>
+                </mat-card-actions>
+                <mat-card-content>
+                    <div class="responsive" *ngFor="let url of urls">
+                        <div class="gallery">
+                          <a target="_blank" href="{{url}}}">
+                            <img src="{{url}}}" alt="Northern Lights" width="100%" height="400">
+                          </a>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </mat-card-content>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
