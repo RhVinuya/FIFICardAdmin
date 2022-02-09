@@ -7,7 +7,19 @@
             <a mat-raised-button color="primary" [routerLink]="['/cards', 'new']">Create Card</a>
           </mat-card-actions>
 
-          <table mat-table [dataSource]="cards" matSort>
+          <div class="container" fxLayout="row" fxLayoutAlign="center none animate" *ngIf="initalizing">
+            <mat-spinner></mat-spinner>
+          </div>
+
+          <div class="container" fxLayout="row" fxLayoutAlign="center none" *ngIf="!withRecords">
+            <div fxFlex="50%" class="text-center no-records animate">
+              <mat-icon>local_post_office_outline</mat-icon>
+              <p>No cards exist.</p>
+            </div>
+            <mat-icon> </mat-icon>
+          </div>
+
+          <table mat-table [dataSource]="cards" matSort *ngIf="withRecords && !initalizing" class="animate">
   
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>

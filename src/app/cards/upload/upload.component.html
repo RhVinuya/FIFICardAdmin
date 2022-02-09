@@ -8,11 +8,24 @@
                     <input type="file" class="file-upload" (change)="uploadFile($event)" #fileUpload style="display: none;">
                     <button mat-raised-button color="primary" type="button" (click)="fileUpload.click()" [disabled]="isUploading">{{isUploading? 'Uploading...' : 'Upload'}}</button>
                 </mat-card-actions>
-                <mat-card-content>
+
+                <div class="container" fxLayout="row" fxLayoutAlign="center none animate" *ngIf="initalizing">
+                    <mat-spinner></mat-spinner>
+                </div>
+
+                <div class="container" fxLayout="row" fxLayoutAlign="center none" *ngIf="!withRecords">
+                    <div fxFlex="50%" class="text-center no-records animate">
+                      <mat-icon>images_outline</mat-icon>
+                      <p>No images exist.</p>
+                    </div>
+                    <mat-icon> </mat-icon>
+                  </div>
+
+                <mat-card-content *ngIf="!initalizing && withRecords">
                     <div class="responsive" *ngFor="let url of urls">
-                        <div class="gallery">
+                        <div class="gallery animate">
                           <a target="_blank" href="{{url}}}">
-                            <img src="{{url}}}" alt="Northern Lights" width="100%" height="400">
+                            <img src="{{url}}}" width="100%" height="100%">
                           </a>
                         </div>
                     </div>

@@ -12,6 +12,8 @@ import { MatSnackBar } from '@angular/material';
 export class UploadComponent implements OnInit {
   @Input() id: string;
 
+  initalizing: boolean;
+  withRecords: boolean;
   images: string[] = [];
   urls: string[] = [];
   progress: number = 0;
@@ -28,6 +30,8 @@ export class UploadComponent implements OnInit {
     this.service = _service;
     this.uploadService = _uploadService;
     this.snackBar = _snackBar;
+    this.initalizing = true;
+    this.withRecords = true;
   }
 
   ngOnInit() {
@@ -37,10 +41,13 @@ export class UploadComponent implements OnInit {
         this.images.forEach(image => {
           this.uploadService.getDownloadURL(image).then(url => {
             this.urls.push(url);
-            console.log(this.urls);
           });
         });
       }
+      else{
+        this.withRecords = false;
+      }
+      this.initalizing = false;
     });
   }
 

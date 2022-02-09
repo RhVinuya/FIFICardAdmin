@@ -16,11 +16,15 @@ export class CardListComponent implements OnInit {
 
   cards: Card[];
   displayedColumns: string[] = ['name', 'description', 'details', 'price', 'active', 'action'];
+  initalizing: boolean;
+  withRecords: boolean;
 
   constructor(private _service: CardsService,
     private logger: NGXLogger,
     private titleService: Title) { 
     this.service = _service;
+    this.initalizing = true;
+    this.withRecords = true;
   }
 
   ngOnInit() {
@@ -28,7 +32,15 @@ export class CardListComponent implements OnInit {
     this.logger.log('Cards loaded');
 
     this.service.getCards().then(data => {
-      this.cards = data;
+      if (data.length > 0)
+      {
+        this.cards = data;
+        this.withRecords = true;
+      }
+      else{
+        this.withRecords = false;
+      }
+      this.initalizing = false;
     });
   }
   
