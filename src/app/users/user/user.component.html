@@ -1,0 +1,36 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="50%">
+        <mat-card>
+            <mat-card-content>
+            <h2>User Details</h2>
+            
+            <form [formGroup]="userForm" (ngSubmit)="saveUser()" class="animate">
+                <mat-card-content>
+                    <mat-form-field class="full-width" appearance="fill">
+                        <mat-label>Firstname</mat-label>
+                        <input matInput placeholder="Firstname" formControlName="firstname">
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width" appearance="fill">
+                        <mat-label>Lastname</mat-label>
+                        <input matInput placeholder="Lastname" formControlName="lastname">
+                    </mat-form-field>
+            
+                    <mat-form-field class="full-width" appearance="fill">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email" formControlName="email" type="email">
+                    </mat-form-field>
+            
+                    <mat-slide-toggle formControlName="active" color="primary">Active</mat-slide-toggle>
+            
+                </mat-card-content>
+
+                <mat-card-actions align="end">
+                <button mat-raised-button color="primary" type="submit" [disabled]="isSaving">{{isSaving? 'Saving...' : 'Save'}}</button>
+                </mat-card-actions>
+            </form>  
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
