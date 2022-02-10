@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { CardsService } from 'src/app/services/cards.service';
 import { MatSnackBar } from '@angular/material';
+import { delay } from 'rxjs-compat/operator/delay';
 
 export class Image{
   public visible: boolean;
@@ -69,22 +70,28 @@ export class UploadComponent implements OnInit {
       const ref = this.uploadService.uploadRef(this.id);
       const task = this.uploadService.uploadFile(file, ref);
 
+      task.snapshotChanges().subscribe(snap => {
+        if (snap.bytesTransferred == snap.totalBytes){
+          let path: string = snap.ref['location']['path_'];
+          let interval = Math.floor(snap.totalBytes/10000);
+
+          setTimeout(()=>{ 
+            this.isUploading = false;
+            ref.getDownloadURL().subscribe(url => {
+              this.urls.push(new Image(url, path));
+              this.updateCardImages();
+              this.snackBar.open("Image Uploaded: " + file.name, "", {
+                duration: interval * 10
+              });
+            });
+          }, 5000);
+        }
+      });
+
       task.percentageChanges().subscribe(per => {
         this.progress = per;
         if (per == 100){
-          this.isUploading = false;
-          ref.getMetadata().subscribe(meta => {
-            ref.getDownloadURL().subscribe(url => {
-              this.urls.push(new Image(url, meta['fullPath']));
-              this.updateCardImages();
-              this.snackBar.open("Image Uploaded: " + file.name, "", {
-                duration: 3000
-              });
-            });
-          });
         }
-      }, error => {
-        this.isUploading = false;
       });
     }
   }
