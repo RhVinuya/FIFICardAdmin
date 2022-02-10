@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.titleService.setTitle('FIFI Card Admin - Register');
+    this.titleService.setTitle('Fifi Greetings - Register');
     
     this.userForm = this.fb.group({
       firstname: ['', [Validators.required]],

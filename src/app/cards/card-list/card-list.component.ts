@@ -29,7 +29,7 @@ export class CardListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.titleService.setTitle('FIFI Card Admin - Cards');
+    this.titleService.setTitle('Fifi Greetings - Cards');
     this.logger.log('Cards loaded');
 
     this.service.getCards().then(data => {

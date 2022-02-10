@@ -39,7 +39,7 @@ export class UserComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.titleService.setTitle('FIFI Card Admin - User');
+    this.titleService.setTitle('Fifi Greetings - User');
 
     this.userForm = this.fb.group({
       id: [''],

@@ -44,7 +44,7 @@ export class CustomerListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle('FIFI Card Admin - Customers');
+    this.titleService.setTitle('Fifi Greetings - Customers');
     this.logger.log('Customers loaded');
     this.dataSource.sort = this.sort;
 
