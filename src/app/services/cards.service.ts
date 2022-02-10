@@ -57,6 +57,8 @@ export class CardsService{
                 description: card.description,
                 details: card.details,
                 price: card.price,
+                event: card.event,
+                recipient: card.recipient,
                 active: card.active,
                 created: Timestamp.now()
             }).then(data => {
@@ -71,6 +73,8 @@ export class CardsService{
             description: card.description,
             details: card.details,
             price: card.price,
+            event: card.event,
+            recipient: card.recipient,
             active: card.active,
             modified: Timestamp.now()
         });

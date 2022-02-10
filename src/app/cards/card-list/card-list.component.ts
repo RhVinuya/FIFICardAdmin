@@ -16,7 +16,7 @@ export class CardListComponent implements OnInit {
   service: CardsService;
 
   cards: Card[];
-  displayedColumns: string[] = ['name', 'description', 'details', 'price', 'active', 'action'];
+  displayedColumns: string[] = ['name', 'description', 'price', 'event', 'recipient', 'active', 'action'];
   initalizing: boolean;
   withRecords: boolean;
 

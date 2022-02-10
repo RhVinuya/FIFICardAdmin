@@ -1,12 +1,13 @@
 import { formatCurrency } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatChipInputEvent, MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { Card } from 'src/app/models/card';
 import { CardsService } from 'src/app/services/cards.service';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-card',
@@ -47,6 +48,8 @@ export class CardComponent implements OnInit {
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       details: ['', [Validators.required]],
+      event: ['', [Validators.required]],
+      recipient: ['', [Validators.required]],
       price: [Number(0)],
       active: [Boolean(false)],
     })
@@ -63,6 +66,8 @@ export class CardComponent implements OnInit {
               description: data.description,
               details: data.details,
               price: formatCurrency(data.price!, 'en_PH', '' ),
+              event: data.event,
+              recipient: data.recipient,
               active: data.active,
             }
           );
