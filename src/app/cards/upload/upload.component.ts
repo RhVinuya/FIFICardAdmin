@@ -4,6 +4,17 @@ import { NGXLogger } from 'ngx-logger';
 import { CardsService } from 'src/app/services/cards.service';
 import { MatSnackBar } from '@angular/material';
 
+export class Image{
+  public visible: boolean;
+  public url: string;
+  public name: string;
+  constructor(_url: string, _name: string){
+    this.url = _url;
+    this.name = _name;
+    this.visible = true;
+  }
+}
+
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -14,8 +25,7 @@ export class UploadComponent implements OnInit {
 
   initalizing: boolean;
   withRecords: boolean;
-  images: string[] = [];
-  urls: string[] = [];
+  urls: Image[] = [];
   progress: number = 0;
   isUploading: boolean = false;
 
@@ -37,10 +47,9 @@ export class UploadComponent implements OnInit {
   ngOnInit() {
     this.service.getImages(this.id).then(data => {
       if (data != undefined){
-        this.images = data;
-        this.images.forEach(image => {
+        data.forEach(image => {
           this.uploadService.getDownloadURL(image).then(url => {
-            this.urls.push(url);
+            this.urls.push(new Image(url, image));
           });
         });
       }
@@ -65,20 +74,33 @@ export class UploadComponent implements OnInit {
         if (per == 100){
           this.isUploading = false;
           ref.getMetadata().subscribe(meta => {
-            this.images.push(meta['fullPath']);
-            this.service.updateImages(this.id, this.images);
-          });
-          ref.getDownloadURL().subscribe(url => {
-            this.urls.push(url);
-          });
-          this.snackBar.open("Image Uploaded: " + file.name, "", {
-            duration: 3000
+            ref.getDownloadURL().subscribe(url => {
+              this.urls.push(new Image(url, meta['fullPath']));
+              this.updateCardImages();
+              this.snackBar.open("Image Uploaded: " + file.name, "", {
+                duration: 3000
+              });
+            });
           });
         }
       }, error => {
         this.isUploading = false;
       });
     }
+  }
+
+  delete(image: Image){
+    image.visible = false;
+    this.updateCardImages();
+  }
+
+  updateCardImages(){
+    let images: string[] = [];
+    this.urls.forEach(image => {
+      if (image.visible)
+        images.push(image.name);
+    })
+    this.service.updateImages(this.id, images);
   }
 
 }
