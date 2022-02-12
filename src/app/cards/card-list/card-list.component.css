@@ -10,3 +10,17 @@ th.mat-sort-header-sorted {
     margin-right: 0px !important;
     margin-bottom: 0px !important;
 }
+
+.mat-cell{
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.mat-header-cell{
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.alight-right{
+    text-align:right !important;
+}

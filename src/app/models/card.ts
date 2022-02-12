@@ -13,4 +13,4 @@ export class Card{
     public created?: Timestamp;
     public modified?: Timestamp;
     public images?: string[];
-  }
+}

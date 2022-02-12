@@ -1,5 +1,5 @@
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
-    <div fxFlex="95%">
+    <div fxFlex="98%">
       <mat-card>
         <mat-card-content>
           <h2>Cards</h2>
@@ -19,8 +19,7 @@
             <mat-icon> </mat-icon>
           </div>
 
-          <table mat-table [dataSource]="cards" matSort *ngIf="withRecords && !initalizing" class="animate">
-  
+          <table mat-table [dataSource]="dataSource" *ngIf="withRecords && !initalizing" class="animate" matSort (matSortChange)="sortData($event)">
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
                 <td mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -32,8 +31,8 @@
             </ng-container>
 
             <ng-container matColumnDef="price">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
-                <td mat-cell *matCellDef="let element"> {{element.price | number:'1.2-2'}} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="alight-right"> Price </th>
+                <td mat-cell *matCellDef="let element" class="alight-right"> {{element.price | number:'1.2-2'}} </td>
             </ng-container>
 
             <ng-container matColumnDef="event">
@@ -47,14 +46,14 @@
             </ng-container>
 
             <ng-container matColumnDef="active">
-                <th mat-header-cell *matHeaderCellDef> Active </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Active </th>
                 <td mat-cell *matCellDef="let element"> {{ element.active ? "Active" : "Inactive" }} </td>
             </ng-container>
 
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef> Action </th>
                 <td mat-cell *matCellDef="let element">
-                  <a mat-stroked-button color="primary" [routerLink]="['/cards', element.id]">Edit</a>
+                  <a mat-stroked-button color="primary" [routerLink]="['/cards', element.id]" class="alight-right">Edit</a>
                 </td>
               </ng-container>
           
