@@ -34,7 +34,7 @@ export class CardsService{
             });
         });
     }
-
+    
     async getCard(id: string): Promise<Card>{
         return new Promise((resolve, rejects) => {
             this.db.collection('cards').doc(id).get().subscribe(doc =>{

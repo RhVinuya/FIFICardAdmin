@@ -4,6 +4,9 @@
         <mat-card-content>
           <h2>Cards</h2>
           <mat-card-actions align="end">
+            <form [formGroup]="searchForm" (ngSubmit)="searchCard()" class="animate">
+              <input type="text" matInput placeholder="Search" class="searchtext" formControlName="search">
+            </form>
             <a mat-raised-button color="primary" [routerLink]="['/cards', 'new']">Create Card</a>
           </mat-card-actions>
 

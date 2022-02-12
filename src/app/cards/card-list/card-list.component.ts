@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort} from '@angular/material/sort';
 import { Card } from 'src/app/models/card';
 import { tap } from 'rxjs/operators';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { C } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-card-list',
@@ -15,6 +17,9 @@ import { tap } from 'rxjs/operators';
 export class CardListComponent implements OnInit {
   service: CardsService;
 
+  fb: FormBuilder;
+  searchForm: FormGroup;
+
   cards: Card[];
   dataSource: MatTableDataSource<Card> = new MatTableDataSource();
   displayedColumns: string[] = ['name', 'description', 'price', 'event', 'recipient', 'active', 'action'];
@@ -23,10 +28,13 @@ export class CardListComponent implements OnInit {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private _service: CardsService,
+  constructor(
+    private _service: CardsService,
+    private _fb: FormBuilder,
     private logger: NGXLogger,
     private titleService: Title) {
     this.service = _service;
+    this.fb = _fb;
     this.initalizing = true;
     this.withRecords = true;
   }
@@ -36,20 +44,28 @@ export class CardListComponent implements OnInit {
     this.logger.log('Cards loaded');
 
     this.service.getCards().then(data => {
-      if (data.length > 0)
-      {
-        this.cards = data;
-        this.dataSource.data = this.cards;
-        this.withRecords = true;;   
-      }
-      else{
-        this.withRecords = false;
-      }
-      this.initalizing = false;
+      this.loadData(data);
     }).catch(reason =>{
       this.withRecords = false;
       this.initalizing = false;
     });
+
+    this.searchForm = this.fb.group({
+      search: ['']
+    })
+  }
+
+  loadData(data: Card[]){
+    if (data.length > 0)
+    {
+      this.cards = data;
+      this.dataSource.data = this.cards;
+      this.withRecords = true;
+    }
+    else{
+      this.withRecords = false;
+    }
+    this.initalizing = false;
   }
 
   sortData(sort: Sort){
@@ -75,6 +91,42 @@ export class CardListComponent implements OnInit {
         }
       });
     }
+  }
+
+  searchCard(){
+    let search: string = this.searchForm.value['search'];
+
+    this.initalizing = true;
+    this.withRecords = true;
+
+    this.service.getCards().then(data => {
+      if (search == ''){
+        this.loadData(data);
+      }
+      else{
+        let newCards: Card[] = [];
+        
+        data.forEach(card => {
+          if (card.name.includes(search)){
+            newCards.push(card);
+          }
+          else if (card.description.includes(search)){
+            newCards.push(card);
+          }
+          else if ((card.event) && (card.event.includes(search))){
+            newCards.push(card);
+          } 
+          else if ((card.recipient) && (card.recipient.includes(search))){
+            newCards.push(card);
+          }
+        });
+        this.loadData(newCards);
+      }
+    }).catch(reason =>{
+      console.log(reason);
+      this.withRecords = false;
+      this.initalizing = false;
+    });
   }
 }
 
