@@ -33,7 +33,7 @@ import { environment } from '../environments/environment';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule,
-    AngularFireAuthModule,
+    AngularFireAuthModule
   ],
   bootstrap: [AppComponent]
 })

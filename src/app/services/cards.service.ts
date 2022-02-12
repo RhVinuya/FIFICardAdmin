@@ -100,4 +100,24 @@ export class CardsService{
             modified: Timestamp.now()
         })
     }
+
+    async getPrimary(id: string): Promise<string>{
+        return new Promise((resolve, rejects) => {
+            this.db.collection('cards').doc(id).get().subscribe(doc =>{
+                if (doc.exists){
+                    resolve((doc.data() as Card).primary);
+                }
+                else{
+                    rejects("Card not found.");
+                }
+            });
+        });
+    }
+
+    async updatePrimary(id: string, image: string){
+        this.db.collection('cards').doc(id).update({
+            primary: image,
+            modified: Timestamp.now()
+        })
+    }
 }
