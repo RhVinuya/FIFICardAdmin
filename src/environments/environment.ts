@@ -10,13 +10,12 @@ export const environment = {
   logLevel: NgxLoggerLevel.TRACE,
   serverLogLevel: NgxLoggerLevel.OFF,
   firebase: {
-    projectId: 'fificard-staging',
-    appId: '1:536378676158:web:758439956a634973215fef',
-    databaseURL: 'https://fificard-staging-default-rtdb.firebaseio.com',
-    storageBucket: 'fificard-staging.appspot.com',
-    locationId: 'us-central',
-    apiKey: 'AIzaSyD-M5TcXBiZel7mlv8sK9J6qdAdACQIiZE',
-    authDomain: 'fificard-staging.firebaseapp.com',
-    messagingSenderId: '536378676158',
+    projectId: 'fifi-greetings',
+    appId: '1:592228815811:web:ae07898d9c86884e7d2376',
+    storageBucket: 'fifi-greetings.appspot.com',
+    apiKey: 'AIzaSyAXyVSWDyzk34XbS2ozI8Rs55oekR7Ox6A',
+    authDomain: 'fifi-greetings.firebaseapp.com',
+    messagingSenderId: '592228815811',
+    measurementId: "G-BN0LKLNJY2"
   }
 };

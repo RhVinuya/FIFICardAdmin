@@ -1,0 +1,52 @@
+table {
+    width: 100%;
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+}
+
+.mat-card-actions{
+    margin-right: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.mat-cell{
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.mat-header-cell{
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.alight-right{
+    text-align:right !important;
+}
+
+.searchtext{
+    width: 500px;
+    font-size: 14px;
+    height: 32px;
+}
+
+.mat-cell label{
+    font-size: 14px;
+}
+
+.text-bold{
+    font-weight: 800;
+}
+
+label{
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+
+mat-card-actions{
+    padding-left: 10px;
+    padding-right: 10px;
+}

@@ -1,0 +1,91 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="98%">
+      <mat-card>
+        <mat-card-content>
+            <h2>Orders</h2>
+
+            <mat-card-actions>
+                <mat-form-field appearance="fill">
+                    <mat-label>Filter Status</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let stat of status" value="{{stat}}">{{stat}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-card-actions>
+
+            <div class="container" fxLayout="row" fxLayoutAlign="center none animate" *ngIf="initializing">
+                <mat-spinner></mat-spinner>
+            </div>
+
+            <div class="container" fxLayout="row" fxLayoutAlign="center none" *ngIf="!withRecords">
+                <div fxFlex="50%" class="text-center no-records animate">
+                    <mat-icon>dashboard</mat-icon>
+                    <p>No orders exist.</p>
+                </div>
+                <mat-icon> </mat-icon>
+            </div>
+
+            <table mat-table [dataSource]="dataSource" *ngIf="withRecords && !initializing" class="animate" matSort>
+                <ng-container matColumnDef="card">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Card </th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <label class="text-bold">{{element.card_name}}</label><br/>
+                        <label>{{element.card_price | number:'1.2-2'}}</label>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="sender">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Sender </th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <label class="text-bold">{{element.sender_name}}</label><br/>
+                        <label>{{element.sender_phone}}</label><br/>
+                        <label>{{element.sender_email}}</label>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="recipient">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Recipient </th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <label class="text-bold">{{element.receiver_name}}</label><br/>
+                        <label>{{element.receiver_phone}}</label><br/>
+                        <label>{{element.receiver_email}}</label>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="anonymously">
+                    <th mat-header-cell *matHeaderCellDef> Send Anonymously </th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <label>{{ element.anonymously ? "Yes" : "No" }} </label>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="sendto">
+                    <th mat-header-cell *matHeaderCellDef> Send To </th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <label>{{ element.sendto == 'Receiver' ? "Receiver: " +  element.receiver_name: "Sender: " +  element.sender_name}}</label> 
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <label class="text-bold">{{element.status}}</label>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let element">
+                      <a mat-stroked-button color="primary" [routerLink]="['/orders', element.id]" >Open</a>
+                    </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+          
+        </mat-card-content>
+      </mat-card>
+  
+    </div>
+  </div>

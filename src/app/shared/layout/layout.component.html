@@ -61,11 +61,11 @@
       <mat-nav-list>
         <h3 mat-subheader>Home</h3>
 
-        <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
+        <a mat-list-item [routerLink]="['/orders']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             dashboard
           </mat-icon>
-          <p mat-line> Dashboard </p>
+          <p mat-line> Orders </p>
         </a>
 
         <a mat-list-item [routerLink]="['/cards']" routerLinkActive="active">
@@ -75,12 +75,13 @@
           <p mat-line> Cards </p>
         </a>
 
-        <a mat-list-item [routerLink]="['/customers']" routerLinkActive="active">
+        <!--<a mat-list-item [routerLink]="['/customers']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             business
           </mat-icon>
           <p mat-line> Customers </p>
-        </a>
+        </a>-->
+
         <a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             people
@@ -88,10 +89,10 @@
           <p mat-line> Users </p>
         </a>
 
-        <a mat-list-item [routerLink]="['/account/profile']">
+        <!--<a mat-list-item [routerLink]="['/account/profile']">
           <mat-icon mat-list-icon>person</mat-icon>
           <p mat-line> Account </p>
-        </a>
+        </a>-->
 
         <!--<a mat-list-item [routerLink]="['/auth/login']">
           <mat-icon mat-list-icon>exit_to_app</mat-icon>

@@ -56,9 +56,9 @@
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef> Action </th>
                 <td mat-cell *matCellDef="let element">
-                  <a mat-stroked-button color="primary" [routerLink]="['/cards', element.id]" class="alight-right">Edit</a>
+                  <a mat-stroked-button color="primary" [routerLink]="['/cards', element.id]">Edit</a>
                 </td>
-              </ng-container>
+            </ng-container>
           
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

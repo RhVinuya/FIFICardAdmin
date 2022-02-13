@@ -14,6 +14,11 @@ const appRoutes: Routes = [
         canActivate: [AuthGuard]
     },
     {
+        path: 'orders',
+        loadChildren: './orders/orders.module#OrdersModule',
+        canActivate: [AuthGuard]
+    },
+    {
         path: 'cards',
         loadChildren: './cards/cards.module#CardsModule',
         canActivate: [AuthGuard]
@@ -50,7 +55,7 @@ const appRoutes: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'dashboard',
+        redirectTo: 'orders',
         pathMatch: 'full'
     }
 ];
