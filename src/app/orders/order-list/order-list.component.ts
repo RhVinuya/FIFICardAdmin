@@ -1,7 +1,7 @@
 import { OrdersService } from './../../services/orders.service';
 import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, Sort } from '@angular/material';
 
 @Component({
   selector: 'app-order-list',
@@ -15,8 +15,9 @@ export class OrderListComponent implements OnInit {
   initializing: boolean = false;
   withRecords: boolean = false;
   status: string[] = [];
+  filterStatus: string = '';
   dataSource: MatTableDataSource<Order  > = new MatTableDataSource();
-  displayedColumns: string[] = ['card', 'sender', 'recipient', 'anonymously', 'sendto', 'status', 'action'];
+  displayedColumns: string[] = ['card', 'sender', 'recipient', 'anonymously', 'sendto', 'address', 'status', 'action'];
 
   constructor(
     _service: OrdersService
@@ -34,7 +35,7 @@ export class OrderListComponent implements OnInit {
 
     this.service.getOrders().then(orders => {
       this.orders = orders;
-      this.dataSource.data = this.orders;
+      this.filterRecords(this.orders);
       this.generateFilter();
       
       this.initializing = false;
@@ -43,7 +44,6 @@ export class OrderListComponent implements OnInit {
     }).then(reason => {
       this.initializing = false;
       this.withRecords = true;
-      console.log(reason);
     })
   }
 
@@ -68,6 +68,27 @@ export class OrderListComponent implements OnInit {
     });
     if (!isFound)
       this.status.push(_status);
+  }
+
+  onStatusFilterChange(_status){
+    let value: string = _status.value;
+    this.filterStatus = value;
+    this.filterRecords(this.orders);
+  }
+
+  filterRecords(_orders: Order[]){
+    if ((this.filterStatus == '') || (this.filterStatus == 'All')){
+      this.dataSource.data = this.orders;
+    }
+    else{
+      let data: Order[] = [];
+      _orders.forEach(order => {
+        if (order.status == this.filterStatus){
+          data.push(order);
+        }
+      });
+      this.dataSource.data = data;
+    }
   }
 
 }

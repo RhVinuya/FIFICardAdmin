@@ -1,1 +1,70 @@
-<p>order works!</p>
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="70%">
+        <mat-card>
+            <mat-card-content>
+            <h2>Order Detail</h2>
+
+            <hr>
+
+            <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+                <div fxFlex="50%">
+                    <section>
+                        <p *ngIf="order">Card: <strong>{{order.card_name!}}</strong></p>
+                        <p *ngIf="order">Price: <strong>{{order.card_price!}}</strong></p>
+                    </section>
+        
+                    <section>
+                        <p>Sender</p>
+                        <p *ngIf="order">Name: <strong>{{order.sender_name!}}</strong></p>
+                        <p *ngIf="order">Phone: <strong>{{order.sender_phone!}}</strong></p>
+                        <p *ngIf="order">Email: <strong>{{order.sender_email!}}</strong></p>
+                    </section>
+        
+                    <section>
+                        <p>Recipient</p>
+                        <p *ngIf="order">Name: <strong>{{order.receiver_name!}}</strong></p>
+                        <p *ngIf="order">Phone: <strong>{{order.receiver_phone!}}</strong></p>
+                        <p *ngIf="order">Email: <strong>{{order.receiver_email!}}</strong></p>
+                    </section>
+        
+                    <section>
+                        <p>Deliver Address</p>
+                        <p *ngIf="order"><strong>{{order.address!}}</strong></p>
+                    </section>
+        
+                    <section>
+                        <p *ngIf="order && order.anonymously"><strong>Send Anonymously</strong></p>
+                    </section>
+        
+                    <section>
+                        <p *ngIf="order">Send to: <strong>{{order.sendto}}</strong> <strong>{{order.sendto == 'Receiver'? '(' + order.receiver_name + ')' : '(' + order.sender_name + ')'}}</strong></p>
+                    </section>
+        
+                    <section>
+                        <p>Message</p>
+                        <div style="white-space:pre-wrap; font-weight: 800" *ngIf="order">{{order.message}}</div>
+                    </section>
+
+                    <section>
+                        <p>Status</p>
+                        <form [formGroup]="statusForm"  class="animate" (ngSubmit)="updateStatus()">
+                            <mat-form-field class="status-field" appearance="fill">
+                                <mat-label>Status</mat-label>
+                                <input matInput placeholder="Status" formControlName="status">
+                            </mat-form-field>
+                            <button mat-raised-button color="primary" class="updateBtn" type="submit">Update Status</button>
+                        </form>
+                    </section>
+                </div>
+                <div fxFlex="50%">
+                    <a href="{{image}}" target="_blank">
+                        <img *ngIf="order" src="{{image}}">
+                    </a>
+                    
+                </div>
+              </div>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
