@@ -1,3 +1,4 @@
+import { EmailService } from './../../services/email.service';
 import { MatSnackBar } from '@angular/material';
 import { UploadService } from './../../services/upload.service';
 import { UploadComponent } from './../../cards/upload/upload.component';
@@ -5,7 +6,7 @@ import { OrdersService } from './../../services/orders.service';
 import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EmailValidator, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-order',
@@ -16,6 +17,7 @@ export class OrderComponent implements OnInit {
   activateRoute: ActivatedRoute;
   service: OrdersService;
   uploadService: UploadService;
+  emailService: EmailService;
   fb: FormBuilder;
   id?: string;
   order: Order;
@@ -27,12 +29,14 @@ export class OrderComponent implements OnInit {
     private _activateRoute: ActivatedRoute,
     private _service: OrdersService,
     private _uploadService: UploadService,
+    private _emailService: EmailService,
     private _fb: FormBuilder,
     private _snackBar: MatSnackBar
   ) { 
     this.service = _service;
     this.activateRoute = _activateRoute;
     this.uploadService = _uploadService;
+    this.emailService = _emailService;
     this.fb = _fb;
     this.snackBar = _snackBar;
   }
@@ -65,8 +69,14 @@ export class OrderComponent implements OnInit {
   updateStatus(){
     if (this.statusForm.valid){
       let status = this.statusForm.value['status'];
+      this.order.status = status;
       this.service.updateStatus(this.order.id, status).then(() => this.snackBar.open("Status is updated to: " + status, '', { duration: 3000, }));
     }
+  }
+
+  emailStatus(){
+    this.emailService.sendOrderEmail(this.order);
+    this.snackBar.open("Email has been sent", '', { duration: 3000, });
   }
 
 }
