@@ -3,6 +3,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Order } from '../models/order';
 import { firestore } from "firebase";
 import Timestamp = firestore.Timestamp
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,10 @@ export class OrdersService {
             }
         });
     });
+  }
+
+  subscribeOrders(): Observable<firestore.QuerySnapshot> {
+    return this.db.collection('orders').get();
   }
 
   async getOrder(id: string): Promise<Order>{

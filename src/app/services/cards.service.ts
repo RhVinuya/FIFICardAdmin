@@ -3,6 +3,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Card } from '../models/card';
 import { firestore } from "firebase";
 import Timestamp = firestore.Timestamp
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
