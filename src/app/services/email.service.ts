@@ -35,6 +35,7 @@ export class EmailService {
         html = html.replace('[ReceiverEmail]', order.receiver_email!);
         html = html.replace('[MESSAGE]', order.message!);
         html = html.replace('[CARDIMAGE]', url == ''? 'http://via.placeholder.com/550x360' : url);
+        html = html.replace('[OrderDetails]', 'https://fifigreetings.com/status/' + order.id);
         resolve(html);
       }).catch(reason => {
         rejects(reason);
