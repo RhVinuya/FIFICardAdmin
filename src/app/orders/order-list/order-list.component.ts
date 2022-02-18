@@ -53,7 +53,7 @@ export class OrderListComponent implements OnInit {
       if(this.orders.length > 0){
         this.status.push('All');
         this.orders.forEach(order => {
-          this.addStatus(order.status);
+          this.addStatus(order.status.trim());
         })
       }
     }
@@ -83,7 +83,7 @@ export class OrderListComponent implements OnInit {
     else{
       let data: Order[] = [];
       _orders.forEach(order => {
-        if (order.status == this.filterStatus){
+        if (order.status.trim() == this.filterStatus){
           data.push(order);
         }
       });
