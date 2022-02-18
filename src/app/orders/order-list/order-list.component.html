@@ -1,9 +1,13 @@
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
     <div fxFlex="98%">
       <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                Orders
+            </mat-card-title>
+        </mat-card-header>
+        <hr/>
         <mat-card-content>
-            <h2>Orders</h2>
-
             <mat-card-actions>
                 <mat-form-field appearance="fill">
                     <mat-label>Filter Status</mat-label>
@@ -90,9 +94,11 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
               </table>
-          
         </mat-card-content>
+        <hr/>
+        <mat-card-footer>
+            <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)" aria-label="Select page"></mat-paginator>
+        </mat-card-footer>
       </mat-card>
-  
     </div>
   </div>

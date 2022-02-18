@@ -1,7 +1,7 @@
 import { OrdersService } from './../../services/orders.service';
 import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order';
-import { MatTableDataSource, Sort } from '@angular/material';
+import { MatTableDataSource, PageEvent, Sort } from '@angular/material';
 
 @Component({
   selector: 'app-order-list',
@@ -12,6 +12,12 @@ export class OrderListComponent implements OnInit {
   service: OrdersService;
 
   orders: Order[];
+  displayOrder: Order[] = [];
+  length: number;
+  pageIndex: number = 0;
+  pageSize: number = 10;
+  pageSizeOptions: number[] = [10, 20, 50, 100];
+
   initializing: boolean = false;
   withRecords: boolean = false;
   status: string[] = [];
@@ -78,7 +84,10 @@ export class OrderListComponent implements OnInit {
 
   filterRecords(_orders: Order[]){
     if ((this.filterStatus == '') || (this.filterStatus == 'All')){
-      this.dataSource.data = this.orders;
+      this.length = this.orders.length;
+      this.displayOrder = _orders;
+      this.updateRange();
+      //this.dataSource.data = this.orders;
     }
     else{
       let data: Order[] = [];
@@ -87,8 +96,28 @@ export class OrderListComponent implements OnInit {
           data.push(order);
         }
       });
-      this.dataSource.data = data;
+      this.length = data.length;
+      this.displayOrder = data;
+      this.updateRange();
+      //this.dataSource.data = data;
     }
   }
 
+  onPageChange(event: PageEvent){
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.updateRange();
+  }
+
+  updateRange(){
+    let start: number = this.pageIndex * this.pageSize;
+    let end: number = start + this.pageSize;
+    let selectedOrders: Order[] = [];
+    for(let i = start; i < end; i++){
+      if (this.displayOrder[i]){
+        selectedOrders.push(this.displayOrder[i]);
+      }
+    }
+    this.dataSource.data = selectedOrders;
+  }
 }
