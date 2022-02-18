@@ -2,9 +2,11 @@
     <div fxFlex="98%">
       <mat-card>
         <mat-card-header>
-          <h2>Cards</h2>
+          <mat-card-title>
+            Cards
+          </mat-card-title>
         </mat-card-header>
-
+        <hr/>
         <mat-card-content>
           <mat-card-actions align="end">
             <form [formGroup]="searchForm" (ngSubmit)="searchCard()" class="animate">
@@ -67,7 +69,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
         </mat-card-content>
-
+        <hr/>
         <mat-card-footer>
             <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)" aria-label="Select page"></mat-paginator>
         </mat-card-footer>
