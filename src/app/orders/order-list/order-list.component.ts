@@ -31,7 +31,7 @@ export class OrderListComponent implements OnInit {
 
   loadOrders(){
     this.initializing = true;
-    this.withRecords = true;
+    this.withRecords = true ;
 
     this.service.getOrders().then(orders => {
       this.orders = orders;
