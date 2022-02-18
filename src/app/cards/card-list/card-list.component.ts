@@ -8,6 +8,7 @@ import { Card } from 'src/app/models/card';
 import { tap } from 'rxjs/operators';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { C } from '@angular/cdk/keycodes';
+import { PageEvent } from '@angular/material';
 
 @Component({
   selector: 'app-card-list',
@@ -21,6 +22,11 @@ export class CardListComponent implements OnInit {
   searchForm: FormGroup;
 
   cards: Card[];
+  length: number;
+  pageIndex: number = 0;
+  pageSize: number = 10;
+  pageSizeOptions: number[] = [10, 20, 50, 100];
+
   dataSource: MatTableDataSource<Card> = new MatTableDataSource();
   displayedColumns: string[] = ['name', 'description', 'price', 'event', 'recipient', 'active', 'action'];
   initalizing: boolean;
@@ -59,10 +65,15 @@ export class CardListComponent implements OnInit {
     if (data.length > 0)
     {
       this.cards = data;
-      this.dataSource.data = this.cards;
+      this.length = this.cards.length;
+      this.pageIndex = 0;
+      this.updateRange();
+      //this.dataSource.data = this.cards;
       this.withRecords = true;
     }
     else{
+      this.length = 0;
+      this.pageIndex = 0;
       this.withRecords = false;
     }
     this.initalizing = false;
@@ -123,10 +134,27 @@ export class CardListComponent implements OnInit {
         this.loadData(newCards);
       }
     }).catch(reason =>{
-      console.log(reason);
       this.withRecords = false;
       this.initalizing = false;
     });
+  }
+
+  onPageChange(event: PageEvent){
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.updateRange();
+  }
+
+  updateRange(){
+    let start: number = this.pageIndex * this.pageSize;
+    let end: number = start + this.pageSize;
+    let selectedCards: Card[] = [];
+    for(let i = start; i < end; i++){
+      if (this.cards[i]){
+        selectedCards.push(this.cards[i]);
+      }
+    }
+    this.dataSource.data = selectedCards;
   }
 }
 

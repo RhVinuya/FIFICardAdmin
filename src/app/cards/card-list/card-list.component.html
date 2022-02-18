@@ -1,8 +1,11 @@
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
     <div fxFlex="98%">
       <mat-card>
-        <mat-card-content>
+        <mat-card-header>
           <h2>Cards</h2>
+        </mat-card-header>
+
+        <mat-card-content>
           <mat-card-actions align="end">
             <form [formGroup]="searchForm" (ngSubmit)="searchCard()" class="animate">
               <input type="text" matInput placeholder="Search" class="searchtext" formControlName="search">
@@ -63,8 +66,11 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
-          
         </mat-card-content>
+
+        <mat-card-footer>
+            <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)" aria-label="Select page"></mat-paginator>
+        </mat-card-footer>
       </mat-card>
   
     </div>
