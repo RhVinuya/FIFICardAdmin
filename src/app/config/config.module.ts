@@ -5,6 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ConfigRoutingModule } from './config-routing.module';
 import { EventListComponent } from './event-list/event-list.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { RecipientListComponent } from './recipient-list/recipient-list.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { DialogComponent } from './dialog/dialog.component';
   declarations: [
     ConfigComponent,
     EventListComponent,
-    DialogComponent
+    DialogComponent,
+    RecipientListComponent
   ],
   entryComponents: [
     DialogComponent

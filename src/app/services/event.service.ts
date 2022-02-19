@@ -46,6 +46,6 @@ export class EventService {
   async updateActive(occasion: Occasion): Promise<void>{
     return this.db.collection('events').doc(occasion.id).update({
         active: occasion.active
-    });
-}
+    }); 
+  }
 }
