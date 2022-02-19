@@ -6,6 +6,7 @@ import { ConfigRoutingModule } from './config-routing.module';
 import { EventListComponent } from './event-list/event-list.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { RecipientListComponent } from './recipient-list/recipient-list.component';
+import { StatusListComponent } from './status-list/status-list.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { RecipientListComponent } from './recipient-list/recipient-list.componen
     ConfigComponent,
     EventListComponent,
     DialogComponent,
-    RecipientListComponent
+    RecipientListComponent,
+    StatusListComponent
   ],
   entryComponents: [
     DialogComponent
