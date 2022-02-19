@@ -16,7 +16,7 @@
     <ng-container matColumnDef="initial">
         <th mat-header-cell *matHeaderCellDef> Initial Status </th>
         <td mat-cell *matCellDef="let element">
-            <input type="radio" value="{{element.id}}" name="initial" (change)="onInitialChange(element.id)">
+            <input type="radio" [checked]="element.initial" name="initial" (change)="onInitialChange(element.id)">
         </td>
     </ng-container>
     

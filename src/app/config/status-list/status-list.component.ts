@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
 import { Status } from 'src/app/models/status';
-import { stat } from 'fs';
 
 @Component({
   selector: 'app-status-list',
