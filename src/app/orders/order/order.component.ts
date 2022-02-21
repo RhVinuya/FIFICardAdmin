@@ -1,3 +1,4 @@
+import { StatusService } from './../../services/status.service';
 import { EmailService } from './../../services/email.service';
 import { MatSnackBar } from '@angular/material';
 import { UploadService } from './../../services/upload.service';
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order';
 import { ActivatedRoute } from '@angular/router';
 import { EmailValidator, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Status } from 'src/app/models/status';
 
 @Component({
   selector: 'app-order',
@@ -18,18 +20,21 @@ export class OrderComponent implements OnInit {
   service: OrdersService;
   uploadService: UploadService;
   emailService: EmailService;
+  statusService: StatusService;
   fb: FormBuilder;
   id?: string;
   order: Order;
   image: string;
   statusForm: FormGroup;
   snackBar: MatSnackBar;
+  statuses: Status[] = [];
 
   constructor(
     private _activateRoute: ActivatedRoute,
     private _service: OrdersService,
     private _uploadService: UploadService,
     private _emailService: EmailService,
+    private _statusService: StatusService,
     private _fb: FormBuilder,
     private _snackBar: MatSnackBar
   ) { 
@@ -37,11 +42,14 @@ export class OrderComponent implements OnInit {
     this.activateRoute = _activateRoute;
     this.uploadService = _uploadService;
     this.emailService = _emailService;
+    this.statusService = _statusService;
     this.fb = _fb;
     this.snackBar = _snackBar;
   }
 
   ngOnInit() {
+    this.getStatuses();
+    
     this.activateRoute.params.subscribe(params => {
       this.id = params['id'];
       this.loadOrder(this.id);
@@ -49,6 +57,13 @@ export class OrderComponent implements OnInit {
 
     this.statusForm = this.fb.group({
       status: ['', [Validators.required]]
+    })
+  }
+
+  getStatuses(){
+    this.statusService.getStatuses().then(data => {
+      this.statuses = data;
+      console.log(data);
     })
   }
 
