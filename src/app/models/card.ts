@@ -8,8 +8,10 @@ export class Card{
     public details?: string;
     public price?: number;
     public active?: boolean;
-    public event?: string;
+    public event?: string; 
+    public events?: string[];
     public recipient?: string;
+    public recipients?: string[];
     public created?: Timestamp;
     public modified?: Timestamp;
     public images?: string[];

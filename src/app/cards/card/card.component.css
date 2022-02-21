@@ -6,3 +6,16 @@
     margin-right: 0px !important;
     margin-bottom: 0px !important;
 }
+
+.closebtn{
+    top: 0px;
+}
+
+.mat-standard-chip .mat-chip-remove {
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 0;
+    margin-top: -6px;
+    background: none;
+}

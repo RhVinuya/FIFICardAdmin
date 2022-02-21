@@ -59,6 +59,7 @@ export class CardsService{
                 details: card.details,
                 price: card.price,
                 event: card.event,
+                events: card.events,
                 recipient: card.recipient,
                 active: card.active,
                 created: Timestamp.now()
@@ -75,6 +76,7 @@ export class CardsService{
             details: card.details,
             price: card.price,
             event: card.event,
+            events: card.events,
             recipient: card.recipient,
             active: card.active,
             modified: Timestamp.now()
