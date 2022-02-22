@@ -26,14 +26,12 @@
                         <div *ngIf="url.visible" [ngClass]="url.primary? 'item primary' : 'item'">
                             <mat-spinner class="imageprogress" *ngIf="url.url == ''"></mat-spinner>
                             <img src="{{url.url}}}" *ngIf="url.url != ''" alt="{{url.name}}">
-                            <div class="action">
-                                <button mat-mini-fab color="primary" class="primaryBtn" (click)="changePrimary(url)" *ngIf="!url.primary" title="Set as Primary">
-                                    <mat-icon>check</mat-icon>
-                                </button>
-                                <button mat-mini-fab color="warn" class="closeBtn" (click)="delete(url)"  title="Remove">
-                                    <mat-icon>close</mat-icon>
-                                </button>
-                            </div>
+                            <button mat-mini-fab color="primary" class="primaryBtn" (click)="changePrimary(url)" *ngIf="!url.primary" title="Set as Primary">
+                                <mat-icon>check</mat-icon>
+                            </button>
+                            <button mat-mini-fab color="warn" class="closeBtn" (click)="delete(url)"  title="Remove">
+                                <mat-icon>close</mat-icon>
+                            </button>
                         </div>
                     </div>
                 </div>
