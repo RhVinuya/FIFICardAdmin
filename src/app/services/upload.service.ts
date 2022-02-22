@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 
@@ -29,11 +30,25 @@ export class UploadService {
     return ref.put(file);
   }
 
+  deleteFile(link: string){
+    this.storage.ref(link).delete();
+    this.storage.ref(link + environment.imageSize.small).delete();
+    this.storage.ref(link + environment.imageSize.medium).delete();
+    this.storage.ref(link + environment.imageSize.large).delete();
+  }
+
   async getDownloadURL(link: string): Promise<string>{
-    return new Promise((resolve, rejects) => {
-      this.storage.ref(link).getDownloadURL().subscribe(url => {
-        resolve(url);
-      });
+    return new Promise((resolve, rejects) => { 
+      this.storage.ref(link).getDownloadURL().subscribe(
+        url => {
+          console.log('url', url);
+          resolve(url);
+        },
+        err => {
+          console.log('err', err);
+          rejects(err);
+        }
+      );
     });
   }
 }

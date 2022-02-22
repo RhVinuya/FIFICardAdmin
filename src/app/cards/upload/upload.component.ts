@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { UploadService } from './../../services/upload.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
@@ -54,9 +55,7 @@ export class UploadComponent implements OnInit {
         if (data.length > 0){
           data.forEach(image => {
             this.urls.push(new Image('', image));
-            this.uploadService.getDownloadURL(image).then(url => {
-              this.updateURL(image, url);
-            });
+            this.getAvailableImage(image).then(url => this.updateURL(image, url));
           });
   
           this._service.getPrimary(this.id).then(primary => {
@@ -71,6 +70,23 @@ export class UploadComponent implements OnInit {
         this.verifyImages();
       }
       this.initalizing = false;
+    });
+  }
+
+  getAvailableImage(image): Promise<string>{
+    return new Promise((resolve) => {
+      this.uploadService.getDownloadURL(image + environment.imageSize.large).then(
+        url => {
+          resolve(url);
+        },
+        err => {
+          this.uploadService.getDownloadURL(image).then(
+            url => {
+              resolve(url);
+            }
+          );
+        }
+      );
     });
   }
 
@@ -98,7 +114,7 @@ export class UploadComponent implements OnInit {
 
           setTimeout(()=>{ 
             this.isUploading = false;
-            ref.getDownloadURL().subscribe(url => {
+            this.getAvailableImage(path).then(url => {
               this.urls.push(new Image(url, path));
               this.updateCardImages();
               if (this.primary == ''){
@@ -126,6 +142,7 @@ export class UploadComponent implements OnInit {
     let i: number = this.urls.indexOf(image);
     this.urls.splice(i, 1)
     this.updateCardImages();
+    this.uploadService.deleteFile(image.name); 
     if (thisIsPrimary){
       this.setPrimary(undefined);
     }
