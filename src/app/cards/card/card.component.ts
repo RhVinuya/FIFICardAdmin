@@ -144,6 +144,7 @@ export class CardComponent implements OnInit {
   getEvents(){
     this.eventService.getEvents().then(data => {
       this.occasions = data;
+      console.log(this.occasions);
     })
   }
 

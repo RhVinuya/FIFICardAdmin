@@ -3,7 +3,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { CardsService } from 'src/app/services/cards.service';
 import { MatSnackBar } from '@angular/material';
-import { delay } from 'rxjs-compat/operator/delay';
 
 export class Image{
   public visible: boolean;

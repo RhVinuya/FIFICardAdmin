@@ -28,14 +28,14 @@
 
                     <mat-form-field class="full-width" appearance="fill">
                         <mat-label>Type of Event</mat-label>
-                        <mat-chip-list #chipList aria-label="Type of Event">
+                        <mat-chip-list #eventList aria-label="Type of Event">
                             <mat-chip *ngFor="let event of events" (removed)="removeEvent(event)">
                                 {{event}} 
                                 <button matChipRemove><mat-icon>cancel</mat-icon></button>
                             </mat-chip>
                             <input 
                                 placeholder="New event..." 
-                                [matChipInputFor]="chipList"  
+                                [matChipInputFor]="eventList"  
                                 [matAutocomplete]="auto"
                                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
                                 (matChipInputTokenEnd)="addEvent($event)">
@@ -46,28 +46,28 @@
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
-
+                    
                     <mat-form-field class="full-width" appearance="fill">
                         <mat-label>Type of Recipient</mat-label>
-                        <mat-chip-list #chipList aria-label="Type of Recipient">
+                        <mat-chip-list #recipientList aria-label="Type of Recipient">
                             <mat-chip *ngFor="let recipient of recipients" (removed)="removeRecipient(recipient)">
                                 {{recipient}} 
                                 <button matChipRemove><mat-icon>cancel</mat-icon></button>
                             </mat-chip>
                             <input 
                                 placeholder="New recipient..." 
-                                [matChipInputFor]="chipList"  
-                                [matAutocomplete]="auto"
+                                [matChipInputFor]="recipientList"  
+                                [matAutocomplete]="auto1"
                                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
                                 (matChipInputTokenEnd)="addRecipient($event)">
                         </mat-chip-list>
-                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedRecipient($event)">
+                        <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="selectedRecipient($event)">
                             <mat-option *ngFor="let for of fors" [value]="for.name">
                               {{for.name}}
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
-            
+                    
                     <mat-slide-toggle formControlName="active" color="primary">Active</mat-slide-toggle>
                 </mat-card-content>
 
