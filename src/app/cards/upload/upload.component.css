@@ -2,6 +2,29 @@
     width: 100%;
 }
 
+.mat-card-actions{
+  margin-right: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.mat-cell{
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.mat-header-cell{
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+mat-card-header{
+  padding-top: 10px;
+}
+
+mat-card-footer{
+  padding-bottom: 10px;
+}
+
 mat-progress-bar{
     width: 200px;
     margin-top: 17px !important;

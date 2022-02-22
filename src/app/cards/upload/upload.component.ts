@@ -51,19 +51,24 @@ export class UploadComponent implements OnInit {
   ngOnInit() {
     this.service.getImages(this.id).then(data => {
       if (data != undefined){
-        data.forEach(image => {
-          this.urls.push(new Image('', image));
-          this.uploadService.getDownloadURL(image).then(url => {
-            this.updateURL(image, url);
+        if (data.length > 0){
+          data.forEach(image => {
+            this.urls.push(new Image('', image));
+            this.uploadService.getDownloadURL(image).then(url => {
+              this.updateURL(image, url);
+            });
           });
-        });
-
-        this._service.getPrimary(this.id).then(primary => {
-          this.setPrimary(primary);
-        })
+  
+          this._service.getPrimary(this.id).then(primary => {
+            this.setPrimary(primary);
+          })
+        }
+        else{
+          this.verifyImages();
+        }
       }
       else{
-        this.withRecords = false;
+        this.verifyImages();
       }
       this.initalizing = false;
     });
@@ -124,6 +129,7 @@ export class UploadComponent implements OnInit {
     if (thisIsPrimary){
       this.setPrimary(undefined);
     }
+    this.verifyImages();
   }
 
   changePrimary(image: Image){
@@ -145,6 +151,7 @@ export class UploadComponent implements OnInit {
         images.push(image.name);
     })
     this.service.updateImages(this.id, images);
+    this.verifyImages();
   }
 
   setPrimary(primary: string){
@@ -167,5 +174,9 @@ export class UploadComponent implements OnInit {
         this.service.updatePrimary(this.id, '');
       }
     }
+  }
+
+  verifyImages(){
+    this.withRecords = this.urls.length > 0;
   }
 }

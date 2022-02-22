@@ -1,82 +1,82 @@
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
     <div fxFlex="70%">
         <mat-card>
-            <mat-card-content>
-            <h2>Card Details</h2>
-            
+            <mat-card-header>
+                <mat-card-title>
+                    Card Details
+                </mat-card-title>
+            </mat-card-header>
+            <hr />
             <form [formGroup]="cardForm" (ngSubmit)="saveCard()" class="animate">
                 <mat-card-content>
                     <mat-form-field class="full-width" appearance="fill">
-                    <mat-label>Name</mat-label>
-                    <input matInput placeholder="Name" formControlName="name">
+                        <mat-label>Name</mat-label>
+                        <input matInput placeholder="Name" formControlName="name">
                     </mat-form-field>
-            
+
                     <mat-form-field class="full-width" appearance="fill">
-                    <mat-label>Description</mat-label>
-                    <input matInput placeholder="Description" formControlName="description">
+                        <mat-label>Description</mat-label>
+                        <input matInput placeholder="Description" formControlName="description">
                     </mat-form-field>
-            
+
                     <mat-form-field class="full-width" appearance="fill">
-                    <mat-label>Details</mat-label>
-                    <textarea matInput rows="10" placeholder="Details" formControlName="details"></textarea>
+                        <mat-label>Details</mat-label>
+                        <textarea matInput rows="10" placeholder="Details" formControlName="details"></textarea>
                     </mat-form-field>
-            
+
                     <mat-form-field class="full-width" appearance="fill">
-                    <mat-label>Price</mat-label>
-                    <input matInput type="number" placeholder="Price" formControlName="price">
+                        <mat-label>Price</mat-label>
+                        <input matInput type="number" placeholder="Price" formControlName="price">
                     </mat-form-field>
 
                     <mat-form-field class="full-width" appearance="fill">
                         <mat-label>Type of Event</mat-label>
                         <mat-chip-list #eventList aria-label="Type of Event">
                             <mat-chip *ngFor="let event of events" (removed)="removeEvent(event)">
-                                {{event}} 
-                                <button matChipRemove><mat-icon>cancel</mat-icon></button>
+                                {{event}}
+                                <button matChipRemove>
+                                    <mat-icon>cancel</mat-icon>
+                                </button>
                             </mat-chip>
-                            <input 
-                                placeholder="New event..." 
-                                [matChipInputFor]="eventList"  
-                                [matAutocomplete]="auto"
-                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
+                            <input placeholder="New event..." [matChipInputFor]="eventList" [matAutocomplete]="auto"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                                 (matChipInputTokenEnd)="addEvent($event)">
                         </mat-chip-list>
                         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedEvent($event)">
                             <mat-option *ngFor="let occasion of occasions" [value]="occasion.name">
-                              {{occasion.name}}
+                                {{occasion.name}}
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
-                    
+
                     <mat-form-field class="full-width" appearance="fill">
                         <mat-label>Type of Recipient</mat-label>
                         <mat-chip-list #recipientList aria-label="Type of Recipient">
                             <mat-chip *ngFor="let recipient of recipients" (removed)="removeRecipient(recipient)">
-                                {{recipient}} 
-                                <button matChipRemove><mat-icon>cancel</mat-icon></button>
+                                {{recipient}}
+                                <button matChipRemove>
+                                    <mat-icon>cancel</mat-icon>
+                                </button>
                             </mat-chip>
-                            <input 
-                                placeholder="New recipient..." 
-                                [matChipInputFor]="recipientList"  
-                                [matAutocomplete]="auto1"
-                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
+                            <input placeholder="New recipient..." [matChipInputFor]="recipientList"
+                                [matAutocomplete]="auto1" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                                 (matChipInputTokenEnd)="addRecipient($event)">
                         </mat-chip-list>
                         <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="selectedRecipient($event)">
                             <mat-option *ngFor="let for of fors" [value]="for.name">
-                              {{for.name}}
+                                {{for.name}}
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
-                    
+
                     <mat-slide-toggle formControlName="active" color="primary">Active</mat-slide-toggle>
                 </mat-card-content>
-
+                <hr />
                 <mat-card-actions align="end">
-                <button mat-raised-button color="primary" type="submit" [disabled]="isSaving">{{isSaving? 'Saving...' : 'Save'}}</button>
+                    <button mat-raised-button color="primary" type="submit" [disabled]="isSaving">{{isSaving?
+                        'Saving...' : 'Save'}}</button>
                 </mat-card-actions>
-            </form>  
-
-            </mat-card-content>
+            </form>
         </mat-card>
     </div>
 </div>

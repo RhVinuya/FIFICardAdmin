@@ -7,6 +7,24 @@
     margin-bottom: 0px !important;
 }
 
+.mat-cell{
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.mat-header-cell{
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+mat-card-header{
+    padding-top: 10px;
+}
+
+mat-card-footer{
+    padding-bottom: 10px;
+}
+
 .closebtn{
     top: 0px;
 }
