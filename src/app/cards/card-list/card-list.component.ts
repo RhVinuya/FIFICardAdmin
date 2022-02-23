@@ -9,8 +9,7 @@ import { Card } from 'src/app/models/card';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PageEvent } from '@angular/material';
 import { firestore } from "firebase";
-import Timestamp = firestore.Timestamp
-import { stat } from 'fs';
+import Timestamp = firestore.Timestamp;
 
 @Component({
   selector: 'app-card-list',
@@ -23,6 +22,7 @@ export class CardListComponent implements OnInit {
   fb: FormBuilder;
   searchForm: FormGroup;
 
+  completeCards: Card[];
   cards: Card[];
   length: number;
   pageIndex: number = 0;
@@ -55,6 +55,7 @@ export class CardListComponent implements OnInit {
     this.logger.log('Cards loaded');
 
     this.service.getCards().then(data => {
+      this.completeCards = data;
       this.loadData(data);
       this.generateLists(data);
     }).catch(reason => {
@@ -169,7 +170,7 @@ export class CardListComponent implements OnInit {
 
     if ((!search) && (event == 'All') && (recipient == 'All') && (status == 'All'))
     {
-      this.loadData(this.cards);
+      this.loadData(this.completeCards);
       this.initalizing = false;
       this.withRecords = this.cards.length > 0;
     }
@@ -180,7 +181,7 @@ export class CardListComponent implements OnInit {
         data.forEach(card => {
           let isIncluded = false;
 
-          if (search.length > 0) {
+          if (search) {
             if (card.name.includes(search)) {
               isIncluded = true;
             }
@@ -197,7 +198,7 @@ export class CardListComponent implements OnInit {
               let listOfEvents = card.event.split(',');
               let found: boolean = false;
               listOfEvents.forEach(_event => {
-                if (_event.trim() == event) {
+                if (_event.trim() == event.trim()) {
                   found = true;
                 }
               })
@@ -212,7 +213,7 @@ export class CardListComponent implements OnInit {
               let listOfRecipients = card.recipient.split(',');
               let found: boolean = false;
               listOfRecipients.forEach(_recipient => {
-                if (_recipient.trim() == recipient) {
+                if (_recipient.trim() == recipient.trim()) {
                   found = true;
                 }
               })
