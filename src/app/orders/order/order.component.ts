@@ -52,32 +52,28 @@ export class OrderComponent implements OnInit {
     
     this.activateRoute.params.subscribe(params => {
       this.id = params['id'];
+      this.statusForm = this.fb.group({
+          status: ['', [Validators.required]]
+      });
       this.loadOrder(this.id);
     });
-
-    this.statusForm = this.fb.group({
-      status: ['', [Validators.required]]
-    })
   }
 
   getStatuses(){
     this.statusService.getStatuses().then(data => {
       this.statuses = data;
-      console.log(data);
     })
   }
 
   loadOrder(id: string){
     this.service.getOrder(id).then(data => {
         this.order = data;
-        this.statusForm = this.fb.group({
-          status: data.status
-        });
+        this.statusForm.controls['status'].setValue(data.status.trim(), {onlySelf: true});
+        
+        this.statusForm.get('status').setValue(data.status)
         this.uploadService.getDownloadURL(data.proof).then(url => {
           this.image = url;
-          console.log(this.image);
         });
-        console.log(this.order);
     });
   }
 
