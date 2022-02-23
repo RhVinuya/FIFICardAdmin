@@ -13,8 +13,10 @@
                         value="{{progress | number:'1.0-0' }}"></mat-progress-spinner>
                     <input type="file" class="file-upload" (change)="uploadFile($event)" #fileUpload
                         style="display: none;">
-                    <button mat-raised-button color="primary" type="button" (click)="fileUpload.click()"
-                        [disabled]="isUploading">{{isUploading? 'Uploading...' : 'Upload'}}</button>
+                    <button mat-raised-button color="primary" type="button" (click)="fileUpload.click()" [disabled]="isUploading">
+                        <mat-icon>cloud_upload</mat-icon>
+                        {{isUploading? 'Uploading...' : 'Upload'}}
+                    </button>
                 </mat-card-actions>
 
                 <div class="container" fxLayout="row" fxLayoutAlign="center none animate" *ngIf="initalizing">

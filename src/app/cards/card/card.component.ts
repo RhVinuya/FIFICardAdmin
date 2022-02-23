@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { Card } from 'src/app/models/card';
 import { CardsService } from 'src/app/services/cards.service';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-card',
@@ -49,15 +49,15 @@ export class CardComponent implements OnInit {
     private _router: Router,
     private logger: NGXLogger,
     private titleService: Title
-  ) { 
-      this.service = _service;
-      this.eventService = _eventService;
-      this.recipientService = _recipientService;
-      this.activateRoute = _activateRoute;
-      this.fb = _fb;
-      this.snackBar = _snackBar;
-      this.router = _router;
-    }
+  ) {
+    this.service = _service;
+    this.eventService = _eventService;
+    this.recipientService = _recipientService;
+    this.activateRoute = _activateRoute;
+    this.fb = _fb;
+    this.snackBar = _snackBar;
+    this.router = _router;
+  }
 
   ngOnInit() {
     this.titleService.setTitle('Fifi Greetings - Card');
@@ -73,19 +73,19 @@ export class CardComponent implements OnInit {
 
     this.activateRoute.params.subscribe(params => {
       this.id = params['id'];
-      if (this.id != 'new'){
+      if (this.id != 'new') {
         this.logger.log('Card loaded: ' + this.id);
         this.service.getCard(this.id).then(data => {
           if (data.events)
             this.events = data.events;
           else
             this.events = data.event.split(',');
-          
+
           if (data.recipients)
             this.recipients = data.recipients;
           else
-            this.recipients = data.recipient.split(','); 
-          
+            this.recipients = data.recipient.split(',');
+
 
           this.cardForm.reset(
             {
@@ -93,11 +93,11 @@ export class CardComponent implements OnInit {
               name: data.name,
               description: data.description,
               details: data.details,
-              price: formatCurrency(data.price!, 'en_PH', '' ),
+              price: formatCurrency(data.price!, 'en_PH', ''),
               active: data.active,
             }
           );
-        }).catch(reason =>{
+        }).catch(reason => {
           this.logger.error(reason);
         })
 
@@ -108,28 +108,28 @@ export class CardComponent implements OnInit {
     this.getRecipients();
   }
 
-  saveCard(){
-    if (!this.isSaving){
-      if (this.cardForm.valid){
+  saveCard() {
+    if (!this.isSaving) {
+      if (this.cardForm.valid) {
         this.isSaving = true;
         let card: Card = this.cardForm.value as Card;
         card.event = this.events.join(',');
         card.events = this.events;
         card.recipient = this.recipients.join(',');
         card.recipients = this.recipients;
-        if (card.id){
+        if (card.id) {
           this.logger.log('Update Card: ' + card.id);
-          this.service.updateCard(card).then(()=>{
+          this.service.updateCard(card).then(() => {
             this.isSaving = false;
             this.snackBar.open("Card Updated", "", { duration: 3000 });
           });
         }
-        else{
+        else {
           this.logger.log('Create Card');
           this.service.addCard(card).then(id => {
             this.isSaving = false;
             this.router.navigate(['/cards/' + id]).then(navigated => {
-              if(navigated) {
+              if (navigated) {
                 this.snackBar.open("Card Added", "", {
                   duration: 3000
                 });
@@ -141,7 +141,7 @@ export class CardComponent implements OnInit {
     }
   }
 
-  getEvents(){
+  getEvents() {
     this.eventService.getEvents().then(data => {
       this.occasions = data;
     })
@@ -168,7 +168,7 @@ export class CardComponent implements OnInit {
     this.events.push(event.option.viewValue);
   }
 
-  getRecipients(){
+  getRecipients() {
     this.recipientService.getRecipients().then(data => {
       this.fors = data;
     })

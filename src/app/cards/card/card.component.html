@@ -73,8 +73,10 @@
                 </mat-card-content>
                 <hr />
                 <mat-card-actions align="end">
-                    <button mat-raised-button color="primary" type="submit" [disabled]="isSaving">{{isSaving?
-                        'Saving...' : 'Save'}}</button>
+                    <button mat-raised-button color="primary" type="submit" [disabled]="isSaving">
+                        <mat-icon>save_alt</mat-icon>
+                        {{isSaving? 'Saving...' : 'Save'}}
+                    </button>
                 </mat-card-actions>
             </form>
         </mat-card>

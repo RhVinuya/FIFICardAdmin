@@ -41,3 +41,33 @@ mat-card-header{
 mat-card-footer{
     padding-bottom: 10px;
 }
+
+select{
+    background-color: white;
+    border: 1px solid #888;
+    margin-left: 5px;
+}
+
+.status{
+    width: 100px;
+    height: 100%;
+}
+
+.recipient{
+    width: 250px;
+    height: 100%;
+}
+
+.event{
+    width: 250px;
+    height: 100%;
+}
+
+.search{
+    width: 500px;
+    height: 100%;
+}
+
+.searchButton{
+    margin-right: 40px !important;
+}

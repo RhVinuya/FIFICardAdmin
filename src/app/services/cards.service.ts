@@ -3,7 +3,6 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Card } from '../models/card';
 import { firestore } from "firebase";
 import Timestamp = firestore.Timestamp
-import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -18,7 +17,7 @@ export class CardsService{
     
     async getCards(): Promise<Card[]>{
         return new Promise((resolve, rejects) => {
-            this.db.collection('cards').get().subscribe(data => {
+            this.db.collection('cards', ref => ref.orderBy('name', 'asc')).get().subscribe(data => {
                 if (!data.empty)
                 {
                     let cards: Card[] = [];
