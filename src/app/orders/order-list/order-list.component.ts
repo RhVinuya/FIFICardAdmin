@@ -23,7 +23,7 @@ export class OrderListComponent implements OnInit {
   status: string[] = [];
   filterStatus: string = '';
   dataSource: MatTableDataSource<Order  > = new MatTableDataSource();
-  displayedColumns: string[] = ['card', 'sender', 'recipient', 'anonymously', 'sendto', 'address', 'status', 'action'];
+  displayedColumns: string[] = ['card', 'sender', 'recipient', 'anonymously', 'sendto', 'address', 'status', 'date', 'action'];
 
   constructor(
     _service: OrdersService
