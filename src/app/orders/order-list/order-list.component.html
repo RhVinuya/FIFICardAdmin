@@ -8,13 +8,22 @@
             </mat-card-header>
             <hr />
             <mat-card-content>
-                <mat-card-actions>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Filter Status</mat-label>
-                        <mat-select (selectionChange)="onStatusFilterChange($event)">
-                            <mat-option *ngFor="let stat of status" value="{{stat}}">{{stat}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                <mat-card-actions align="end">
+                    <form [formGroup]="searchForm" (ngSubmit)="searchCard()">
+                        <input placeholder="Search for Sender or Receiver" type="search" class="search" formControlName="search">
+                        <select class="card" formControlName="card">
+                            <option value="All" selected>Select Card</option>
+                            <option *ngFor="let card of cards" value="{{card}}">{{card}}</option>
+                        </select>
+                        <select class="status" formControlName="status">
+                            <option value="All" selected>Select Status</option>
+                            <option *ngFor="let stat of status" value="{{stat}}">{{stat}}</option>
+                        </select>
+                        <button mat-raised-button color="primary">
+                            <mat-icon>search</mat-icon>
+                            Search
+                        </button>
+                    </form>
                 </mat-card-actions>
 
                 <div class="container" fxLayout="row" fxLayoutAlign="center none animate" *ngIf="initializing">
