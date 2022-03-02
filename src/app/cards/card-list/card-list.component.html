@@ -9,9 +9,6 @@
       <hr />
       <mat-card-content>
         <mat-card-actions align="end">
-          <!--<form [formGroup]="searchForm" (ngSubmit)="searchCard()" class="animate">
-            <input type="text" matInput placeholder="Search" class="searchtext" formControlName="search">
-          </form>-->
           <form [formGroup]="searchForm" (ngSubmit)="searchCard()">
             <input placeholder="Search for Name or Description" type="search" class="search" formControlName="search">
             <select class="event" formControlName="event">

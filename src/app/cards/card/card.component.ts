@@ -78,13 +78,21 @@ export class CardComponent implements OnInit {
         this.service.getCard(this.id).then(data => {
           if (data.events)
             this.events = data.events;
-          else
-            this.events = data.event.split(',');
+          else{
+            if (data.event)
+              this.events = data.event.split(',');
+            else
+              this.events = [];
+          }
 
           if (data.recipients)
             this.recipients = data.recipients;
-          else
-            this.recipients = data.recipient.split(',');
+          else{
+            if (data.recipient)
+              this.recipients = data.recipient.split(',');
+            else
+              this.recipients = [];
+          }
 
 
           this.cardForm.reset(

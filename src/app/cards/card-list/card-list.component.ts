@@ -59,7 +59,7 @@ export class CardListComponent implements OnInit {
       this.loadData(data);
       this.generateLists(data);
     }).catch(reason => {
-      this.withRecords = false;
+      //this.withRecords = false;
       this.initalizing = false;
     });
 
@@ -77,7 +77,6 @@ export class CardListComponent implements OnInit {
       this.length = this.cards.length;
       this.pageIndex = 0;
       this.updateRange();
-      //this.dataSource.data = this.cards;
       this.withRecords = true;
     }
     else {
