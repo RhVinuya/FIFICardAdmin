@@ -137,6 +137,8 @@ export class CardListComponent implements OnInit {
       this.dataSource.data = data.sort((a, b) => {
         const isAsc = sort.direction === "asc";
         switch (sort.active) {
+          case "code":
+            return compare(a.code, b.code, isAsc);
           case "name":
             return compare(a.name, b.name, isAsc);
           case "description":
@@ -185,6 +187,9 @@ export class CardListComponent implements OnInit {
               isIncluded = true;
             }
             if (card.description.includes(search)) {
+              isIncluded = true;
+            }
+            if (card.code.includes(search)) {
               isIncluded = true;
             }
           }
