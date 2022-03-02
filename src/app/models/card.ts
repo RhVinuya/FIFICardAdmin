@@ -3,6 +3,7 @@ import Timestamp = firestore.Timestamp
 
 export class Card{
     public id?: string;
+    public code?: string;
     public name? : string;
     public description?: string;
     public details?: string;

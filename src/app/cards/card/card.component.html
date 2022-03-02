@@ -10,6 +10,11 @@
             <form [formGroup]="cardForm" (ngSubmit)="saveCard()" class="animate">
                 <mat-card-content>
                     <mat-form-field class="full-width" appearance="fill">
+                        <mat-label>Code</mat-label>
+                        <input matInput placeholder="Code" formControlName="code" readonly>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width" appearance="fill">
                         <mat-label>Name</mat-label>
                         <input matInput placeholder="Name" formControlName="name">
                     </mat-form-field>

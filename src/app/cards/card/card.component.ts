@@ -39,6 +39,8 @@ export class CardComponent implements OnInit {
   fors: Recipient[] = [];
   recipients: string[] = [];
 
+  defaultCode: string = 'To be generated upon saving';
+
   constructor(
     private _service: CardsService,
     private _eventService: EventService,
@@ -64,12 +66,13 @@ export class CardComponent implements OnInit {
 
     this.cardForm = this.fb.group({
       id: [''],
+      code: [this.defaultCode],
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       details: ['', [Validators.required]],
       price: [Number(0)],
       active: [Boolean(false)],
-    })
+    });
 
     this.activateRoute.params.subscribe(params => {
       this.id = params['id'];
@@ -94,10 +97,10 @@ export class CardComponent implements OnInit {
               this.recipients = [];
           }
 
-
           this.cardForm.reset(
             {
               id: data.id,
+              code: data.code? data.code:this.defaultCode,
               name: data.name,
               description: data.description,
               details: data.details,
@@ -125,27 +128,43 @@ export class CardComponent implements OnInit {
         card.events = this.events;
         card.recipient = this.recipients.join(',');
         card.recipients = this.recipients;
-        if (card.id) {
-          this.logger.log('Update Card: ' + card.id);
-          this.service.updateCard(card).then(() => {
-            this.isSaving = false;
-            this.snackBar.open("Card Updated", "", { duration: 3000 });
-          });
+
+        if (card.code == this.defaultCode){
+          this.service.getConfig().then(config => {
+            let code: number = config.cardcode + 1;
+            card.code = code.toString();
+            this.saveProcess(card);
+            this.service.updateConfig(config.id, code);
+            this.cardForm.patchValue({code:code.toString()});
+          })
         }
-        else {
-          this.logger.log('Create Card');
-          this.service.addCard(card).then(id => {
-            this.isSaving = false;
-            this.router.navigate(['/cards/' + id]).then(navigated => {
-              if (navigated) {
-                this.snackBar.open("Card Added", "", {
-                  duration: 3000
-                });
-              }
-            });
-          });
+        else{
+          this.saveProcess(card);
         }
       }
+    }
+  }
+
+  saveProcess(card: Card){
+    if (card.id) {
+      this.logger.log('Update Card: ' + card.id);
+      this.service.updateCard(card).then(() => {
+        this.isSaving = false;
+        this.snackBar.open("Card Updated", "", { duration: 3000 });
+      });
+    }
+    else {
+      this.logger.log('Create Card');
+      this.service.addCard(card).then(id => {
+        this.isSaving = false;
+        this.router.navigate(['/cards/' + id]).then(navigated => {
+          if (navigated) {
+            this.snackBar.open("Card Added", "", {
+              duration: 3000
+            });
+          }
+        });
+      });
     }
   }
 

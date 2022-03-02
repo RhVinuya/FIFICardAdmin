@@ -41,11 +41,9 @@ export class UploadService {
     return new Promise((resolve, rejects) => { 
       this.storage.ref(link).getDownloadURL().subscribe(
         url => {
-          console.log('url', url);
           resolve(url);
         },
         err => {
-          console.log('err', err);
           rejects(err);
         }
       );

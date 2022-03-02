@@ -30,7 +30,7 @@ export class CardListComponent implements OnInit {
   pageSizeOptions: number[] = [10, 20, 50, 100];
 
   dataSource: MatTableDataSource<Card> = new MatTableDataSource();
-  displayedColumns: string[] = ['name', 'description', 'price', 'event', 'recipient', 'active', 'date', 'action'];
+  displayedColumns: string[] = ['code', 'name', 'description', 'price', 'event', 'recipient', 'active', 'date', 'action'];
   initalizing: boolean;
   withRecords: boolean;
 

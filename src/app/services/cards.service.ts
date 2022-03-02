@@ -3,6 +3,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Card } from '../models/card';
 import { firestore } from "firebase";
 import Timestamp = firestore.Timestamp
+import { Config } from '../models/config';
 
 @Injectable({
     providedIn: 'root',
@@ -11,7 +12,9 @@ import Timestamp = firestore.Timestamp
 export class CardsService{
     db: AngularFirestore;
 
-    constructor(_db: AngularFirestore){
+    constructor(
+        _db: AngularFirestore
+    ){
         this.db = _db;
     }
     
@@ -53,6 +56,7 @@ export class CardsService{
     async addCard(card: Card): Promise<string>{
         return new Promise(resolve => {
             this.db.collection('cards').add({
+                code: card.code,
                 name: card.name,
                 description: card.description,
                 details: card.details,
@@ -70,6 +74,7 @@ export class CardsService{
 
     async updateCard(card: Card): Promise<void>{
         return this.db.collection('cards').doc(card.id).update({
+            code: card.code,
             name: card.name,
             description: card.description,
             details: card.details,
@@ -120,6 +125,48 @@ export class CardsService{
         this.db.collection('cards').doc(id).update({
             primary: image,
             modified: Timestamp.now()
+        })
+    }
+
+    async addDefault(value: number): Promise<string>{
+        return new Promise(resolve => {
+            this.db.collection('config').add({
+                code: value
+            }).then(data => {
+                resolve(data.id);
+            })
+        });
+    }
+
+    async getConfig(): Promise<Config>{
+        return new Promise((resolve) => {
+            this.db.collection('config').get().subscribe(data => {
+                if (!data.empty)
+                {
+                    let config: Config;
+
+                    data.forEach(doc => {
+                        config = doc.data() as Config;
+                        config.id = doc.id;
+                    });
+                    resolve(config);
+                }
+                else{
+                    let value: number = 100000;
+                    this.addDefault(value).then(id => {
+                        let config: Config = new Config();
+                        config.id = id;
+                        config.cardcode = value;
+                        resolve(config);
+                    })
+                }
+            });
+        })
+    }
+
+    async updateConfig(_id: string, _cardcode: number){
+        this.db.collection('config').doc(_id).update({
+            cardcode: _cardcode,
         })
     }
 }
