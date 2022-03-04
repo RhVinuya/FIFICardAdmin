@@ -180,65 +180,75 @@ export class CardListComponent implements OnInit {
       this.service.getCards().then(data => {
         let newCards: Card[] = [];
         data.forEach(card => {
-          let isIncluded = false;
+          let isSearchMatch: boolean = false;
+          let isEventMatch: boolean = false;
+          let isRecipientMatch: boolean = false;
+          let isStatus: boolean = false;
 
           if (search) {
-            if (card.name.includes(search)) {
-              isIncluded = true;
-            }
-            if (card.description.includes(search)) {
-              isIncluded = true;
-            }
-            if (card.code.includes(search)) {
-              isIncluded = true;
-            }
+            if (card.name)
+              if (card.name.includes(search)) {
+                isSearchMatch = true;
+              }
+            if (card.description)
+              if (card.description.includes(search)) {
+                isSearchMatch = true;
+              }
+            if (card.code)
+              if (card.code.includes(search)) {
+                isSearchMatch = true;
+              }
           }
-          else {
-            isIncluded = true;
+          else{
+            isSearchMatch = true;
           }
 
-          if (isIncluded) {
-            if (event != 'All') {
-              let listOfEvents = card.event.split(',');
-              let found: boolean = false;
-              listOfEvents.forEach(_event => {
-                if (_event.trim() == event.trim()) {
-                  found = true;
-                }
-              })
-              if (!found) {
-                isIncluded = false;
+          if (event != 'All') {
+            let listOfEvents = card.event.split(',');
+            let found: boolean = false;
+            listOfEvents.forEach(_event => {
+              if (_event.trim() == event.trim()) {
+                found = true;
               }
+            });
+            if (!found) {
+              isEventMatch = false;
             }
           }
-
-          if (isIncluded) {
-            if (recipient != 'All') {
-              let listOfRecipients = card.recipient.split(',');
-              let found: boolean = false;
-              listOfRecipients.forEach(_recipient => {
-                if (_recipient.trim() == recipient.trim()) {
-                  found = true;
-                }
-              })
-              if (!found) {
-                isIncluded = false;
-              }
-            }
+          else{
+            isEventMatch = true;
           }
 
-          if (isIncluded) {
-            if (status != 'All') {
-              if (card.active && (status != 'active')) {
-                isIncluded = false
+          if (recipient != 'All') {
+            let listOfRecipients = card.recipient.split(',');
+            let found: boolean = false;
+            listOfRecipients.forEach(_recipient => {
+              if (_recipient.trim() == recipient.trim()) {
+                found = true;
               }
-              if (!card.active && (status != 'inactive')) {
-                isIncluded = false
-              }
+            })
+            if (!found) {
+              isRecipientMatch = false;
             }
           }
+          else{
+            isRecipientMatch = true;
+          }
 
-          if (isIncluded) {
+          if (status != 'All') {
+            if (card.active && (status == 'active')) {
+              isStatus = true
+            }
+            if (!card.active && (status == 'inactive')) {
+              isStatus = true
+            }
+          }
+          else{
+            isStatus = true;
+          }
+
+          console.log(card.name, isSearchMatch, isEventMatch, isRecipientMatch, isStatus);
+          if (isSearchMatch && isEventMatch && isRecipientMatch && isStatus) {
             newCards.push(card);
           }
         });
