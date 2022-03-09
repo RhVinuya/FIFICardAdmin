@@ -205,15 +205,11 @@ export class CardListComponent implements OnInit {
 
           if (event != 'All') {
             let listOfEvents = card.event.split(',');
-            let found: boolean = false;
             listOfEvents.forEach(_event => {
               if (_event.trim() == event.trim()) {
-                found = true;
+                isEventMatch = true;
               }
             });
-            if (!found) {
-              isEventMatch = false;
-            }
           }
           else{
             isEventMatch = true;
@@ -221,15 +217,11 @@ export class CardListComponent implements OnInit {
 
           if (recipient != 'All') {
             let listOfRecipients = card.recipient.split(',');
-            let found: boolean = false;
             listOfRecipients.forEach(_recipient => {
               if (_recipient.trim() == recipient.trim()) {
-                found = true;
+                isRecipientMatch = true;
               }
             })
-            if (!found) {
-              isRecipientMatch = false;
-            }
           }
           else{
             isRecipientMatch = true;
@@ -276,6 +268,18 @@ export class CardListComponent implements OnInit {
       }
     }
     this.dataSource.data = selectedCards;
+  }
+
+  UpdateAll(){
+    this.service.getCards().then(cards => {
+      cards.forEach(card => {
+        if (card.active){
+          this.service.deactivate(card.id).then(() => {
+            console.log(card);
+          })
+        }
+      })
+    })
   }
 }
 

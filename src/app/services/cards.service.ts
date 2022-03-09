@@ -169,4 +169,11 @@ export class CardsService{
             cardcode: _cardcode,
         })
     }
+
+    async deactivate(id: string){
+        this.db.collection('cards').doc(id).update({
+            active: false,
+            modified: Timestamp.now()
+        })
+    }
 }
