@@ -64,4 +64,12 @@ export class EventListComponent implements OnInit {
       });
     })
   }
+
+  onIsGift(ocassion: Occasion){
+    this.service.updateIsGift(ocassion).then(()=> {
+      this.snackBar.open(`Event ${ocassion.active? 'Active' : 'Inactive'}`, "", {
+        duration: 3000
+      });
+    })
+  }
 }
