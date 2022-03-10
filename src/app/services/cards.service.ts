@@ -20,7 +20,7 @@ export class CardsService{
     
     async getCards(): Promise<Card[]>{
         return new Promise((resolve, rejects) => {
-            this.db.collection('cards', ref => ref.orderBy('name', 'asc')).get().subscribe(data => {
+            this.db.collection('cards', ref => ref.orderBy('code', 'desc')).get().subscribe(data => {
                 if (!data.empty)
                 {
                     let cards: Card[] = [];
@@ -55,26 +55,28 @@ export class CardsService{
 
     async addCard(card: Card): Promise<string>{
         return new Promise(resolve => {
-            this.db.collection('cards').add({
-                code: card.code,
-                name: card.name,
-                description: card.description,
-                details: card.details,
-                price: card.price,
-                event: card.event,
-                events: card.events,
-                recipient: card.recipient,
-                active: card.active,
-                created: Timestamp.now()
-            }).then(data => {
-                resolve(data.id);
+            this.getNextCode().then(nextCode => {
+                this.db.collection('cards').add({
+                    code: nextCode.toString(),
+                    name: card.name,
+                    description: card.description,
+                    details: card.details,
+                    price: card.price,
+                    event: card.event,
+                    events: card.events,
+                    recipient: card.recipient,
+                    active: card.active,
+                    created: Timestamp.now()
+                }).then(data => {
+                    resolve(data.id);
+                })
             })
         });
     }
 
     async updateCard(card: Card): Promise<void>{
         return this.db.collection('cards').doc(card.id).update({
-            code: card.code,
+            //code: card.code,
             name: card.name,
             description: card.description,
             details: card.details,
@@ -128,52 +130,29 @@ export class CardsService{
         })
     }
 
-    async addDefault(value: number): Promise<string>{
-        return new Promise(resolve => {
-            this.db.collection('config').add({
-                code: value
-            }).then(data => {
-                resolve(data.id);
-            })
-        });
-    }
-
-    async getConfig(): Promise<Config>{
-        return new Promise((resolve) => {
-            this.db.collection('config').get().subscribe(data => {
-                if (!data.empty)
-                {
-                    let config: Config;
-
-                    data.forEach(doc => {
-                        config = doc.data() as Config;
-                        config.id = doc.id;
-                    });
-                    resolve(config);
-                }
-                else{
-                    let value: number = 100000;
-                    this.addDefault(value).then(id => {
-                        let config: Config = new Config();
-                        config.id = id;
-                        config.cardcode = value;
-                        resolve(config);
-                    })
-                }
-            });
-        })
-    }
-
-    async updateConfig(_id: string, _cardcode: number){
-        this.db.collection('config').doc(_id).update({
-            cardcode: _cardcode,
-        })
-    }
-
     async deactivate(id: string){
         this.db.collection('cards').doc(id).update({
             active: false,
             modified: Timestamp.now()
         })
+    }
+
+    async getNextCode(): Promise<number>{
+        return new Promise((resolve, rejects) => {
+            this.db.collection('cards', ref => ref.orderBy('code', 'desc')).get().subscribe(data => {
+                if (!data.empty)
+                {
+                    data.forEach(doc => {
+                        let lastCard: Card = doc.data() as Card;
+                        resolve(Number(lastCard.code) + 1);
+                        return;
+                    })
+
+                }
+                else{
+                    resolve(100000);
+                }
+            });
+        });
     }
 }

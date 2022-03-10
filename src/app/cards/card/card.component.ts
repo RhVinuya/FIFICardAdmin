@@ -128,19 +128,7 @@ export class CardComponent implements OnInit {
         card.events = this.events;
         card.recipient = this.recipients.join(',');
         card.recipients = this.recipients;
-
-        if (card.code == this.defaultCode){
-          this.service.getConfig().then(config => {
-            let code: number = config.cardcode + 1;
-            card.code = code.toString();
-            this.saveProcess(card);
-            this.service.updateConfig(config.id, code);
-            this.cardForm.patchValue({code:code.toString()});
-          })
-        }
-        else{
-          this.saveProcess(card);
-        }
+        this.saveProcess(card);
       }
     }
   }

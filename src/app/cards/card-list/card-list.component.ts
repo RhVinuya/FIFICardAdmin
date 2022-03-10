@@ -54,6 +54,10 @@ export class CardListComponent implements OnInit {
     this.titleService.setTitle('Fifi Greetings - Cards');
     this.logger.log('Cards loaded');
 
+    this.service.getNextCode().then(next => {
+      console.log(next);
+    })
+
     this.service.getCards().then(data => {
       this.completeCards = data;
       this.loadData(data);
@@ -239,7 +243,6 @@ export class CardListComponent implements OnInit {
             isStatus = true;
           }
 
-          console.log(card.name, isSearchMatch, isEventMatch, isRecipientMatch, isStatus);
           if (isSearchMatch && isEventMatch && isRecipientMatch && isStatus) {
             newCards.push(card);
           }
@@ -268,18 +271,6 @@ export class CardListComponent implements OnInit {
       }
     }
     this.dataSource.data = selectedCards;
-  }
-
-  UpdateAll(){
-    this.service.getCards().then(cards => {
-      cards.forEach(card => {
-        if (card.active){
-          this.service.deactivate(card.id).then(() => {
-            console.log(card);
-          })
-        }
-      })
-    })
   }
 }
 
