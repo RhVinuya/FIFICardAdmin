@@ -31,6 +31,7 @@ th.mat-sort-header-sorted {
     width: 500px;
     font-size: 14px;
     height: 32px;
+    border:1px solid #ccc;
 }
 
 .mat-cell label{

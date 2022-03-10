@@ -3,6 +3,11 @@
         <mat-card>
             <mat-card-content>
                 <h2>Images</h2>
+                <div>
+                    Red bordered image = Primary Photo
+                    <br/>
+                    hover and Click check to set the Primary Photo
+                </div>
                 <mat-card-actions align="end" >
                     <mat-progress-spinner mode="determinate" diameter="37" *ngIf=isUploading value="{{progress | number:'1.0-0' }}"></mat-progress-spinner>
                     <input type="file" class="file-upload" (change)="uploadFile($event)" #fileUpload style="display: none;">

@@ -4,10 +4,11 @@
         <mat-card-content>
           <h2>Cards</h2>
           <mat-card-actions align="end">
-            <form [formGroup]="searchForm" (ngSubmit)="searchCard()" class="animate">
-              <input type="text" matInput placeholder="Search" class="searchtext" formControlName="search">
+           
+            <a mat-raised-button color="primary" [routerLink]="['/cards', 'new']" style="margin-right:10px">Create Card</a>
+             <form [formGroup]="searchForm" (ngSubmit)="searchCard()" class="animate">
+              <input type="text" matInput placeholder="Search" class="searchtext ml-3" formControlName="search">
             </form>
-            <a mat-raised-button color="primary" [routerLink]="['/cards', 'new']">Create Card</a>
           </mat-card-actions>
 
           <div class="container" fxLayout="row" fxLayoutAlign="center none animate" *ngIf="initalizing">
