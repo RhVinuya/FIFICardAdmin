@@ -62,7 +62,6 @@ export class EmailService {
     this.getCard(order.card_id!).then(primary => {
       this.uploadService.getDownloadURL(primary).then(url => {
         this.generateHTML(order, url).then(html => {
-          console.log(html);
           this.db.collection('mail').add({
             to: order.sender_email,
             message: {

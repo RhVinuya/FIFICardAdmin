@@ -1,0 +1,36 @@
+mat-card-actions{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+mat-list-item{
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+}
+
+mat-list-item:hover{
+    background-color: #eee;
+}
+
+table {
+    width: 100%;
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+}
+
+.mat-card-actions{
+    margin-right: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.mat-cell{
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.mat-header-cell{
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}

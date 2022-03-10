@@ -17,5 +17,10 @@ export const environment = {
     authDomain: 'fifi-greetings.firebaseapp.com',
     messagingSenderId: '592228815811',
     measurementId: "G-BN0LKLNJY2"
+  },
+  imageSize: {
+    small: "_74x100",
+    medium: "_278x220",
+    large: "_282x400"
   }
 };

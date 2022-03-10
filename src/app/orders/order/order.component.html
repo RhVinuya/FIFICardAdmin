@@ -50,8 +50,11 @@
                         <form [formGroup]="statusForm"  class="animate" (ngSubmit)="updateStatus()">
                             <mat-form-field class="status-field" appearance="fill">
                                 <mat-label>Status</mat-label>
-                                <input matInput placeholder="Status" formControlName="status">
+                                <mat-select formControlName="status">
+                                    <mat-option *ngFor="let status of statuses" [value]="status.name">{{status.name}}</mat-option>
+                                </mat-select>
                             </mat-form-field>
+
                             <button mat-raised-button color="primary" class="updateBtn" type="submit">Update Status</button>
                         </form>
                     </section>

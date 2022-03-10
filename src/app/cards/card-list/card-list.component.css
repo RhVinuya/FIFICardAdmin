@@ -29,5 +29,45 @@ th.mat-sort-header-sorted {
     width: 500px;
     font-size: 14px;
     height: 32px;
-    border:1px solid #ccc;
+    border: 1px solid #888;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+mat-card-header{
+    padding-top: 10px;
+}
+
+mat-card-footer{
+    padding-bottom: 10px;
+}
+
+select{
+    background-color: white;
+    border: 1px solid #888;
+    margin-left: 5px;
+}
+
+.status{
+    width: 100px;
+    height: 100%;
+}
+
+.recipient{
+    width: 250px;
+    height: 100%;
+}
+
+.event{
+    width: 250px;
+    height: 100%;
+}
+
+.search{
+    width: 500px;
+    height: 100%;
+}
+
+.searchButton{
+    margin-right: 40px !important;
 }

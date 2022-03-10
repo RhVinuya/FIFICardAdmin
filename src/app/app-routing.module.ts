@@ -54,6 +54,11 @@ const appRoutes: Routes = [
         canActivate: [AuthGuard]
     },
     {
+        path: 'config',
+        loadChildren: './config/config.module#ConfigModule',
+        canActivate: [AuthGuard]
+    },
+    {
         path: '**',
         redirectTo: 'orders',
         pathMatch: 'full'

@@ -17,7 +17,7 @@ export class OrdersService {
 
   async getOrders(): Promise<Order[]>{
     return new Promise((resolve, rejects) => {
-        this.db.collection('orders').get().subscribe(data => {
+        this.db.collection('orders', ref => ref.orderBy('created', 'desc')).get().subscribe(data => {
             if (!data.empty)
             {
                 let orders: Order[] = [];

@@ -51,3 +51,32 @@ mat-card-actions{
     padding-left: 10px;
     padding-right: 10px;
 }
+
+mat-card-header{
+    padding-top: 10px;
+}
+
+mat-card-footer{
+    padding-bottom: 10px;
+}
+
+select{
+    background-color: white;
+    border: 1px solid #888;
+    margin-left: 5px;
+}
+
+.status{
+    width: 150px;
+    height: 100%;
+}
+
+.card{
+    width: 300px;
+    height: 100%;
+}
+
+.search{
+    width: 400px;
+    height: 100%;
+}
