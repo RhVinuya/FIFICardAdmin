@@ -34,5 +34,4 @@ export class DialogComponent implements OnInit {
   close() {
     this.eventDialogRef.close();
   }
-
 }

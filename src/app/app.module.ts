@@ -5,6 +5,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireRemoteConfigModule } from '@angular/fire/remote-config';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -16,7 +17,7 @@ import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +34,8 @@ import { environment } from '../environments/environment';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireRemoteConfigModule
   ],
   bootstrap: [AppComponent]
 })

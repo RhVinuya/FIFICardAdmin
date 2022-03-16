@@ -7,6 +7,7 @@ import { EventListComponent } from './event-list/event-list.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { RecipientListComponent } from './recipient-list/recipient-list.component';
 import { StatusListComponent } from './status-list/status-list.component';
+import { RatingDialogComponent } from '../cards/rating-dialog/rating-dialog.component';
 
 @NgModule({
   imports: [

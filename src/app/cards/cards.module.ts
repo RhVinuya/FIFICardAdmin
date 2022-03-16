@@ -5,6 +5,8 @@ import { SharedModule } from '../shared/shared.module';
 import { CardListComponent } from './card-list/card-list.component';
 import { CardComponent } from './card/card.component';
 import { UploadComponent } from './upload/upload.component';
+import { RatingsComponent } from './ratings/ratings.component';
+import { RatingDialogComponent } from './rating-dialog/rating-dialog.component';
 
 @NgModule({
     imports: [
@@ -15,8 +17,11 @@ import { UploadComponent } from './upload/upload.component';
     declarations: [
     CardListComponent,
     CardComponent,
-    UploadComponent],
+    UploadComponent,
+    RatingsComponent,
+    RatingDialogComponent],
     entryComponents: [
+      RatingDialogComponent
     ]
   })
   export class CardsModule { }

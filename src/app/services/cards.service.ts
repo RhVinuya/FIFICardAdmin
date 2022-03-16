@@ -1,3 +1,5 @@
+import { Title } from '@angular/platform-browser';
+import { Rating } from './../models/rating';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Card } from '../models/card';
@@ -153,6 +155,56 @@ export class CardsService{
                     resolve(100000);
                 }
             });
+        });
+    }
+
+    async getRatings(id: string): Promise<Rating[]>{
+        return new Promise((resolve, rejects) => {
+            this.db.collection('cards').doc(id).collection('ratings', ref => ref.orderBy('created', 'desc')).get().subscribe(data => {
+                if (!data.empty)
+                {
+                    let ratings: Rating[] = [];
+                    data.forEach(doc => {
+                        //console.log(doc.data()["date"].toDate());
+                        let rating: Rating = doc.data() as Rating;
+                        rating.id = doc.id;
+                        rating.date = doc.data()["date"].toDate();
+                        ratings.push(rating);
+                    });
+                    resolve(ratings);
+                }
+                else{
+                    rejects("No ratings found.");
+                }
+            });
+        });
+    }
+
+    async addRating(id: string, rating: Rating): Promise<string>{
+        return new Promise(resolve => {
+            this.db.collection('cards').doc(id).collection('ratings').add({
+                date: new Date(rating.date),
+                username: rating.username,
+                rate: rating.rate,
+                title: rating.title,
+                review: rating.review,
+                approve: rating.approve,
+                created: Timestamp.now()
+            }).then(data => {
+                resolve(data.id);
+            })
+        });
+    }
+
+    async UpdateRating(id: string, rating: Rating): Promise<void>{
+        return this.db.collection('cards').doc(id).collection('ratings').doc(rating.id).update({
+            date: new Date(rating.date),
+            username: rating.username,
+            rate: rating.rate,
+            title: rating.title,
+            review: rating.review,
+            approve: rating.approve,
+            modified: Timestamp.now()
         });
     }
 }

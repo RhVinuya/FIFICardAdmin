@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Ratings</h2>
+<br />
+<mat-dialog-content [formGroup]="form">
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="Username" formControlName="username">
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date" readonly>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Rating</mat-label>
+        <input matInput hidden="true" formControlName="rating">
+        <mat-icon (click)="updateRating(1)" class="rate-star">{{rating>=1?'star':'star_border'}}</mat-icon>
+        <mat-icon (click)="updateRating(2)" class="rate-star">{{rating>=2?'star':'star_border'}}</mat-icon>
+        <mat-icon (click)="updateRating(3)" class="rate-star">{{rating>=3?'star':'star_border'}}</mat-icon>
+        <mat-icon (click)="updateRating(4)" class="rate-star">{{rating>=4?'star':'star_border'}}</mat-icon>
+        <mat-icon (click)="updateRating(5)" class="rate-star">{{rating>=5?'star':'star_border'}}</mat-icon>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="Title" formControlName="title">
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Review</mat-label>
+        <textarea matInput rows="10" placeholder="Write your review" formControlName="review"></textarea>
+    </mat-form-field>
+    <mat-slide-toggle formControlName="approve" color="primary">Approve</mat-slide-toggle>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button class="mat-stroked-button mat-basic" (click)="close()">Cancel</button>
+    <button class="mat-stroked-button mat-primary" (click)="save()">Save</button>
+</mat-dialog-actions>
