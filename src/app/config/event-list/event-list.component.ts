@@ -80,4 +80,12 @@ export class EventListComponent implements OnInit {
       });
     })
   }
+
+  onIsSticker(ocassion: Occasion){
+    this.service.updateIsSticker(ocassion).then(()=> {
+      this.snackBar.open("Updated", "", {
+        duration: 3000
+      });
+    })
+  }
 }

@@ -60,4 +60,10 @@ export class EventService {
         isCreations: occasion.isCreations
     }); 
   }
+
+  async updateIsSticker(occasion: Occasion): Promise<void>{
+    return this.db.collection('events').doc(occasion.id).update({
+      isSticker: occasion.isSticker
+    }); 
+  }
 }
