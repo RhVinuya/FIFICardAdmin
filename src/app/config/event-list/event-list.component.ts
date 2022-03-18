@@ -67,7 +67,15 @@ export class EventListComponent implements OnInit {
 
   onIsGift(ocassion: Occasion){
     this.service.updateIsGift(ocassion).then(()=> {
-      this.snackBar.open(`Event ${ocassion.active? 'Active' : 'Inactive'}`, "", {
+      this.snackBar.open("Updated", "", {
+        duration: 3000
+      });
+    })
+  }
+
+  onIsCreations(ocassion: Occasion){
+    this.service.updateIsCreations(ocassion).then(()=> {
+      this.snackBar.open("Updated", "", {
         duration: 3000
       });
     })

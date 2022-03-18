@@ -54,4 +54,10 @@ export class EventService {
         isGift: occasion.isGift
     }); 
   }
+
+  async updateIsCreations(occasion: Occasion): Promise<void>{
+    return this.db.collection('events').doc(occasion.id).update({
+        isCreations: occasion.isCreations
+    }); 
+  }
 }
