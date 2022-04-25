@@ -4,6 +4,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { CardsService } from 'src/app/services/cards.service';
 import { MatSnackBar } from '@angular/material';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 export class Image{
   public visible: boolean;
@@ -47,6 +48,11 @@ export class UploadComponent implements OnInit {
     this.snackBar = _snackBar;
     this.initalizing = true;
     this.withRecords = true;
+  }
+
+  drop(event: CdkDragDrop<Image[]>) {
+    moveItemInArray(this.urls, event.previousIndex, event.currentIndex);
+    this.updateCardImages();
   }
 
   ngOnInit() {
