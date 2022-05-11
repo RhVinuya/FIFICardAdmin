@@ -64,10 +64,19 @@
                     </section>
                 </div>
                 <div fxFlex="50%">
-                    <a href="{{image}}" target="_blank">
-                        <img *ngIf="order" src="{{image}}">
-                    </a>
-                    
+                    <section>
+                        <p *ngIf="order">Payment: <strong>{{order.gateway!}}</strong></p>
+                    </section>
+                    <section>
+                        <p *ngIf="order && order.gateway! == 'PayPal'">PayPal Transaction Id: <strong>{{order.transaction_id!}}</strong></p>
+                        <p *ngIf="order && order.gateway! == 'PayPal'">PayPal Payer Id: <strong>{{order.payer_id!}}</strong></p>
+                        <p *ngIf="order && order.gateway! == 'PayPal'">PayPal Payer Email: <strong>{{order.payer_email!}}</strong></p>
+                    </section>
+                    <section>
+                        <a href="{{image}}" target="_blank">
+                            <img *ngIf="order" src="{{image}}">
+                        </a>
+                    </section>
                 </div>
               </div>
 

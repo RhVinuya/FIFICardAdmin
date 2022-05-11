@@ -20,7 +20,7 @@ export class OrderListComponent implements OnInit {
   displayOrder: Order[] = [];
   length: number;
   pageIndex: number = 0;
-  pageSize: number = 10;
+  pageSize: number = 10;s
   pageSizeOptions: number[] = [10, 20, 50, 100];
 
   initializing: boolean = false;
