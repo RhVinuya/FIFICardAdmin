@@ -1,3 +1,4 @@
+import { UsersService } from './../../services/users.service';
 import { OrdersService } from './../../services/orders.service';
 import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order';
@@ -28,11 +29,12 @@ export class OrderListComponent implements OnInit {
   cards: string[] = [];
   filterStatus: string = '';
   dataSource: MatTableDataSource<Order  > = new MatTableDataSource();
-  displayedColumns: string[] = ['card', 'sender', 'recipient', 'anonymously', 'sendto', 'address', 'status', 'date', 'action'];
+  displayedColumns: string[] = ['card', 'sender', 'recipient', 'anonymously', 'sendto', 'address', 'payment', 'status', 'date', 'action'];
 
   constructor(
     private _service: OrdersService,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private userService: UsersService
   ) { 
     this.service = _service;
     this.fb = _fb;
@@ -177,5 +179,25 @@ export class OrderListComponent implements OnInit {
 
     this.initializing = false;
     this.withRecords = this.length > 0;
+  }
+
+  validateEmail(email) 
+    {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
+
+  fixOrders(){
+    this.service.getOrders().then(orders => {
+      orders.forEach(order => {
+        if (this.validateEmail(order.sender_email)){
+          this.userService.getUserByEmail(order.sender_email).then(user => {
+            //this.service.updateUserId(order.id, user.id)
+            console.log("Found => " + order.sender_email, user.uid);  
+          }).catch(reason => {
+          })
+        }
+      })
+    })
   }
 }
