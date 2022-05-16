@@ -23,6 +23,9 @@
                     No ratings found
                 </div>
 
+                <mat-card-subtitle *ngIf="norecords == false">
+                    Average Score: {{avarageRating  }}
+                </mat-card-subtitle>
                 <table mat-table [dataSource]="dataSource" *ngIf="!norecords && !initalizing" class="animate">
                     <ng-container matColumnDef="username">
                         <th mat-header-cell *matHeaderCellDef> Username </th>

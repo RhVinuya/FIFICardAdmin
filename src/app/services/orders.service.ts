@@ -60,4 +60,10 @@ export class OrdersService {
       modified: Timestamp.now()
     });
   }
+
+  async updateUserId(id: string, userID: string){
+    this.db.collection('orders').doc(id).update({
+      user_Id: userID
+    });
+  }
 }

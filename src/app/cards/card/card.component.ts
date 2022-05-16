@@ -2,7 +2,6 @@ import { Recipient } from 'src/app/models/recipient';
 import { RecipientService } from 'src/app/services/recipient.service';
 import { Occasion } from 'src/app/models/occasion';
 import { EventService } from 'src/app/services/event.service';
-import { formatCurrency } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatSnackBar } from '@angular/material';
@@ -70,7 +69,7 @@ export class CardComponent implements OnInit {
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       details: ['', [Validators.required]],
-      price: [Number(0)],
+      price: [Number(0), [Validators.required, Validators.min(0)]],
       active: [Boolean(false)],
     });
 
@@ -104,7 +103,7 @@ export class CardComponent implements OnInit {
               name: data.name,
               description: data.description,
               details: data.details,
-              price: formatCurrency(data.price!, 'en_PH', ''),
+              price: data.price.toFixed(2),
               active: data.active,
             }
           );
@@ -117,6 +116,20 @@ export class CardComponent implements OnInit {
 
     this.getEvents();
     this.getRecipients();
+  }
+
+  onKeyPressEvent(event: any){
+    var charCode = (event.which) ? event.which : event.keyCode;
+    // Only Numbers 0-9
+    if (charCode == 46){
+      return true;
+    }
+    else if (charCode < 48 || charCode > 57){
+      event.preventDefault();
+      return false;
+    } else {
+      return true;
+    }
   }
 
   saveCard() {

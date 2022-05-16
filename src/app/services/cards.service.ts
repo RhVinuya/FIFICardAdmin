@@ -158,6 +158,13 @@ export class CardsService{
         });
     }
 
+    async updateAverageRatings(id: string, ratings: number){
+        this.db.collection('cards').doc(id).update({
+            ratings: ratings,
+            modified: Timestamp.now()
+        })
+    }
+
     async getRatings(id: string): Promise<Rating[]>{
         return new Promise((resolve, rejects) => {
             this.db.collection('cards').doc(id).collection('ratings', ref => ref.orderBy('created', 'desc')).get().subscribe(data => {

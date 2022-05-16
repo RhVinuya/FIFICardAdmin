@@ -21,6 +21,8 @@ export class RatingsComponent implements OnInit {
   displayedColumns: string[] = ['username', 'date', 'rate', 'title', 'approve', 'action'];
   snackBar: MatSnackBar;
 
+  avarageRating: number;
+
   constructor(
     private dialog: MatDialog,
     private _service: CardsService,
@@ -31,7 +33,14 @@ export class RatingsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadRatings();
+    this.loadUser();
+  }
+
+  loadUser(){
+    this.service.getCard(this.id).then(card => {
+      this.avarageRating = card.ratings;
+      this.loadRatings();
+    })
   }
 
   loadRatings(){
@@ -41,11 +50,31 @@ export class RatingsComponent implements OnInit {
       this.dataSource.data = ratings;
       this.initalizing = false;
       this.norecords = false;
+
+      if (ratings.length > 0){
+        this.calculateAverageRatings(ratings);
+      }
     }).catch(reason => {
       console.log(reason);
       this.norecords = true;
       this.initalizing = false;
     })
+  }
+
+  calculateAverageRatings(ratings: Rating[]){
+    let totalRatings: number = 0;
+    let approveRatingCount: number = 0;
+    ratings.forEach(rating => {
+      if (rating.approve){
+        totalRatings = totalRatings + rating.rate;
+        approveRatingCount++;
+      }
+    });
+    let average = totalRatings/approveRatingCount;
+    if (this.avarageRating != average){
+      this.avarageRating = average;
+      this.service.updateAverageRatings(this.id, this.avarageRating);
+    }
   }
 
   addRating(){

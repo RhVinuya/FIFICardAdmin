@@ -1,3 +1,4 @@
+import { AccountModule } from './../../account/account.module';
 import { Status } from './../../models/status';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
@@ -10,6 +11,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { PageEvent } from '@angular/material';
 import { firestore } from "firebase";
 import Timestamp = firestore.Timestamp;
+import { isatty } from 'tty';
 
 @Component({
   selector: 'app-card-list',
@@ -30,7 +32,7 @@ export class CardListComponent implements OnInit {
   pageSizeOptions: number[] = [10, 20, 50, 100];
 
   dataSource: MatTableDataSource<Card> = new MatTableDataSource();
-  displayedColumns: string[] = ['code', 'name', 'description', 'price', 'event', 'recipient', 'active', 'date', 'action'];
+  displayedColumns: string[] = ['code', 'name', 'description', 'price', 'event', 'recipient', 'ratings', 'active', 'date', 'action'];
   initalizing: boolean;
   withRecords: boolean;
 
@@ -59,11 +61,10 @@ export class CardListComponent implements OnInit {
     })
 
     this.service.getCards().then(data => {
-      this.completeCards = data;
       this.loadData(data);
       this.generateLists(data);
     }).catch(reason => {
-      //this.withRecords = false;
+      this.withRecords = false;
       this.initalizing = false;
     });
 
@@ -76,6 +77,7 @@ export class CardListComponent implements OnInit {
   }
 
   loadData(data: Card[]) {
+    this.initalizing = true;
     if (data.length > 0) {
       this.cards = data;
       this.length = this.cards.length;
@@ -136,31 +138,81 @@ export class CardListComponent implements OnInit {
   }
 
   sortData(sort: Sort) {
-    const data = this.dataSource.data.slice();
+    console.log(sort.active);
     if (sort.direction != '') {
-      this.dataSource.data = data.sort((a, b) => {
-        const isAsc = sort.direction === "asc";
-        switch (sort.active) {
-          case "code":
-            return compare(a.code, b.code, isAsc);
-          case "name":
-            return compare(a.name, b.name, isAsc);
-          case "description":
-            return compare(a.description, b.description, isAsc);
-          case "price":
-            return compareNumber(a.price, b.price, isAsc);
-          case "event":
-            return compare(a.event, b.event, isAsc);
-          case "recipient":
-            return compare(a.recipient, b.recipient, isAsc);
-          case "active":
-            return compareBoolean(a.active, b.active, isAsc);
-          case "date":
-            return compareDate(a.modified ? a.modified : a.created, b.modified ? b.modified : b.created, isAsc)
-          default:
-            return 0;
-        }
-      });
+      const isAsc: boolean = sort.direction === "asc";
+      let sortedCards: Card[];
+
+      if (sort.active == "code") {
+        if (!isAsc)
+          sortedCards = this.cards.sort((a, b) => 0 - (Number(a.code!) > Number(b.code!) ? -1 : 1));
+        else
+          sortedCards = this.cards.sort((a, b) => 0 - (Number(a.code!) > Number(b.code!) ? 1 : -1));
+        console.log(1, sortedCards[0].name);
+      }
+      else if (sort.active == "name") {
+        if (!isAsc)
+          sortedCards = this.cards.sort((a, b) => 0 - (a.name!.trim().toUpperCase() > b.name!.trim().toUpperCase() ? -1 : 1));
+        else
+          sortedCards = this.cards.sort((a, b) => 0 - (a.name!.trim().toUpperCase() > b.name!.trim().toUpperCase() ? 1 : -1));
+        console.log(2, sortedCards[0].name);
+      }
+      else if (sort.active == "description") {
+        if (!isAsc)
+          sortedCards = this.cards.sort((a, b) => 0 - (a.description!.trim().toUpperCase() > b.description!.trim().toUpperCase() ? -1 : 1));
+        else
+          sortedCards = this.cards.sort((a, b) => 0 - (a.description!.trim().toUpperCase() > b.description!.trim().toUpperCase() ? 1 : -1));
+        console.log(3, sortedCards[0].name);
+      }
+      else if (sort.active == "price") {
+        if (!isAsc)
+          sortedCards = this.cards.sort((a, b) => 0 - (Number(a.price!||0) > Number(b.price!||0) ? -1 : 1));
+        else
+          sortedCards = this.cards.sort((a, b) => 0 - (Number(a.price!||0) > Number(b.price!||0) ? 1 : -1));
+        console.log(1, sortedCards[0].name);
+      }
+      else if (sort.active == "event") {
+        if (!isAsc)
+          sortedCards = this.cards.sort((a, b) => 0 - (a.event!.trim().toUpperCase() > b.event!.trim().toUpperCase() ? -1 : 1));
+        else
+          sortedCards = this.cards.sort((a, b) => 0 - (a.event!.trim().toUpperCase() > b.event!.trim().toUpperCase() ? 1 : -1));
+        console.log(4, sortedCards[0].name);
+      }
+      else if (sort.active == "recipient") {
+        if (!isAsc)
+          sortedCards = this.cards.sort((a, b) => 0 - (a.recipient!.trim().toUpperCase() > b.recipient!.trim().toUpperCase() ? -1 : 1));
+        else
+          sortedCards = this.cards.sort((a, b) => 0 - (a.recipient!.trim().toUpperCase() > b.recipient!.trim().toUpperCase() ? 1 : -1));
+        console.log(5, sortedCards[0].name);
+      }
+      else if (sort.active == "ratings") {
+        if (!isAsc)
+          sortedCards = this.cards.sort((a, b) => 0 - (Number(a.ratings!||0) > Number(b.ratings!||0) ? -1 : 1));
+        else
+          sortedCards = this.cards.sort((a, b) => 0 - (Number(a.ratings!||0) > Number(b.ratings!||0) ? 1 : -1));
+        console.log(1, sortedCards[0].name);
+      }
+      else if (sort.active == "active") {
+        if (!isAsc)
+          sortedCards = this.cards.sort((a, b) => 0 - (a.active! > b.active! ? -1 : 1));
+        else
+          sortedCards = this.cards.sort((a, b) => 0 - (a.active! > b.active! ? 1 : -1));
+        console.log(6, sortedCards[0].name);
+      }
+      else if (sort.active == "date") {
+        if (!isAsc)
+          sortedCards = this.cards.sort((a, b) => 0 - (a.modified! > b.modified! ? -1 : 1));
+        else
+          sortedCards = this.cards.sort((a, b) => 0 - (a.modified! > b.modified! ? 1 : -1));
+        console.log(7, sortedCards[0].name);
+      }
+      else {
+        sortedCards = this.cards.sort((a, b) => 0 - (a.created! > b.created! ? 1 : -1));
+        console.log(8, sortedCards[0].name);
+      }
+      
+      console.log(sortedCards[0].name);
+      this.updateRange()
     }
   }
 
@@ -173,14 +225,12 @@ export class CardListComponent implements OnInit {
     this.initalizing = true;
     this.withRecords = true;
 
-    if ((!search) && (event == 'All') && (recipient == 'All') && (status == 'All'))
-    {
+    if ((!search) && (event == 'All') && (recipient == 'All') && (status == 'All')) {
       this.loadData(this.completeCards);
       this.initalizing = false;
       this.withRecords = this.cards.length > 0;
     }
-    else 
-    {
+    else {
       this.service.getCards().then(data => {
         let newCards: Card[] = [];
         data.forEach(card => {
@@ -203,7 +253,7 @@ export class CardListComponent implements OnInit {
                 isSearchMatch = true;
               }
           }
-          else{
+          else {
             isSearchMatch = true;
           }
 
@@ -215,7 +265,7 @@ export class CardListComponent implements OnInit {
               }
             });
           }
-          else{
+          else {
             isEventMatch = true;
           }
 
@@ -227,7 +277,7 @@ export class CardListComponent implements OnInit {
               }
             })
           }
-          else{
+          else {
             isRecipientMatch = true;
           }
 
@@ -239,11 +289,12 @@ export class CardListComponent implements OnInit {
               isStatus = true
             }
           }
-          else{
+          else {
             isStatus = true;
           }
 
           if (isSearchMatch && isEventMatch && isRecipientMatch && isStatus) {
+            console.log(card);
             newCards.push(card);
           }
         });
@@ -264,14 +315,10 @@ export class CardListComponent implements OnInit {
   updateRange() {
     let start: number = this.pageIndex * this.pageSize;
     let end: number = start + this.pageSize;
-    let selectedCards: Card[] = [];
-    for (let i = start; i < end; i++) {
-      if (this.cards[i]) {
-        selectedCards.push(this.cards[i]);
-      }
-    }
-    this.dataSource.data = selectedCards;
+    this.dataSource.data = this.cards.slice(start, end);
+    this.dataSource.sort = this.sort;
   }
+
 }
 
 function compare(a: string, b: string, isAsc: boolean) {

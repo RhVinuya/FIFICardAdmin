@@ -6,3 +6,7 @@
 table {
     width: 100%;
 }
+
+mat-card-subtitle{
+    padding-left: 20px;
+}
