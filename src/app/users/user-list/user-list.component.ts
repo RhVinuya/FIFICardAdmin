@@ -31,7 +31,7 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.titleService.setTitle('Fifi Greetings - Users');
+    this.titleService.setTitle('Fibei Greetings - Users');
     this.logger.log('Users loaded');
 
     this.service.getUsers().then(data => {

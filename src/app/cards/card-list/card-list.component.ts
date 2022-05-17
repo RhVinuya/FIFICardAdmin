@@ -53,7 +53,7 @@ export class CardListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.titleService.setTitle('Fifi Greetings - Cards');
+    this.titleService.setTitle('Fibei Greetings - Cards');
     this.logger.log('Cards loaded');
 
     this.service.getNextCode().then(next => {

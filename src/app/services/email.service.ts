@@ -65,7 +65,7 @@ export class EmailService {
           this.db.collection('mail').add({
             to: order.sender_email,
             message: {
-              subject: "Fifi Greetings Order Update",
+              subject: "Fibei Greetings Order Update",
               html: html,
             },
           });

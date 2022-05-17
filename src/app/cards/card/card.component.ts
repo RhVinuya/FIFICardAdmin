@@ -61,7 +61,7 @@ export class CardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.titleService.setTitle('Fifi Greetings - Card');
+    this.titleService.setTitle('Fibei Greetings - Card');
 
     this.cardForm = this.fb.group({
       id: [''],

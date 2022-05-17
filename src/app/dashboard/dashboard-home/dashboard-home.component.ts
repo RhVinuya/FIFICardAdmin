@@ -20,7 +20,7 @@ export class DashboardHomeComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
-    this.titleService.setTitle('Fifi Greetings - Dashboard');
+    this.titleService.setTitle('Fibei Greetings - Dashboard');
     this.logger.log('Dashboard loaded');
 
     setTimeout(() => {

@@ -26,7 +26,7 @@ export class PasswordResetComponent implements OnInit {
     private notificationService: NotificationService,
     private titleService: Title) {
 
-    this.titleService.setTitle('Fifi Greetings - Password Reset');
+    this.titleService.setTitle('Fibei Greetings - Password Reset');
     this.hideNewPassword = true;
     this.hideNewPasswordConfirm = true;
   }

@@ -24,7 +24,7 @@ export class PasswordResetRequestComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Fifi Greetings - Password Reset Request');
+    this.titleService.setTitle('Fibei Greetings - Password Reset Request');
 
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email])

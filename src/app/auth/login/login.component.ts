@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.titleService.setTitle('Fifi Greetings - Login');
+        this.titleService.setTitle('Fibei Greetings - Login');
         this.authenticationService.logout();
         this.createForm();
     }
