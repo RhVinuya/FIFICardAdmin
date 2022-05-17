@@ -63,7 +63,7 @@ export class CardsService{
                     name: card.name,
                     description: card.description,
                     details: card.details,
-                    price: card.price,
+                    price: Number(card.price),
                     event: card.event,
                     events: card.events,
                     recipient: card.recipient,
@@ -82,7 +82,7 @@ export class CardsService{
             name: card.name,
             description: card.description,
             details: card.details,
-            price: card.price,
+            price: Number(card.price),
             event: card.event,
             events: card.events,
             recipient: card.recipient,
@@ -160,7 +160,7 @@ export class CardsService{
 
     async updateAverageRatings(id: string, ratings: number){
         this.db.collection('cards').doc(id).update({
-            ratings: ratings,
+            ratings: Number(ratings).toFixed(2),
             modified: Timestamp.now()
         })
     }

@@ -103,7 +103,7 @@ export class CardComponent implements OnInit {
               name: data.name,
               description: data.description,
               details: data.details,
-              price: data.price.toFixed(2),
+              price: Number(data.price).toFixed(2),
               active: data.active,
             }
           );

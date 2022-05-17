@@ -31,10 +31,11 @@
                     <mat-icon> </mat-icon>
                 </div>
 
-                <div cdkDropList cdkDropListOrientation="horizontal" class="example-list allitems" (cdkDropListDropped)="drop($event)">
-                    <div class="example-box" *ngFor="let url of urls" cdkDrag>
-                        <div *ngIf="url.visible" [ngClass]="url.primary? 'item primary' : 'item'">
-                            <mat-spinner class="imageprogress" *ngIf="url.url == ''"></mat-spinner>
+                <div #dropListContainer class="example-list allitems" cdkDropListGroup>
+                    <div class="example-box" *ngFor="let url of urls; let i = index" cdkDropList [cdkDropListData]="i">
+                        <div *ngIf="url.visible" [ngClass]="url.primary? 'item primary' : 'item'" 
+                            cdkDrag [cdkDragData]="i" (cdkDragEntered)="dragEntered($event)" (cdkDragMoved)="dragMoved($event)" (cdkDragDropped)="dragDropped($event)">
+                            <mat-spinner [diameter]="30" class="imageprogress" *ngIf="url.url == ''"></mat-spinner>
                             <img src="{{url.url}}}" *ngIf="url.url != ''" alt="{{url.name}}">
                             <button mat-mini-fab color="primary" class="primaryBtn" (click)="changePrimary(url)"
                                 *ngIf="!url.primary" title="Set as Primary">

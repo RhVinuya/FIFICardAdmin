@@ -37,8 +37,8 @@ div.allitems{
 div.item{
   float: left;
   border: #ccc solid 1px;
-  height: 200px;
-  width: 100%;
+  width: 200px;
+  min-height: 100px;
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -163,27 +163,11 @@ div.gallery {
 
 
   .example-list {
-    display: flex;
-    flex-wrap: wrap;
-    background: white;
-    border-radius: 4px;
-    overflow: none;
-  }
-  
-  .example-box {
-    width: 25%;
-    padding: 3px 3px 3px 3px;
-    color: rgba(0, 0, 0, 0.87);
-    display: flex;
+    display: flex; 
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    cursor: move;
-    background: white;
-    font-size: 14px;
-    flex-grow: 1;
-    flex-basis: 0;
+    row-gap: 20px;
   }
   
   .cdk-drag-preview {

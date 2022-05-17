@@ -148,56 +148,48 @@ export class CardListComponent implements OnInit {
           sortedCards = this.cards.sort((a, b) => 0 - (Number(a.code!) > Number(b.code!) ? -1 : 1));
         else
           sortedCards = this.cards.sort((a, b) => 0 - (Number(a.code!) > Number(b.code!) ? 1 : -1));
-        console.log(1, sortedCards[0].name);
       }
       else if (sort.active == "name") {
         if (!isAsc)
           sortedCards = this.cards.sort((a, b) => 0 - (a.name!.trim().toUpperCase() > b.name!.trim().toUpperCase() ? -1 : 1));
         else
           sortedCards = this.cards.sort((a, b) => 0 - (a.name!.trim().toUpperCase() > b.name!.trim().toUpperCase() ? 1 : -1));
-        console.log(2, sortedCards[0].name);
       }
       else if (sort.active == "description") {
         if (!isAsc)
           sortedCards = this.cards.sort((a, b) => 0 - (a.description!.trim().toUpperCase() > b.description!.trim().toUpperCase() ? -1 : 1));
         else
           sortedCards = this.cards.sort((a, b) => 0 - (a.description!.trim().toUpperCase() > b.description!.trim().toUpperCase() ? 1 : -1));
-        console.log(3, sortedCards[0].name);
       }
       else if (sort.active == "price") {
         if (!isAsc)
           sortedCards = this.cards.sort((a, b) => 0 - (Number(a.price!||0) > Number(b.price!||0) ? -1 : 1));
         else
           sortedCards = this.cards.sort((a, b) => 0 - (Number(a.price!||0) > Number(b.price!||0) ? 1 : -1));
-        console.log(1, sortedCards[0].name);
       }
       else if (sort.active == "event") {
         if (!isAsc)
           sortedCards = this.cards.sort((a, b) => 0 - (a.event!.trim().toUpperCase() > b.event!.trim().toUpperCase() ? -1 : 1));
         else
           sortedCards = this.cards.sort((a, b) => 0 - (a.event!.trim().toUpperCase() > b.event!.trim().toUpperCase() ? 1 : -1));
-        console.log(4, sortedCards[0].name);
       }
       else if (sort.active == "recipient") {
         if (!isAsc)
           sortedCards = this.cards.sort((a, b) => 0 - (a.recipient!.trim().toUpperCase() > b.recipient!.trim().toUpperCase() ? -1 : 1));
         else
           sortedCards = this.cards.sort((a, b) => 0 - (a.recipient!.trim().toUpperCase() > b.recipient!.trim().toUpperCase() ? 1 : -1));
-        console.log(5, sortedCards[0].name);
       }
       else if (sort.active == "ratings") {
         if (!isAsc)
           sortedCards = this.cards.sort((a, b) => 0 - (Number(a.ratings!||0) > Number(b.ratings!||0) ? -1 : 1));
         else
           sortedCards = this.cards.sort((a, b) => 0 - (Number(a.ratings!||0) > Number(b.ratings!||0) ? 1 : -1));
-        console.log(1, sortedCards[0].name);
       }
       else if (sort.active == "active") {
         if (!isAsc)
           sortedCards = this.cards.sort((a, b) => 0 - (a.active! > b.active! ? -1 : 1));
         else
           sortedCards = this.cards.sort((a, b) => 0 - (a.active! > b.active! ? 1 : -1));
-        console.log(6, sortedCards[0].name);
       }
       else if (sort.active == "date") {
         if (!isAsc)
@@ -208,10 +200,8 @@ export class CardListComponent implements OnInit {
       }
       else {
         sortedCards = this.cards.sort((a, b) => 0 - (a.created! > b.created! ? 1 : -1));
-        console.log(8, sortedCards[0].name);
       }
       
-      console.log(sortedCards[0].name);
       this.updateRange()
     }
   }
