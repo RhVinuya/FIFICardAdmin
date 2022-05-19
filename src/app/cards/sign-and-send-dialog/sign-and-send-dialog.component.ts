@@ -73,7 +73,15 @@ export class SignAndSendDialogComponent implements OnInit {
           textarea.limit = sign.limit;
 
           this.textareas.push(textarea);
-          this.textareasForSaving.push(textarea);
+
+          let textarea2 = new Textarea(sign.code);
+          textarea2.left = sign.left;
+          textarea2.top = sign.top;
+          textarea2.width = sign.width;
+          textarea2.height = sign.height;
+          textarea2.limit = sign.limit;
+
+          this.textareasForSaving.push(textarea2);
 
           if (maxCode < sign.code) {
             maxCode = sign.code;
