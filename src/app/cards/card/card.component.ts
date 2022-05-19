@@ -71,6 +71,8 @@ export class CardComponent implements OnInit {
       details: ['', [Validators.required]],
       price: [Number(0), [Validators.required, Validators.min(0)]],
       active: [Boolean(false)],
+      bestseller: [Boolean(false)],
+      featured: [Boolean(false)],
     });
 
     this.activateRoute.params.subscribe(params => {
@@ -105,6 +107,8 @@ export class CardComponent implements OnInit {
               details: data.details,
               price: Number(data.price).toFixed(2),
               active: data.active,
+              bestseller: data.bestseller,
+              featured: data.featured,
             }
           );
         }).catch(reason => {

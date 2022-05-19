@@ -9,6 +9,8 @@ export class Card{
     public details?: string;
     public price?: number;
     public active?: boolean;
+    public bestseller?: boolean;
+    public featured?: boolean;
     public event?: string; 
     public events?: string[];
     public recipient?: string;

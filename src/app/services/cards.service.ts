@@ -68,6 +68,8 @@ export class CardsService{
                     events: card.events,
                     recipient: card.recipient,
                     active: card.active,
+                    bestseller: card.bestseller,
+                    featured: card.featured,
                     created: Timestamp.now()
                 }).then(data => {
                     resolve(data.id);
@@ -87,6 +89,8 @@ export class CardsService{
             events: card.events,
             recipient: card.recipient,
             active: card.active,
+            bestseller: card.bestseller,
+            featured: card.featured,
             modified: Timestamp.now()
         });
     }
