@@ -11,4 +11,5 @@ export class User {
     public active?: boolean;
     public created?: Timestamp;
     public modified?: Timestamp;
+    public uid?: string;
 }
