@@ -143,6 +143,12 @@ export class CardsService {
         })
     }
 
+    async updateSignAndSendFlag(id: string, value: boolean) {
+        this.db.collection('cards').doc(id).update({
+            signAndSend: value
+        })
+    }
+
     async getNextCode(): Promise<number> {
         return new Promise((resolve, rejects) => {
             this.db.collection('cards', ref => ref.orderBy('code', 'desc')).get().subscribe(data => {
@@ -265,5 +271,18 @@ export class CardsService {
 
     async deleteSignAndSend(id: string, signId: string){
         return this.db.collection('cards').doc(id).collection('signandsend').doc(signId).delete();
+    }
+
+    async getSignAndSendCount(id: string): Promise<number> {
+        return new Promise((resolve, rejects) => {
+            this.db.collection('cards').doc(id).collection('signandsend').get().subscribe(data => {
+                if (!data.empty) {
+                    resolve(data.docs.length);
+                }
+                else {
+                    resolve(0);
+                }
+            });
+        });
     }
 }

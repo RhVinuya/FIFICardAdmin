@@ -268,7 +268,11 @@ export class UploadComponent implements OnInit {
     }
     this.dialogRef = this.dialog.open(SignAndSendDialogComponent, dialogConfig);
 
-    this.dialogRef.afterClosed().subscribe(data => {});
+    this.dialogRef.afterClosed().subscribe(data => {
+      this.service.getSignAndSendCount(this.id).then(count => {
+        this.service.updateSignAndSendFlag(this.id, count != 0);
+      })
+    });
 
   }
 }

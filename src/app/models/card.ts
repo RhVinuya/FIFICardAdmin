@@ -1,3 +1,4 @@
+import { SignAndSend } from './sign-and-send';
 import { firestore } from "firebase";
 import Timestamp = firestore.Timestamp
 
@@ -20,4 +21,5 @@ export class Card{
     public images?: string[];
     public primary?: string;
     public ratings?: number;
+    public signAndSend?: boolean;
 }
