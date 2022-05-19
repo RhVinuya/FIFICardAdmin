@@ -1,0 +1,56 @@
+.main{
+    display: flex;
+    flex-direction: row;
+}
+
+.main-tools{
+    width: 200px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.main-div{
+    position: relative;
+}
+
+.layout {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: 400px;
+    height: 100px;
+    display: flex;
+    font-size: 20px;
+    border: solid 1px red;
+    cursor: move;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: transparent;
+    border-radius: 4px;
+}
+
+.footer{
+    display: flex;
+    flex-direction: row;
+}
+
+.tool{
+    flex-basis: 50%;
+}
+
+.pull-right{
+    text-align: right;
+}
+
+.pull-right button{
+    margin-left: 5px;;
+}
+
+.full-width{
+    width: 100%;
+}
+
+.hidden{
+    visibility: hidden;
+}

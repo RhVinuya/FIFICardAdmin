@@ -7,6 +7,7 @@ import { CardComponent } from './card/card.component';
 import { UploadComponent } from './upload/upload.component';
 import { RatingsComponent } from './ratings/ratings.component';
 import { RatingDialogComponent } from './rating-dialog/rating-dialog.component';
+import { SignAndSendDialogComponent } from './sign-and-send-dialog/sign-and-send-dialog.component';
 
 @NgModule({
     imports: [
@@ -19,9 +20,11 @@ import { RatingDialogComponent } from './rating-dialog/rating-dialog.component';
     CardComponent,
     UploadComponent,
     RatingsComponent,
-    RatingDialogComponent],
+    RatingDialogComponent,
+    SignAndSendDialogComponent],
     entryComponents: [
-      RatingDialogComponent
+      RatingDialogComponent,
+      SignAndSendDialogComponent
     ]
   })
   export class CardsModule { }

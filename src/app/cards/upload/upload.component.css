@@ -34,17 +34,35 @@ div.allitems{
   width: 100%;
 }
 
+.item-card{
+  width: 280px;
+  margin: 5px 5px 5px 5px;
+}
+
+.mat-card{
+  padding-bottom: 5px;
+}
+
+.mat-card-actions{
+  padding-top: 0px !important;
+  margin-right: -8px !important;
+}
+
+.mat-card-image{
+  margin-bottom: 0px !important;
+}
+
+.mat-button{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
 div.item{
-  float: left;
   border: #ccc solid 1px;
-  width: 200px;
+  width: 250px;
   min-height: 100px;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
   margin: 5px 5px 5px 5px;
   padding: 5px 5px 5px 5px;
-  display: flex;
 }
 
 div.item img{
@@ -52,20 +70,18 @@ div.item img{
   max-width: 100%;
 }
 
-div.item button{
-  position: absolute;
+div.item div.tools{
+  height: 30px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+div.item div.tools a{
+  cursor: pointer;
 }
 
 .imageprogress{
   position: absolute;
-}
-
-div.item:hover{
-  border: lightskyblue solid 1px;
-}
-
-div.item:hover img{
-  opacity: 20%;
 }
 
 div.item:hover .primaryBtn{
@@ -167,7 +183,7 @@ div.gallery {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    row-gap: 20px;
+    row-gap: 5px;
   }
   
   .cdk-drag-preview {
