@@ -1,7 +1,4 @@
-import { AccountModule } from './../../account/account.module';
-import { Status } from './../../models/status';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { NGXLogger } from 'ngx-logger';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { CardsService } from 'src/app/services/cards.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -44,7 +41,6 @@ export class CardListComponent implements OnInit {
   constructor(
     private _service: CardsService,
     private _fb: FormBuilder,
-    private logger: NGXLogger,
     private titleService: Title) {
     this.service = _service;
     this.fb = _fb;
@@ -54,8 +50,7 @@ export class CardListComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('Fibei Greetings - Cards');
-    this.logger.log('Cards loaded');
-
+    
     this.service.getNextCode().then(next => {
       console.log(next);
     })

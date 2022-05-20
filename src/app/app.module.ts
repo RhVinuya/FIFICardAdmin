@@ -12,7 +12,6 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { CustomMaterialModule } from './custom-material/custom-material.module';
 import { AppRoutingModule } from './app-routing.module';
-import { LoggerModule } from 'ngx-logger';
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -26,11 +25,6 @@ import { environment } from '../environments/environment';
     SharedModule,
     CustomMaterialModule.forRoot(),
     AppRoutingModule,
-    LoggerModule.forRoot({
-      serverLoggingUrl: `http://my-api/logs`,
-      level: environment.logLevel,
-      serverLogLevel: environment.serverLogLevel,
-    }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule,

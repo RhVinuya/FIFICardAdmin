@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { NGXLogger } from 'ngx-logger';
 import { Register } from 'src/app/models/register';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -26,7 +25,6 @@ export class RegisterComponent implements OnInit {
     private _fb: FormBuilder,
     private _snackBar: MatSnackBar,
     private _router: Router,
-    private logger: NGXLogger,
     private titleService: Title) { 
       this.service = _service;
       this.fb = _fb;
@@ -51,14 +49,12 @@ export class RegisterComponent implements OnInit {
         this.isSaving = true;
         let register: Register = this.userForm.value as Register;
         this.service.registerUser(register.email, register.password).then(uid => {
-          this.logger.log('Register User: ' + uid);
           let user: User = new User();
           user.localId = uid;
           user.firstname = register.firstname;
           user.lastname = register.lastname;
           user.email = register.email;
           this.service.addUser(user).then(id => {
-            this.logger.log('Created User: ' + id);
             this.isSaving = false;
             this.router.navigate(['/users']).then(navigated => {
               if(navigated) {
@@ -67,11 +63,9 @@ export class RegisterComponent implements OnInit {
             });
           }).catch(reason => {
             this.isSaving = false;
-            this.logger.error(reason);
           })
         }).catch(reason => {
           this.isSaving = false;
-          this.logger.error(reason);
         })
       }
     }

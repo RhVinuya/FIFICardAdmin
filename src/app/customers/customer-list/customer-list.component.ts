@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { NGXLogger } from 'ngx-logger';
 import { Title } from '@angular/platform-browser';
 
 import { NotificationService } from '../../core/services/notification.service';
@@ -38,14 +37,12 @@ export class CustomerListComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
-    private logger: NGXLogger,
     private notificationService: NotificationService,
     private titleService: Title
   ) { }
 
   ngOnInit() {
     this.titleService.setTitle('Fibei Greetings - Customers');
-    this.logger.log('Customers loaded');
     this.dataSource.sort = this.sort;
 
   }

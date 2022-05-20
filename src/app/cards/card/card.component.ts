@@ -7,7 +7,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NGXLogger } from 'ngx-logger';
 import { Card } from 'src/app/models/card';
 import { CardsService } from 'src/app/services/cards.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
@@ -48,7 +47,6 @@ export class CardComponent implements OnInit {
     private _fb: FormBuilder,
     private _snackBar: MatSnackBar,
     private _router: Router,
-    private logger: NGXLogger,
     private titleService: Title
   ) {
     this.service = _service;
@@ -78,7 +76,6 @@ export class CardComponent implements OnInit {
     this.activateRoute.params.subscribe(params => {
       this.id = params['id'];
       if (this.id != 'new') {
-        this.logger.log('Card loaded: ' + this.id);
         this.service.getCard(this.id).then(data => {
           if (data.events)
             this.events = data.events;
@@ -112,7 +109,6 @@ export class CardComponent implements OnInit {
             }
           );
         }).catch(reason => {
-          this.logger.error(reason);
         })
 
       }
@@ -152,14 +148,12 @@ export class CardComponent implements OnInit {
 
   saveProcess(card: Card){
     if (card.id) {
-      this.logger.log('Update Card: ' + card.id);
       this.service.updateCard(card).then(() => {
         this.isSaving = false;
         this.snackBar.open("Card Updated", "", { duration: 3000 });
       });
     }
     else {
-      this.logger.log('Create Card');
       this.service.addCard(card).then(id => {
         this.isSaving = false;
         this.router.navigate(['/cards/' + id]).then(navigated => {

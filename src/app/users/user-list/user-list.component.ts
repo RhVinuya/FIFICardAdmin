@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { NotificationService } from '../../core/services/notification.service';
-import { NGXLogger } from 'ngx-logger';
 import { User } from 'src/app/models/user';
 
 @Component({
@@ -21,7 +20,6 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private _service: UsersService,
-    private logger: NGXLogger,
     private notificationService: NotificationService,
     private titleService: Title
   ) { 
@@ -32,7 +30,6 @@ export class UserListComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('Fibei Greetings - Users');
-    this.logger.log('Users loaded');
 
     this.service.getUsers().then(data => {
       if (data.length > 0)

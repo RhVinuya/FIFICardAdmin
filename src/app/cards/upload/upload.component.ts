@@ -2,7 +2,6 @@ import { SignAndSendDialogComponent } from './../sign-and-send-dialog/sign-and-s
 import { environment } from './../../../environments/environment';
 import { UploadService } from './../../services/upload.service';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { NGXLogger } from 'ngx-logger';
 import { CardsService } from 'src/app/services/cards.service';
 import { MatDialog, MatDialogConfig, MatDialogRef, MatSnackBar } from '@angular/material';
 import { CdkDragDrop, CdkDragEnter, CdkDragMove, moveItemInArray, } from '@angular/cdk/drag-drop';
@@ -53,7 +52,6 @@ export class UploadComponent implements OnInit {
     private _service: CardsService,
     private _uploadService: UploadService,
     private _snackBar: MatSnackBar,
-    private logger: NGXLogger,
     private dialog: MatDialog
   ) {
     this.service = _service;
@@ -165,7 +163,6 @@ export class UploadComponent implements OnInit {
       this.isUploading = true;
       this.progress = 5;
       const file: File = event.target.files[0];
-      this.logger.log('Upload: ' + file.name);
       const ref = this.uploadService.uploadRef(this.id);
       const task = this.uploadService.uploadFile(file, ref);
 
