@@ -39,6 +39,10 @@
                     <section>
                         <p *ngIf="order">Send to: <strong>{{order.sendto}}</strong> <strong>{{order.sendto == 'Receiver'? '(' + order.receiver_name + ')' : '(' + order.sender_name + ')'}}</strong></p>
                     </section>
+
+                    <section *ngIf="withSignAndSend">
+                        <button type="button" mat-raised-button color="primary" (click)="previewSignAndSend()">Preview Sign and Send</button>
+                    </section>
         
                     <section>
                         <p>Message</p>

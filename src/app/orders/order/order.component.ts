@@ -1,6 +1,7 @@
+import { OrderSignAndSendDialogComponent } from './../order-sign-and-send-dialog/order-sign-and-send-dialog.component';
 import { StatusService } from './../../services/status.service';
 import { EmailService } from './../../services/email.service';
-import { MatSnackBar } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDialogRef, MatSnackBar } from '@angular/material';
 import { UploadService } from './../../services/upload.service';
 import { UploadComponent } from './../../cards/upload/upload.component';
 import { OrdersService } from './../../services/orders.service';
@@ -29,6 +30,9 @@ export class OrderComponent implements OnInit {
   snackBar: MatSnackBar;
   statuses: Status[] = [];
 
+  withSignAndSend: boolean = false;
+  dialogRef: MatDialogRef<OrderSignAndSendDialogComponent>;
+
   constructor(
     private _activateRoute: ActivatedRoute,
     private _service: OrdersService,
@@ -36,7 +40,8 @@ export class OrderComponent implements OnInit {
     private _emailService: EmailService,
     private _statusService: StatusService,
     private _fb: FormBuilder,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) { 
     this.service = _service;
     this.activateRoute = _activateRoute;
@@ -75,6 +80,11 @@ export class OrderComponent implements OnInit {
           this.image = url;
         });
     });
+
+    this.service.getSignAndSendDetails(id).then(data => {
+      this.withSignAndSend = data.length > 0;
+      console.log(data);
+    });
   }
 
   updateStatus(){
@@ -88,6 +98,14 @@ export class OrderComponent implements OnInit {
   emailStatus(){
     this.emailService.sendOrderEmail(this.order);
     this.snackBar.open("Email has been sent", '', { duration: 3000, });
+  }
+
+  previewSignAndSend(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      orderId: this.id!,
+    }
+    this.dialogRef = this.dialog.open(OrderSignAndSendDialogComponent, dialogConfig);
   }
 
 }

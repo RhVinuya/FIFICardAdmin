@@ -4,6 +4,7 @@ import { Order } from '../models/order';
 import { firestore } from "firebase";
 import Timestamp = firestore.Timestamp
 import { Observable } from 'rxjs';
+import { SignAndSendDetails } from '../models/sign-and-send-details';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,26 @@ export class OrdersService {
     });
   }
 
+  async getSignAndSendDetails(id: string): Promise<SignAndSendDetails[]>{
+    return new Promise((resolve, rejects) => {
+      this.db.collection('orders/' + id + '/signandsend' ).get().subscribe(data => {
+        if (!data.empty)
+        {
+            let signs: SignAndSendDetails[] = [];
+            data.forEach(doc => {
+                let sign: SignAndSendDetails = doc.data() as SignAndSendDetails;
+                sign.id = doc.id;
+                signs.push(sign);
+            });
+            resolve(signs);
+        }
+        else{
+            rejects("No sign and send found.");
+        }
+      });
+    });
+  }
+
   async updateStatus(id: string, status: string){
     this.db.collection('orders').doc(id).update({
       status: status,
@@ -66,4 +87,6 @@ export class OrdersService {
       user_Id: userID
     });
   }
+
+
 }

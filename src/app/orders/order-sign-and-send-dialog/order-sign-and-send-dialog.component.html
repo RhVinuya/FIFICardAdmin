@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Sign and Send</h2>
+<br />
+<mat-dialog-content>
+    <div class="main">
+        <img src="{{focus.url}}">
+        <div class="text-area d-flex align-items-center justify-content-center" *ngFor="let item of focusItems"
+            [style.top.px]="item.top" [style.left.px]="item.left" [style.width.px]="item.width"
+            [style.height.px]="item.height">
+            <div [style.font-family]="item.style" [style.font-size.px]="item.size" [style.text-align]="item.alignment">
+                <p [innerText]="item.text"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tools">
+        <img *ngFor="let item of images" src="{{item.url}}" (click)="changeImage(item)">
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions class="pull-right">
+    <button class="mat-stroked-button mat-warn" (click)="close()">Cancel</button>
+</mat-dialog-actions>
