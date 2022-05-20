@@ -56,11 +56,13 @@ export class SignAndSendDialogComponent implements OnInit {
     this.image = this.data.image;
     this.url = this.data.url;
     this.cardId = this.data.cardId;
+    console.log(this.data);
+
     this.loadSignAndSend();
   }
 
   loadSignAndSend() {
-    this.service.getSignAndSend(this.cardId).then(data => {
+    this.service.getSignAndSend(this.cardId, this.image).then(data => {
       this.signAndSend = data;
       let maxCode: number = 0;
       data.forEach(sign => {

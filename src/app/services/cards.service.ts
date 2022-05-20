@@ -7,6 +7,7 @@ import { Card } from '../models/card';
 import { firestore } from "firebase";
 import Timestamp = firestore.Timestamp
 import { Config } from '../models/config';
+import { sign } from 'crypto';
 
 @Injectable({
     providedIn: 'root',
@@ -223,18 +224,22 @@ export class CardsService {
         });
     }
 
-    async getSignAndSend(id: string): Promise<SignAndSend[]> {
+    async getSignAndSend(id: string, image: string): Promise<SignAndSend[]> {
         return new Promise((resolve, rejects) => {
             this.db.collection('cards').doc(id).collection('signandsend').get().subscribe(data => {
                 if (!data.empty) {
                     let signAndSends: SignAndSend[] = [];
                     data.forEach(doc => {
-                        //console.log(doc.data()["date"].toDate());
                         let signAndSend: SignAndSend = doc.data() as SignAndSend;
-                        signAndSend.id = doc.id;
-                        signAndSends.push(signAndSend);
+                        if (signAndSend.image == image){
+                            signAndSend.id = doc.id;
+                            signAndSends.push(signAndSend);
+                        }
                     });
-                    resolve(signAndSends);
+                    if (signAndSends.length > 0)
+                        resolve(signAndSends);
+                    else
+                        rejects("No Sign and Send Detail found.");
                 }
                 else {
                     rejects("No Sign and Send Detail found.");
