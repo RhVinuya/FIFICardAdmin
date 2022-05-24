@@ -1,10 +1,11 @@
+import { ConfirmDialogComponent } from './../../shared/confirm-dialog/confirm-dialog.component';
 import { Recipient } from 'src/app/models/recipient';
 import { RecipientService } from 'src/app/services/recipient.service';
 import { Occasion } from 'src/app/models/occasion';
 import { EventService } from 'src/app/services/event.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatSnackBar } from '@angular/material';
+import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog, MatDialogConfig, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Card } from 'src/app/models/card';
@@ -19,6 +20,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 export class CardComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   id?: string;
+  dialogRef: MatDialogRef<ConfirmDialogComponent>;
 
   service: CardsService;
   activateRoute: ActivatedRoute;
@@ -47,7 +49,8 @@ export class CardComponent implements OnInit {
     private _fb: FormBuilder,
     private _snackBar: MatSnackBar,
     private _router: Router,
-    private titleService: Title
+    private titleService: Title,
+    private dialog: MatDialog,
   ) {
     this.service = _service;
     this.eventService = _eventService;
@@ -79,7 +82,7 @@ export class CardComponent implements OnInit {
         this.service.getCard(this.id).then(data => {
           if (data.events)
             this.events = data.events;
-          else{
+          else {
             if (data.event)
               this.events = data.event.split(',');
             else
@@ -88,7 +91,7 @@ export class CardComponent implements OnInit {
 
           if (data.recipients)
             this.recipients = data.recipients;
-          else{
+          else {
             if (data.recipient)
               this.recipients = data.recipient.split(',');
             else
@@ -98,7 +101,7 @@ export class CardComponent implements OnInit {
           this.cardForm.reset(
             {
               id: data.id,
-              code: data.code? data.code:this.defaultCode,
+              code: data.code ? data.code : this.defaultCode,
               name: data.name,
               description: data.description,
               details: data.details,
@@ -118,13 +121,13 @@ export class CardComponent implements OnInit {
     this.getRecipients();
   }
 
-  onKeyPressEvent(event: any){
+  onKeyPressEvent(event: any) {
     var charCode = (event.which) ? event.which : event.keyCode;
     // Only Numbers 0-9
-    if (charCode == 46){
+    if (charCode == 46) {
       return true;
     }
-    else if (charCode < 48 || charCode > 57){
+    else if (charCode < 48 || charCode > 57) {
       event.preventDefault();
       return false;
     } else {
@@ -141,12 +144,48 @@ export class CardComponent implements OnInit {
         card.events = this.events;
         card.recipient = this.recipients.join(',');
         card.recipients = this.recipients;
-        this.saveProcess(card);
+
+        this.verifyCardName(card).then(status => {
+          if (!status) {
+            this.saveProcess(card);
+          }
+        });
+        this.isSaving = false;
       }
     }
   }
 
-  saveProcess(card: Card){
+  verifyCardName(card: Card): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.service.getCardByName(card.name).then(id => {
+        console.log(id, this.id!);
+        if (id != card.id!) {
+          const dialogConfig = new MatDialogConfig();
+          dialogConfig.data = {
+            message: "Card name already been used, Are you sure you want to duplicate the name?"
+          }
+          this.dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
+
+          this.dialogRef.afterClosed().subscribe(data => {
+            if (data) {
+              this.saveProcess(card);
+            }
+          });
+
+          resolve(true);
+        }
+        else{
+          resolve(false);
+        }
+
+      }).catch(err => {
+        resolve(false);
+      });
+    });
+  }
+
+  saveProcess(card: Card) {
+    this.isSaving = true;
     if (card.id) {
       this.service.updateCard(card).then(() => {
         this.isSaving = false;

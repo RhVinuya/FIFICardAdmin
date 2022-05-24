@@ -55,7 +55,6 @@ export class RatingsComponent implements OnInit {
         this.calculateAverageRatings(ratings);
       }
     }).catch(reason => {
-      console.log(reason);
       this.norecords = true;
       this.initalizing = false;
     })

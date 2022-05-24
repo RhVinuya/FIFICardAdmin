@@ -37,3 +37,7 @@ mat-card-footer{
     margin-top: -6px;
     background: none;
 }
+
+mat-slide-toggle{
+    padding-right: 30px;
+}

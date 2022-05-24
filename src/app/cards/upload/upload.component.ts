@@ -89,12 +89,11 @@ export class UploadComponent implements OnInit {
   dragMoved(event: CdkDragMove<number>) {
     if (!this.dropListContainer || !this.dragDropInfo) return;
     const placeholderElement = this.dropListContainer.nativeElement.querySelector('.cdk-drag-placeholder');
-    const receiverElement = this.dragDropInfo.dragIndex > this.dragDropInfo.dropIndex ? placeholderElement.nextElementSiblings: placeholderElement.previousElementSibling;
+    const receiverElement = this.dragDropInfo.dragIndex > this.dragDropInfo.dropIndex ? placeholderElement.nextElementSiblings : placeholderElement.previousElementSibling;
     if (!receiverElement) {
       return;
     }
 
-    console.log(event);
     receiverElement.style.display = 'none';
     this.dropListReceiverElement = receiverElement;
   }
@@ -256,20 +255,23 @@ export class UploadComponent implements OnInit {
     this.withRecords = this.urls.length > 0;
   }
 
-  signAndSend(image: Image){
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      url: image.url,
-      image: image.name,
-      cardId: this.id
-    }
-    this.dialogRef = this.dialog.open(SignAndSendDialogComponent, dialogConfig);
+  signAndSend(image: Image) {
+    this.uploadService.getDownloadURL(image.name).then(url => {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.data = {
+        url: url,
+        image: image.name,
+        cardId: this.id
+      }
+      this.dialogRef = this.dialog.open(SignAndSendDialogComponent, dialogConfig);
 
-    this.dialogRef.afterClosed().subscribe(data => {
-      this.service.getSignAndSendCount(this.id).then(count => {
-        this.service.updateSignAndSendFlag(this.id, count != 0);
-      })
+      this.dialogRef.afterClosed().subscribe(data => {
+        this.service.getSignAndSendCount(this.id).then(count => {
+          this.service.updateSignAndSendFlag(this.id, count != 0);
+        });
+      });
+    
     });
+  };
+} 
 
-  }
-}

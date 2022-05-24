@@ -7,32 +7,46 @@
         </mat-card-title>
       </mat-card-header>
       <hr />
+      <mat-card-actions align="end">
+        
+      </mat-card-actions>
       <mat-card-content>
         <mat-card-actions align="end">
-          <form [formGroup]="searchForm" (ngSubmit)="searchCard()">
-            <input placeholder="Search for Name, Description or Code" type="search" class="search" formControlName="search">
-            <select class="event" formControlName="event">
-              <option value="All" selected>Select Event</option>
-              <option *ngFor="let event of listOfEvents" value="{{event}}">{{event}}</option>
-            </select>
-            <select class="recipient" formControlName="recipient">
-              <option value="All" selected>Select Recipient</option>
-              <option *ngFor="let recipient of listOfRecipients" value="{{recipient}}">{{recipient}}</option>
-            </select>
-            <select class="status" formControlName="status">
-              <option value="All" selected>Select Status</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
-            <button mat-raised-button color="primary" class="searchButton">
-              <mat-icon>search</mat-icon>
-              Search
-            </button>
-          </form>
-          <a mat-raised-button color="primary" [routerLink]="['/cards', 'new']">
-            <mat-icon>add</mat-icon>
-            Create Card
-          </a>
+          <mat-form-field class="search-param search" appearance="fill">
+            <mat-label>Search</mat-label>
+            <input type="search" matInput placeholder="Search for Name, Description or Code" (change)="onChange('search', $event)">
+          </mat-form-field>
+          <mat-form-field class="search-param" appearance="fill">
+            <mat-label>Event</mat-label>
+            <mat-select (selectionChange)="onChange('event', $event)">
+              <mat-option value="All">Select Event</mat-option>
+              <mat-option *ngFor="let event of listOfEvents" value="{{event}}">{{event}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="search-param" appearance="fill">
+            <mat-label>Recipient</mat-label>
+            <mat-select (selectionChange)="onChange('recipient', $event)">
+              <mat-option value="All">Select Recipient</mat-option>
+              <mat-option *ngFor="let recipient of listOfRecipients" value="{{recipient}}">{{recipient}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="search-param" appearance="fill">
+            <mat-label>Status</mat-label>
+            <mat-select (selectionChange)="onChange('status', $event)">
+              <mat-option value="All">Select Status</mat-option>
+              <mat-option value="active">Active</mat-option>
+              <mat-option value="inactive">Inactive</mat-option>
+              <mat-option value="bestseller">Best Seller</mat-option>
+              <mat-option value="featured">Featured</mat-option>
+              <mat-option value="signandsend">Sign and Send</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <section>
+            <button mat-raised-button class="button" (click)="clickSearch()"><mat-icon>search</mat-icon>Search</button>
+          </section>
+          <section>
+            <button mat-raised-button color="primary" class="button add-button" [routerLink]="['/cards', 'new']"><mat-icon>add</mat-icon>Create Card</button>
+          </section>
         </mat-card-actions>
 
         <div class="container" fxLayout="row" fxLayoutAlign="center none animate" *ngIf="initalizing">

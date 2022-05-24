@@ -24,7 +24,7 @@ export class CardsService {
 
     async getCards(): Promise<Card[]> {
         return new Promise((resolve, rejects) => {
-            this.db.collection('cards', ref => ref.orderBy('code', 'desc')).get().subscribe(data => {
+            this.db.collection('cards', ref => ref.orderBy('code', 'desc')).get() .subscribe(data => {
                 if (!data.empty) {
                     let cards: Card[] = [];
                     data.forEach(doc => {
@@ -94,6 +94,22 @@ export class CardsService {
             featured: card.featured,
             modified: Timestamp.now()
         });
+    }
+
+    async getCardByName(name: string): Promise<string>{
+        return new Promise((resolve, rejects) => {
+            this.db.collection('cards', ref => ref.where("name", "==", name)).get().subscribe(data => {
+                if (!data.empty) {
+                    data.forEach(doc => {
+                       resolve(doc.id);
+                    });
+                }
+                else {
+                    rejects("Card not found.");
+                }
+            });
+        })
+        
     }
 
     async getImages(id: string): Promise<string[]> {
@@ -181,7 +197,6 @@ export class CardsService {
                 if (!data.empty) {
                     let ratings: Rating[] = [];
                     data.forEach(doc => {
-                        //console.log(doc.data()["date"].toDate());
                         let rating: Rating = doc.data() as Rating;
                         rating.id = doc.id;
                         rating.date = doc.data()["date"].toDate();

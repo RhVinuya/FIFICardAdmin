@@ -56,7 +56,6 @@ export class SignAndSendDialogComponent implements OnInit {
     this.image = this.data.image;
     this.url = this.data.url;
     this.cardId = this.data.cardId;
-    console.log(this.data);
 
     this.loadSignAndSend();
   }
