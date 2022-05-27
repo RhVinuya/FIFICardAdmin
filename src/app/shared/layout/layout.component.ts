@@ -57,9 +57,9 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
             if (!data.empty)
             {
                 data.forEach(doc => {
-                    if((doc.data() as Order).status.toLowerCase() == 'new'){
-                      this.newStatusCount++;
-                    }
+                    //if((doc.data() as Order).status.toLowerCase() == 'new'){
+                     // this.newStatusCount++;
+                    //}
                 });
             }
           });

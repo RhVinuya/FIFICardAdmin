@@ -5,16 +5,18 @@ import { SharedModule } from '../shared/shared.module';
 import { OrdersRoutingModule } from './orders-routing.module';
 import { OrderComponent } from './order/order.component';
 import { OrderSignAndSendDialogComponent } from './order-sign-and-send-dialog/order-sign-and-send-dialog.component';
+import { PaymentStatusDialogComponent } from './payment-status-dialog/payment-status-dialog.component';
 
 @NgModule({
-  declarations: [OrderListComponent, OrderComponent, OrderSignAndSendDialogComponent],
+  declarations: [OrderListComponent, OrderComponent, OrderSignAndSendDialogComponent, PaymentStatusDialogComponent],
   imports: [
     CommonModule,
     OrdersRoutingModule,
     SharedModule
   ],
   entryComponents: [
-    OrderSignAndSendDialogComponent
+    OrderSignAndSendDialogComponent,
+    PaymentStatusDialogComponent
   ]
 })
 export class OrdersModule { }

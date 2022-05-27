@@ -9,7 +9,7 @@
             <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
                 <div fxFlex="50%">
                     <section>
-                        <p *ngIf="order">Card: <strong>{{order.card_name!}}</strong></p>
+                        <p *ngIf="order && card">Card: <strong>{{card.name!}}</strong></p>
                         <p *ngIf="order">Price: <strong>{{order.card_price!}}</strong></p>
                     </section>
         
@@ -40,7 +40,7 @@
                         <p *ngIf="order">Send to: <strong>{{order.sendto}}</strong> <strong>{{order.sendto == 'Receiver'? '(' + order.receiver_name + ')' : '(' + order.sender_name + ')'}}</strong></p>
                     </section>
 
-                    <section *ngIf="withSignAndSend">
+                    <section *ngIf="order && order.withSignAndSend">
                         <button type="button" mat-raised-button color="primary" (click)="previewSignAndSend()">Preview Sign and Send</button>
                     </section>
         
@@ -48,7 +48,7 @@
                         <p>Message</p>
                         <div style="white-space:pre-wrap; font-weight: 800" *ngIf="order">{{order.message}}</div>
                     </section>
-
+                    <!--
                     <section>
                         <p>Status</p>
                         <form [formGroup]="statusForm"  class="animate" (ngSubmit)="updateStatus()">
@@ -66,21 +66,7 @@
                     <section>
                         <button type="button" mat-raised-button color="primary" (click)="emailStatus()">Update Customer</button>
                     </section>
-                </div>
-                <div fxFlex="50%">
-                    <section>
-                        <p *ngIf="order">Payment: <strong>{{order.gateway!}}</strong></p>
-                    </section>
-                    <section>
-                        <p *ngIf="order && order.gateway! == 'PayPal'">PayPal Transaction Id: <strong>{{order.transaction_id!}}</strong></p>
-                        <p *ngIf="order && order.gateway! == 'PayPal'">PayPal Payer Id: <strong>{{order.payer_id!}}</strong></p>
-                        <p *ngIf="order && order.gateway! == 'PayPal'">PayPal Payer Email: <strong>{{order.payer_email!}}</strong></p>
-                    </section>
-                    <section>
-                        <a href="{{image}}" target="_blank">
-                            <img *ngIf="order" src="{{image}}">
-                        </a>
-                    </section>
+                    -->
                 </div>
               </div>
 

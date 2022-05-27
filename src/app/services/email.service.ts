@@ -26,7 +26,7 @@ export class EmailService {
     return new Promise((resolve, rejects) => {
       fetch('/assets/static/order.html').then(res => res.text()).then(data => {
         let html = data;
-        html = html.replace('[STATUS]', order.status!);
+        //html = html.replace('[STATUS]', order.status!);
         html = html.replace('[SenderName]', order.sender_name!);
         html = html.replace('[SenderPhone]', order.sender_phone!);
         html = html.replace('[SenderEmail]', order.sender_email!);

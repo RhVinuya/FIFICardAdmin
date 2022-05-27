@@ -1,3 +1,4 @@
+import { CardsService } from 'src/app/services/cards.service';
 import { OrderSignAndSendDialogComponent } from './../order-sign-and-send-dialog/order-sign-and-send-dialog.component';
 import { StatusService } from './../../services/status.service';
 import { EmailService } from './../../services/email.service';
@@ -10,6 +11,7 @@ import { Order } from 'src/app/models/order';
 import { ActivatedRoute } from '@angular/router';
 import { EmailValidator, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Status } from 'src/app/models/status';
+import { Card } from 'src/app/models/card';
 
 @Component({
   selector: 'app-order',
@@ -22,9 +24,11 @@ export class OrderComponent implements OnInit {
   uploadService: UploadService;
   emailService: EmailService;
   statusService: StatusService;
+  cardService: CardsService;
   fb: FormBuilder;
   id?: string;
   order: Order;
+  card: Card;
   image: string;
   statusForm: FormGroup;
   snackBar: MatSnackBar;
@@ -39,6 +43,7 @@ export class OrderComponent implements OnInit {
     private _uploadService: UploadService,
     private _emailService: EmailService,
     private _statusService: StatusService,
+    private _cardService: CardsService,
     private _fb: FormBuilder,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog
@@ -48,6 +53,7 @@ export class OrderComponent implements OnInit {
     this.uploadService = _uploadService;
     this.emailService = _emailService;
     this.statusService = _statusService;
+    this.cardService = _cardService;
     this.fb = _fb;
     this.snackBar = _snackBar;
   }
@@ -73,24 +79,26 @@ export class OrderComponent implements OnInit {
   loadOrder(id: string){
     this.service.getOrder(id).then(data => {
         this.order = data;
-        this.statusForm.controls['status'].setValue(data.status.trim(), {onlySelf: true});
+        this.cardService.getCard(this.order.card_id).then(card => {
+          this.card = card;
+        })
+       // this.statusForm.controls['status'].setValue(data.status.trim(), {onlySelf: true});
         
-        this.statusForm.get('status').setValue(data.status)
-        this.uploadService.getDownloadURL(data.proof).then(url => {
-          this.image = url;
-        });
+       // this.statusForm.get('status').setValue(data.status)
+       // this.uploadService.getDownloadURL(data.proof).then(url => {
+        //  this.image = url;
+       // });
     });
 
-    this.service.getSignAndSendDetails(id).then(data => {
-      this.withSignAndSend = data.length > 0;
-      console.log(data);
-    });
+    //this.service.getSignAndSendDetails(id).then(data => {
+    //  this.withSignAndSend = data.length > 0;
+    //});
   }
 
   updateStatus(){
     if (this.statusForm.valid){
       let status = this.statusForm.value['status'];
-      this.order.status = status;
+      //this.order.status = status;
       this.service.updateStatus(this.order.id, status).then(() => this.snackBar.open("Status is updated to: " + status, '', { duration: 3000, }));
     }
   }
