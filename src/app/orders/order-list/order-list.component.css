@@ -85,3 +85,11 @@ select{
     cursor: pointer;
     color: blue;
 }
+
+.my-status-New
+{
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+}

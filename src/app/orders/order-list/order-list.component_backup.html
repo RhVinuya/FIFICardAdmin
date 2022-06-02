@@ -75,7 +75,6 @@
                     <ng-container matColumnDef="payment">
                         <th mat-header-cell *matHeaderCellDef> Payment </th>
                         <td mat-cell *matCellDef="let element">
-                            <label>Receipt #: 00000</label><br/>
                             <label class="text-bold">{{element.payment.gateway}}</label><br />
                             <label class="text-bold link" (click)="paymentLink(element.payment)">{{element.payment.id}}</label>
                         </td>
@@ -84,7 +83,7 @@
                     <ng-container matColumnDef="paymentstatus">
                         <th mat-header-cell *matHeaderCellDef> Payment Status </th>
                         <td mat-cell *matCellDef="let element">
-                            <label class="text-bold my-status-{{element.payment.status}}">{{element.payment.status}}</label>
+                            <label class="text-bold">{{element.payment.status}}</label>
                         </td>
                     </ng-container>
 

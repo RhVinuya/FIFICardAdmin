@@ -7,57 +7,46 @@
             <hr>
 
             <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
-                <div fxFlex="100%">
+                <div fxFlex="50%">
                     <section>
-                        <p><b>Receipt #:</b> 0000</p>
-                        <p *ngIf="order && card"> <b>Card:</b> {{card.name!}} <a> 0001</a>(ADD CardID & LINK)  <span title="show card link"><mat-icon>image</mat-icon></span></p>
-                        <p *ngIf="order"> <b>Price:</b> {{order.card_price!}}</p>
-                    </section>
-        <table>
-            <tr>
-                <td> 
-                    <section style="padding:10px;border:1px solid #ccc;border-radius:10px">
-                    <h3>Sender</h3>
-                    <p *ngIf="order"><b>Name:</b> {{order.sender_name!}}</p>
-                    <p *ngIf="order"> <b>Phone:</b> {{order.sender_phone!}}</p>
-                    <p *ngIf="order"> <b>Email:</b> {{order.sender_email!}}</p>
-                    </section>
-                </td>
-                <td>
-                    <section style="padding:10px;border:1px solid #ccc;border-radius:10px">
-                        <h3>Recipient</h3>
-                        <p *ngIf="order"> <b>Name:</b> {{order.receiver_name!}}</p>
-                        <p *ngIf="order"> <b>Phone:</b> {{order.receiver_phone!}}</p>
-                        <p *ngIf="order"> <b>Email:</b> {{order.receiver_email!}}</p>
-                    </section>
-                </td>
-            </tr>
-        </table>
-                   
-        
-                    <section>
-                        <p *ngIf="order"><b>Deliver Address:</b> {{order.address!}}</p>
+                        <p *ngIf="order && card">Card: <strong>{{card.name!}}</strong></p>
+                        <p *ngIf="order">Price: <strong>{{order.card_price!}}</strong></p>
                     </section>
         
                     <section>
-                        <p *ngIf="order && order.anonymously"><b>Send Anonymously</b></p>
+                        <p>Sender</p>
+                        <p *ngIf="order">Name: <strong>{{order.sender_name!}}</strong></p>
+                        <p *ngIf="order">Phone: <strong>{{order.sender_phone!}}</strong></p>
+                        <p *ngIf="order">Email: <strong>{{order.sender_email!}}</strong></p>
                     </section>
         
                     <section>
-                        <p *ngIf="order"> <b>Send to:</b> {{order.sendto}} {{order.sendto == 'Receiver'? '(' + order.receiver_name + ')' : '(' + order.sender_name + ')'}}</p>
+                        <p>Recipient</p>
+                        <p *ngIf="order">Name: <strong>{{order.receiver_name!}}</strong></p>
+                        <p *ngIf="order">Phone: <strong>{{order.receiver_phone!}}</strong></p>
+                        <p *ngIf="order">Email: <strong>{{order.receiver_email!}}</strong></p>
+                    </section>
+        
+                    <section>
+                        <p>Deliver Address</p>
+                        <p *ngIf="order"><strong>{{order.address!}}</strong></p>
+                    </section>
+        
+                    <section>
+                        <p *ngIf="order && order.anonymously"><strong>Send Anonymously</strong></p>
+                    </section>
+        
+                    <section>
+                        <p *ngIf="order">Send to: <strong>{{order.sendto}}</strong> <strong>{{order.sendto == 'Receiver'? '(' + order.receiver_name + ')' : '(' + order.sender_name + ')'}}</strong></p>
                     </section>
 
                     <section *ngIf="order && order.withSignAndSend">
                         <button type="button" mat-raised-button color="primary" (click)="previewSignAndSend()">Preview Sign and Send</button>
                     </section>
-                    
+        
                     <section>
-                        <div><b>Message:</b></div>
-                        <br/>
-                        <div style="white-space:pre-wrap; font-weight: 900;padding: 10px;
-                        background: #f7f7f7;
-                        border: 1px solid #ccc;" *ngIf="order"> {{order.message}}</div>
-                        <br/><br/>
+                        <p>Message</p>
+                        <div style="white-space:pre-wrap; font-weight: 800" *ngIf="order">{{order.message}}</div>
                     </section>
                     <!--
                     <section>
