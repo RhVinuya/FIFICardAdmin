@@ -2,7 +2,7 @@
 <br />
 <mat-dialog-content class="main">
     <div class="main-div">
-        <img src="{{url}}">
+        <img class="sign-send-img" src="{{url}}">
         <div *ngFor="let textarea of textareas" [ngClass]="textarea.remove ? 'layout hidden' : 'layout'" cdkDrag cdkDragBoundary=".main-div"
             [style.top.px]="textarea.top" [style.left.px]="textarea.left" [style.width.px]="textarea.width"
             [style.height.px]="textarea.height" [style.visibility]="textarea.remove"
@@ -38,7 +38,7 @@
 </mat-dialog-content>
 <mat-dialog-actions class="footer">
     <div class="tool">
-        <button class="mat-stroked-button mat-primary" (click)="addTextarea()">Add Textarea</button>
+        <button class="mat-stroked-button mat-primary" (click)="addTextarea()">Add Text</button>
     </div>
     <div class="tool pull-right">
         <button class="mat-stroked-button mat-basic" (click)="save()">Save</button>

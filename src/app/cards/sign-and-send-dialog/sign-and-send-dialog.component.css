@@ -54,3 +54,7 @@
 .hidden{
     visibility: hidden;
 }
+
+.sign-send-img{
+    max-width: 1400px;
+}

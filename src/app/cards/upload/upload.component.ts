@@ -263,6 +263,7 @@ export class UploadComponent implements OnInit {
         image: image.name,
         cardId: this.id
       }
+      dialogConfig.width = '1800px';
       this.dialogRef = this.dialog.open(SignAndSendDialogComponent, dialogConfig);
 
       this.dialogRef.afterClosed().subscribe(data => {
