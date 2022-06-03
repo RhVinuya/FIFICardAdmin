@@ -1,3 +1,4 @@
+import { PaymentService } from 'src/app/services/payment.service';
 import { CardsService } from 'src/app/services/cards.service';
 import { OrderSignAndSendDialogComponent } from './../order-sign-and-send-dialog/order-sign-and-send-dialog.component';
 import { StatusService } from './../../services/status.service';
@@ -12,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EmailValidator, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Status } from 'src/app/models/status';
 import { Card } from 'src/app/models/card';
+import { Payment } from 'src/app/models/payment';
 
 @Component({
   selector: 'app-order',
@@ -25,11 +27,14 @@ export class OrderComponent implements OnInit {
   emailService: EmailService;
   statusService: StatusService;
   cardService: CardsService;
+  paymentService: PaymentService;
   fb: FormBuilder;
   id?: string;
   order: Order;
   card: Card;
+  payment: Payment;
   image: string;
+  proof: string;
   statusForm: FormGroup;
   snackBar: MatSnackBar;
   statuses: Status[] = [];
@@ -44,6 +49,7 @@ export class OrderComponent implements OnInit {
     private _emailService: EmailService,
     private _statusService: StatusService,
     private _cardService: CardsService,
+    private _paymentService: PaymentService,
     private _fb: FormBuilder,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog
@@ -54,6 +60,7 @@ export class OrderComponent implements OnInit {
     this.emailService = _emailService;
     this.statusService = _statusService;
     this.cardService = _cardService;
+    this.paymentService = _paymentService;
     this.fb = _fb;
     this.snackBar = _snackBar;
   }
@@ -81,6 +88,17 @@ export class OrderComponent implements OnInit {
         this.order = data;
         this.cardService.getCard(this.order.card_id).then(card => {
           this.card = card;
+        })
+
+        this.paymentService.getPayment(this.order.paymentId).then(payment => {
+          this.payment = payment;
+
+          if (this.payment.gateway == 'GCash'){
+            this.uploadService.getDownloadURL(this.payment.proof).then(url => {
+              console.log(this.payment.proof, url);
+              this.proof = url;
+            })
+          }
         })
        // this.statusForm.controls['status'].setValue(data.status.trim(), {onlySelf: true});
         

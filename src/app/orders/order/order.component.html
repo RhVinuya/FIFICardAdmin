@@ -2,64 +2,80 @@
     <div fxFlex="70%">
         <mat-card>
             <mat-card-content>
-            <h2>Order Detail</h2>
+                <h2>Order Detail</h2>
 
-            <hr>
+                <hr>
 
-            <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
-                <div fxFlex="100%">
-                    <section>
-                        <p><b>Receipt #:</b> 0000</p>
-                        <p *ngIf="order && card"> <b>Card:</b> {{card.name!}} <a> 0001</a>(ADD CardID & LINK)  <span title="show card link"><mat-icon>image</mat-icon></span></p>
-                        <p *ngIf="order"> <b>Price:</b> {{order.card_price!}}</p>
-                    </section>
-        <table>
-            <tr>
-                <td> 
-                    <section style="padding:10px;border:1px solid #ccc;border-radius:10px">
-                    <h3>Sender</h3>
-                    <p *ngIf="order"><b>Name:</b> {{order.sender_name!}}</p>
-                    <p *ngIf="order"> <b>Phone:</b> {{order.sender_phone!}}</p>
-                    <p *ngIf="order"> <b>Email:</b> {{order.sender_email!}}</p>
-                    </section>
-                </td>
-                <td>
-                    <section style="padding:10px;border:1px solid #ccc;border-radius:10px">
-                        <h3>Recipient</h3>
-                        <p *ngIf="order"> <b>Name:</b> {{order.receiver_name!}}</p>
-                        <p *ngIf="order"> <b>Phone:</b> {{order.receiver_phone!}}</p>
-                        <p *ngIf="order"> <b>Email:</b> {{order.receiver_email!}}</p>
-                    </section>
-                </td>
-            </tr>
-        </table>
-                   
-        
-                    <section>
-                        <p *ngIf="order"><b>Deliver Address:</b> {{order.address!}}</p>
-                    </section>
-        
-                    <section>
-                        <p *ngIf="order && order.anonymously"><b>Send Anonymously</b></p>
-                    </section>
-        
-                    <section>
-                        <p *ngIf="order"> <b>Send to:</b> {{order.sendto}} {{order.sendto == 'Receiver'? '(' + order.receiver_name + ')' : '(' + order.sender_name + ')'}}</p>
-                    </section>
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+                    <div fxFlex="100%">
+                        <p *ngIf="order"><b>#:</b> <strong>{{order.id}}</strong></p>
 
-                    <section *ngIf="order && order.withSignAndSend">
-                        <button type="button" mat-raised-button color="primary" (click)="previewSignAndSend()">Preview Sign and Send</button>
-                    </section>
-                    
-                    <section>
-                        <div><b>Message:</b></div>
-                        <br/>
-                        <div style="white-space:pre-wrap; font-weight: 900;padding: 10px;
-                        background: #f7f7f7;
-                        border: 1px solid #ccc;" *ngIf="order"> {{order.message}}</div>
-                        <br/><br/>
-                    </section>
-                    <!--
+                        <section style="padding:10px;border:1px solid #ccc;border-radius:5px">
+                            <p *ngIf="order && card"> <b>Card Id: #</b> <strong>{{card.id}}</strong> &nbsp; &nbsp; <a
+                                    [routerLink]="['/cards', card.id]" title="show card link">Open Card</a></p>
+                            <p *ngIf="order && card"> <b>Card:</b> {{card.name!}}</p>
+                        </section>
+                        <section>
+                            <p *ngIf="order"> <b>Price:</b> {{order.card_price!.toFixed(2)}}</p>
+                        </section>
+                        <table>
+                            <tr>
+                                <td>
+                                    <section style="padding:10px;border:1px solid #ccc;border-radius:5px">
+                                        <h3>Sender</h3>
+                                        <p *ngIf="order"><b>Name:</b> {{order.sender_name!}}</p>
+                                        <p *ngIf="order"> <b>Phone:</b> {{order.sender_phone!}}</p>
+                                        <p *ngIf="order"> <b>Email:</b> {{order.sender_email!}}</p>
+                                    </section>
+                                </td>
+                                <td>
+                                    <section style="padding:10px;border:1px solid #ccc;border-radius:5px">
+                                        <h3>Recipient</h3>
+                                        <p *ngIf="order"> <b>Name:</b> {{order.receiver_name!}}</p>
+                                        <p *ngIf="order"> <b>Phone:</b> {{order.receiver_phone!}}</p>
+                                        <p *ngIf="order"> <b>Email:</b> {{order.receiver_email!}}</p>
+                                    </section>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <section>
+                            <p *ngIf="order"><b>Deliver Address:</b> {{order.address!}}</p>
+                        </section>
+
+                        <section>
+                            <p *ngIf="order && order.anonymously"><b>Send Anonymously</b></p>
+                        </section>
+
+                        <section>
+                            <p *ngIf="order"> <b>Send to:</b> {{order.sendto}} {{order.sendto == 'Receiver'? '(' +
+                                order.receiver_name + ')' : '(' + order.sender_name + ')'}}</p>
+                        </section>
+
+                        <section *ngIf="order && order.withSignAndSend">
+                            <button type="button" mat-raised-button color="primary"
+                                (click)="previewSignAndSend()">Preview Sign and Send</button>
+                        </section>
+                        <!--
+                        <section>
+                            <div><b>Message:</b></div>
+                            <br />
+                        </section>
+                        <section style="padding:10px;border:1px solid #ccc;border-radius:5px; min-height: 100px;"
+                            *ngIf="order"> {{order.message}}</section>
+                        <br /><br />-->
+                        <section style="padding:10px;border:1px solid #ccc;border-radius:5px">
+                            <h3>Payment</h3>
+                            <p *ngIf="order && payment"> <b>Payment Id:</b> #{{payment.id!}}</p>
+                            <p *ngIf="order && payment"> <b>Gateway:</b> {{payment.gateway}}</p>
+                            <p *ngIf="order && payment"> <b>Total Paid Amount:</b> {{payment.total.toFixed(2)}}</p>
+                            <p *ngIf="order && payment && (payment.gateway == 'PayPal')"> <b>Transaction Id:</b> {{payment.transactionId}}</p>
+                            <p *ngIf="order && payment && (payment.gateway == 'PayPal')"> <b>Payer Id:</b> {{payment.payerId}}</p>
+                            <p *ngIf="order && payment && (payment.gateway == 'PayPal')"> <b>Payer Email:</b> {{payment.payerEmail}}</p>
+                            <p *ngIf="order && payment && (payment.gateway == 'GCash')"> <b>Proof:</b>&nbsp;&nbsp;<a href="{{proof}}" target="_blank"> {{payment.proof}}</a></p>
+                            <p *ngIf="order && payment"> <b>Status:</b> {{payment.status}}</p>
+                        </section>
+                        <!--
                     <section>
                         <p>Status</p>
                         <form [formGroup]="statusForm"  class="animate" (ngSubmit)="updateStatus()">
@@ -78,8 +94,8 @@
                         <button type="button" mat-raised-button color="primary" (click)="emailStatus()">Update Customer</button>
                     </section>
                     -->
+                    </div>
                 </div>
-              </div>
 
             </mat-card-content>
         </mat-card>
