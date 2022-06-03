@@ -101,3 +101,16 @@ select{
     padding: 10px;
     border-radius: 16px;
 }
+
+.search-param{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.search{
+    width: 500px;
+}
+
+.button{
+    padding: 8px 20px 8px 20px !important;
+}

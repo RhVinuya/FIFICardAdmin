@@ -1,3 +1,4 @@
+import { StatusService } from './../../services/status.service';
 import { UploadService } from './../../services/upload.service';
 import { PaymentStatusDialogComponent } from './../payment-status-dialog/payment-status-dialog.component';
 import { CardsService } from 'src/app/services/cards.service';
@@ -10,6 +11,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { PaymentService } from 'src/app/services/payment.service';
 import { Payment } from 'src/app/models/payment';
 import { Card } from 'src/app/models/card';
+import { stat } from 'fs';
 
 class PaymentOrder {
   public id: string;
@@ -33,8 +35,10 @@ export class OrderListComponent implements OnInit {
   orderService: OrdersService;
   cardService: CardsService;
   uploadService: UploadService;
+  statusService: StatusService;
 
   paymentOrders: PaymentOrder[] = [];
+  completeList: PaymentOrder[] = [];
   dialogRef: MatDialogRef<PaymentStatusDialogComponent>;
 
 
@@ -52,6 +56,7 @@ export class OrderListComponent implements OnInit {
   withRecords: boolean = false;
   status: string[] = [];
   cards: string[] = [];
+  filerSearch: string = '';
   filterStatus: string = '';
   dataSource: MatTableDataSource<PaymentOrder> = new MatTableDataSource();
   displayedColumns: string[] = ['card', 'sender', 'recipient', 'address', 'payment', 'paymentstatus', 'date', 'signandsend', 'action'];
@@ -61,6 +66,7 @@ export class OrderListComponent implements OnInit {
     private _orderService: OrdersService,
     private _cardService: CardsService,
     private _uploadService: UploadService,
+    private _statusService: StatusService,
     private _fb: FormBuilder,
     private userService: UsersService,
     private dialog: MatDialog
@@ -69,10 +75,12 @@ export class OrderListComponent implements OnInit {
     this.orderService = _orderService;
     this.cardService = _cardService;
     this.uploadService = _uploadService;
+    this.statusService = _statusService;
     this.fb = _fb;
   }
 
   ngOnInit() {
+    this. generateFilter();
     this.loadPayment();
 
     this.searchForm = this.fb.group({
@@ -110,6 +118,7 @@ export class OrderListComponent implements OnInit {
     paymentOrder.card = card;
     paymentOrder.payment = payment;
     this.paymentOrders.push(paymentOrder);
+    this.completeList.push(paymentOrder);
   }
 
   updateRange() {
@@ -144,6 +153,73 @@ export class OrderListComponent implements OnInit {
         }
       })
     });
+  }
+
+  generateFilter() {
+    this.statusService.getStatuses().then(statuses => {
+      statuses.forEach(status => {
+        this.status.push(status.name)
+      });
+    })
+  }
+
+  onChange(type: string, event: any){
+    if (type == 'search')
+      this.filerSearch = event.target.value;
+    if (type == 'status')
+      this.filterStatus = event.value;
+  }
+
+  clickSearch(){
+    this.searchRecords(this.filerSearch, this.filterStatus);
+  }
+
+  searchRecords(search: string, status: string) {
+    this.initializing = true;
+    this.withRecords = true;
+    this.displayOrder = [];
+
+    if ((search === '') && (status === 'All')){
+      this.paymentOrders = [];
+      this.paymentOrders = this.completeList;
+      this.length = this.displayOrder.length;
+      this.updateRange();
+    }
+    else{
+      this.paymentOrders = [];
+      this.completeList.forEach(paymentOrder => {
+        let searchMatch: boolean = true;
+        let statusMatch: boolean = true;
+
+        if (search.length > 0) {
+          if (paymentOrder.order.sender_name.includes(search)) {
+            searchMatch = true;
+          }
+          else if (paymentOrder.order.receiver_name.includes(search)) {
+            searchMatch = true;
+          }
+          else {
+            searchMatch = false;
+          }
+        }     
+        
+        if (status != 'All') {
+          if (paymentOrder.payment.status.trim() != status.trim()) {
+            statusMatch = false;
+          }
+        }
+
+        if (searchMatch && statusMatch) {
+          this.paymentOrders.push(paymentOrder);
+        }
+      });
+
+      this.length = this.displayOrder.length;
+      this.updateRange();
+    }
+
+    this.initializing = false;
+    this.withRecords = this.length > 0;
   }
 
   /*

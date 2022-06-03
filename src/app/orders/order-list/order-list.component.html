@@ -8,6 +8,22 @@
             </mat-card-header>
             <hr />
             <mat-card-content>
+                <mat-card-actions align="end">
+                    <mat-form-field class="search-param search" appearance="fill">
+                        <mat-label>Search</mat-label>
+                        <input type="search" matInput placeholder="Search for Sender or Receiver" (change)="onChange('search', $event)">
+                      </mat-form-field>
+                    <mat-form-field class="search-param" appearance="fill">
+                        <mat-label>Payment Status</mat-label>
+                        <mat-select (selectionChange)="onChange('status', $event)">
+                          <mat-option value="All">Select Status</mat-option>
+                          <mat-option *ngFor="let stat of status" value="{{stat}}">{{stat}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <section>
+                        <button mat-raised-button class="button" (click)="clickSearch()"><mat-icon>search</mat-icon>Search</button>
+                      </section>
+                </mat-card-actions>
                 <!--<mat-card-actions align="end">
                     <form [formGroup]="searchForm"><!--(ngSubmit)="searchCard()"-->
                 <!--       <input placeholder="Search for Sender or Receiver" type="search" class="search" formControlName="search">
