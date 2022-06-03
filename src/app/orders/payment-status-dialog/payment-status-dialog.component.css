@@ -13,3 +13,15 @@
 button{
     margin-left: 10px;
 }
+
+.pill{
+    background: #007bff;
+    color: white;
+    padding: 3px 5px 3px 5px;
+    border-radius: 16px;
+    text-decoration: none;
+}
+
+.proof{ 
+    padding-bottom: 10px;
+}

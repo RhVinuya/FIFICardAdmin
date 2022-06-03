@@ -113,6 +113,7 @@ export class OrderListComponent implements OnInit {
   }
 
   updateRange() {
+    this.length = this.paymentOrders.length;
     let start: number = this.pageIndex * this.pageSize;
     let end: number = start + this.pageSize;
     let selectedOrders: PaymentOrder[] = [];

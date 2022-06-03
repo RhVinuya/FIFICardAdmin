@@ -39,6 +39,7 @@ export class PaymentStatusDialogComponent implements OnInit {
     this.status = this.payment.status;
     if (this.payment.gateway == 'GCash'){
       this.uploadService.getDownloadURL(this.payment.proof).then(url => {
+        console.log(this.payment.proof, url);
         this.proof = url;
       })
     }
