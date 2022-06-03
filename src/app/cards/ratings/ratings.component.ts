@@ -51,9 +51,8 @@ export class RatingsComponent implements OnInit {
       this.initalizing = false;
       this.norecords = false;
 
-      if (ratings.length > 0){
-        this.calculateAverageRatings(ratings);
-      }
+      this.calculateAverageRatings(ratings);
+
     }).catch(reason => {
       this.norecords = true;
       this.initalizing = false;
@@ -63,15 +62,17 @@ export class RatingsComponent implements OnInit {
   calculateAverageRatings(ratings: Rating[]){
     let totalRatings: number = 0;
     let approveRatingCount: number = 0;
+    let average: number = 0;
     ratings.forEach(rating => {
       if (rating.approve){
         totalRatings = totalRatings + rating.rate;
         approveRatingCount++;
       }
     });
-    let average = totalRatings/approveRatingCount;
+    if (totalRatings > 0)
+      average = totalRatings/approveRatingCount;
     if (this.avarageRating != average){
-      this.avarageRating = average;
+      this.avarageRating = Number(average);
       this.service.updateAverageRatings(this.id, this.avarageRating);
     }
   }

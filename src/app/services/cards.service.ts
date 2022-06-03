@@ -71,6 +71,7 @@ export class CardsService {
                     active: card.active,
                     bestseller: card.bestseller,
                     featured: card.featured,
+                    ratings: Number(0),
                     created: Timestamp.now()
                 }).then(data => {
                     resolve(data.id);
@@ -186,7 +187,7 @@ export class CardsService {
 
     async updateAverageRatings(id: string, ratings: number) {
         this.db.collection('cards').doc(id).update({
-            ratings: Number(ratings).toFixed(2),
+            ratings: Number(ratings),
             modified: Timestamp.now()
         })
     }
