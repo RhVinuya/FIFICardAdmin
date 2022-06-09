@@ -1,0 +1,12 @@
+.input{
+    margin-left: 50px;
+    margin-right: 10px;
+    font-size: 14px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+.item{
+    border: 1px solid gray;
+    padding: 5px 5px 5px 5px;
+}

@@ -86,12 +86,15 @@ export class OrderComponent implements OnInit {
   loadOrder(id: string){
     this.service.getOrder(id).then(data => {
         this.order = data;
+        console.log(this.order);
         this.cardService.getCard(this.order.card_id).then(card => {
           this.card = card;
+          console.log(this.card);
         })
 
         this.paymentService.getPayment(this.order.paymentId).then(payment => {
           this.payment = payment;
+          console.log(this.payment);
 
           if (this.payment.gateway == 'GCash'){
             this.uploadService.getDownloadURL(this.payment.proof).then(url => {

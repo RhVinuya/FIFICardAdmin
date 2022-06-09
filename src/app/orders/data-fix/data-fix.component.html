@@ -1,0 +1,39 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="70%">
+        <mat-card>
+            <mat-card-content>
+                <h2>Data Fixing</h2>
+                <hr>
+                <section>
+                    <button mat-raised-button (click)="oldOrderRecordsFix()">Get Old Order Records</button>
+                </section>
+                <br/>
+                <section>
+                    <div *ngFor="let order of orders" class="item">
+                        #{{order.id}}<br/>
+                        Date: {{order.created.toDate().toLocaleString()}}<br/>
+                        User Id: {{order.user_id}}<br/>
+                        Payment Id: {{order.paymentId}}<br/>
+                        Gateway: {{order.gateway}}<br/>
+                        Status: {{order.status}}<br/>
+                        <button mat-raised-button *ngIf="order.paymentId == undefined" (click)="createPayment(order)">Create Payment</button>
+                    </div>
+                </section>
+                <br/>
+                <section>
+                    <button mat-raised-button (click)="oldOrderRecordsPriceFix()">Get Order with Price</button>
+                    &nbsp;
+                    <button mat-raised-button (click)="fixPriceAll()">Update All</button>
+                </section>
+                <br/>
+                <section>
+                    <div *ngFor="let order of ordersPrice" class="item">
+                        #{{order.id}}<br/>
+                        Price: {{order.card_price}}<br/>
+                        <button mat-raised-button *ngIf="order.paymentId == undefined" (click)="fixPrice(order)">Fix Price</button>
+                    </div>
+                </section>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

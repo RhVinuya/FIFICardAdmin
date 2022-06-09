@@ -1,3 +1,4 @@
+import { DataFixComponent } from './data-fix/data-fix.component';
 import { OrderComponent } from './order/order.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { NgModule } from '@angular/core';
@@ -11,6 +12,7 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', component: OrderListComponent },
+      { path: 'data', component: DataFixComponent },
       { path: ':id', component: OrderComponent },
     ]
   }

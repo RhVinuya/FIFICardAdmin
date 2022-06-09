@@ -20,6 +20,9 @@ export class Card{
     public modified?: Timestamp;
     public images?: string[];
     public primary?: string;
-    public ratings?: number;
+    public ratings?: number;    
     public signAndSend?: boolean;
+
+    public search_name: string;
+    public search_description: string
 }

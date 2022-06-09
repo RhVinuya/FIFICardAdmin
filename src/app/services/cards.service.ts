@@ -61,18 +61,21 @@ export class CardsService {
             this.getNextCode().then(nextCode => {
                 this.db.collection('cards').add({
                     code: nextCode.toString(),
-                    name: card.name,
-                    description: card.description,
-                    details: card.details,
+                    name: card.name.trim(),
+                    description: card.description.trim(),
+                    details: card.details.trim(),
                     price: Number(card.price),
                     event: card.event,
                     events: card.events,
                     recipient: card.recipient,
+                    recipients: card.recipients,
                     active: card.active,
                     bestseller: card.bestseller,
                     featured: card.featured,
                     ratings: Number(0),
-                    created: Timestamp.now()
+                    created: Timestamp.now(),
+                    search_name: card.name.trim().toLowerCase(),
+                    search_description: card.description.trim().toLocaleLowerCase()
                 }).then(data => {
                     resolve(data.id);
                 })
@@ -83,17 +86,20 @@ export class CardsService {
     async updateCard(card: Card): Promise<void> {
         return this.db.collection('cards').doc(card.id).update({
             //code: card.code,
-            name: card.name,
-            description: card.description,
-            details: card.details,
+            name: card.name.trim(),
+            description: card.description.trim(),
+            details: card.details.trim(),
             price: Number(card.price),
             event: card.event,
             events: card.events,
             recipient: card.recipient,
+            recipients: card.recipients,
             active: card.active,
             bestseller: card.bestseller,
             featured: card.featured,
-            modified: Timestamp.now()
+            modified: Timestamp.now(),
+            search_name: card.name.trim().toLowerCase(),
+            search_description: card.description.trim().toLocaleLowerCase()
         });
     }
 

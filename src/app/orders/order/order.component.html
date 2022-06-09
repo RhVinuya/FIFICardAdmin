@@ -74,6 +74,7 @@
                             <p *ngIf="order && payment && (payment.gateway == 'PayPal')"> <b>Payer Email:</b> {{payment.payerEmail}}</p>
                             <p *ngIf="order && payment && (payment.gateway == 'GCash')"> <b>Proof:</b>&nbsp;&nbsp;<a href="{{proof}}" target="_blank"> {{payment.proof}}</a></p>
                             <p *ngIf="order && payment"> <b>Status:</b> {{payment.status}}</p>
+                            <p *ngIf="order && payment"> <b>Date:</b> {{payment.created.toDate().toLocaleString()}}</p>
                         </section>
                         <!--
                     <section>

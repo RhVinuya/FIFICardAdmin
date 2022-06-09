@@ -6,9 +6,10 @@ import { OrdersRoutingModule } from './orders-routing.module';
 import { OrderComponent } from './order/order.component';
 import { OrderSignAndSendDialogComponent } from './order-sign-and-send-dialog/order-sign-and-send-dialog.component';
 import { PaymentStatusDialogComponent } from './payment-status-dialog/payment-status-dialog.component';
+import { DataFixComponent } from './data-fix/data-fix.component';
 
 @NgModule({
-  declarations: [OrderListComponent, OrderComponent, OrderSignAndSendDialogComponent, PaymentStatusDialogComponent],
+  declarations: [OrderListComponent, OrderComponent, OrderSignAndSendDialogComponent, PaymentStatusDialogComponent, DataFixComponent],
   imports: [
     CommonModule,
     OrdersRoutingModule,
