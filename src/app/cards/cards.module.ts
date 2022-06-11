@@ -11,23 +11,24 @@ import { SignAndSendDialogComponent } from './sign-and-send-dialog/sign-and-send
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
-    imports: [
-      CommonModule,
-      CardsRoutingModule,
-      SharedModule
-    ],
-    declarations: [
+  imports: [
+    CommonModule,
+    CardsRoutingModule,
+    SharedModule
+  ],
+  declarations: [
     CardListComponent,
     CardComponent,
     UploadComponent,
     RatingsComponent,
     RatingDialogComponent,
     SignAndSendDialogComponent,
-    ConfirmDialogComponent],
-    entryComponents: [
-      RatingDialogComponent,
-      SignAndSendDialogComponent,
-      ConfirmDialogComponent
-    ]
-  })
-  export class CardsModule { }
+    ConfirmDialogComponent
+  ],
+  entryComponents: [
+    RatingDialogComponent,
+    SignAndSendDialogComponent,
+    ConfirmDialogComponent
+  ]
+})
+export class CardsModule { }

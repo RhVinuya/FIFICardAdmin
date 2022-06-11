@@ -1,73 +1,68 @@
-<div class="container" fxLayout="row" fxLayoutAlign="center none">
-    <div fxFlex="70%">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>
-                    Ratings
-                </mat-card-title>
-            </mat-card-header>
-            <hr />
-            <mat-card-content>
-                <mat-card-actions align="end">
-                    <button mat-raised-button color="primary" (click)="addRating()">
-                        <mat-icon>add</mat-icon>
-                        Add Rating
-                    </button>
-                </mat-card-actions>
-                <mat-card-subtitle *ngIf="norecords == false">
-                    Average Score: {{avarageRating | number:'.2-2'}}
-                </mat-card-subtitle>
-
-                <div class="container" fxLayout="row" fxLayoutAlign="center none animate" *ngIf="initalizing">
-                    <mat-spinner></mat-spinner>
-                </div>
-
-                <div *ngIf="norecords" class="norecords">
-                    No ratings found
-                </div>
-                
-                <table mat-table [dataSource]="dataSource" *ngIf="!norecords && !initalizing" class="animate">
-                    <ng-container matColumnDef="username">
-                        <th mat-header-cell *matHeaderCellDef> Username </th>
-                        <td mat-cell *matCellDef="let element"> {{element.username}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="date">
-                        <th mat-header-cell *matHeaderCellDef> Date </th>
-                        <td mat-cell *matCellDef="let element"> {{element.date.toDateString()}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="rate">
-                        <th mat-header-cell *matHeaderCellDef> Rate </th>
-                        <td mat-cell *matCellDef="let element"> 
-                            <mat-icon *ngIf="element.rate>=1">star</mat-icon>
-                            <mat-icon *ngIf="element.rate>=2">star</mat-icon>
-                            <mat-icon *ngIf="element.rate>=3">star</mat-icon>
-                            <mat-icon *ngIf="element.rate>=4">star</mat-icon>
-                            <mat-icon *ngIf="element.rate>=5">star</mat-icon>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="title">
-                        <th mat-header-cell *matHeaderCellDef> Title </th>
-                        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="approve">
-                        <th mat-header-cell *matHeaderCellDef> Approve </th>
-                        <td mat-cell *matCellDef="let element"> {{element.approve?'Yes':'No'}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="action">
-                        <th mat-header-cell *matHeaderCellDef> Action </th>
-                        <td mat-cell *matCellDef="let element">
-                          <a mat-stroked-button color="primary" (click)="editRating(element)">
-                            <mat-icon>edit</mat-icon>
-                            Edit
-                          </a>
-                        </td>
-                      </ng-container>
-                    
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-
-            </mat-card-content>
-        </mat-card>
+<div class="tools">
+    <div class="data">
+        <div *ngIf="norecords == false">
+            Average Score: {{avarageRating | number:'.2-2'}}
+        </div>
+    </div>
+    <div class="tool">
+        <button mat-raised-button color="primary" (click)="addRating()">
+            <mat-icon>add</mat-icon>
+            Add Rating
+        </button>
     </div>
 </div>
+
+
+
+
+<mat-divider></mat-divider>
+
+<div *ngIf="initalizing" class="full-width">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="norecords" class="norecords">
+    No ratings found
+</div>
+
+
+<table mat-table [dataSource]="dataSource" *ngIf="!norecords && !initalizing" class="animate">
+    <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef> Username </th>
+        <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef> Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.date.toDateString()}} </td>
+    </ng-container>
+    <ng-container matColumnDef="rate">
+        <th mat-header-cell *matHeaderCellDef> Rate </th>
+        <td mat-cell *matCellDef="let element">
+            <mat-icon *ngIf="element.rate>=1">star</mat-icon>
+            <mat-icon *ngIf="element.rate>=2">star</mat-icon>
+            <mat-icon *ngIf="element.rate>=3">star</mat-icon>
+            <mat-icon *ngIf="element.rate>=4">star</mat-icon>
+            <mat-icon *ngIf="element.rate>=5">star</mat-icon>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+    <ng-container matColumnDef="approve">
+        <th mat-header-cell *matHeaderCellDef> Approve </th>
+        <td mat-cell *matCellDef="let element"> {{element.approve?'Yes':'No'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element">
+            <a mat-stroked-button color="primary" (click)="editRating(element)">
+                <mat-icon>edit</mat-icon>
+                Edit
+            </a>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

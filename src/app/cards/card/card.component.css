@@ -41,3 +41,12 @@ mat-card-footer{
 mat-slide-toggle{
     padding-right: 30px;
 }
+
+.flag{
+    padding-bottom: 10px;
+}
+
+.tools{
+    padding-top: 10px !important;
+    text-align: right !important;
+}

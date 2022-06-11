@@ -13,6 +13,7 @@ import { RatingDialogComponent } from '../rating-dialog/rating-dialog.component'
 
 export class RatingsComponent implements OnInit {
   @Input() id: string;
+  
   dialogRef: MatDialogRef<RatingDialogComponent>;
   service: CardsService;
   initalizing: boolean;

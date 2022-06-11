@@ -3,7 +3,7 @@ import { Recipient } from 'src/app/models/recipient';
 import { RecipientService } from 'src/app/services/recipient.service';
 import { Occasion } from 'src/app/models/occasion';
 import { EventService } from 'src/app/services/event.service';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog, MatDialogConfig, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';

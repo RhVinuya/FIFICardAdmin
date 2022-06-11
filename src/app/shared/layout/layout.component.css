@@ -62,3 +62,7 @@ a.mat-list-item.active {
   position: absolute;
   bottom: 0;
 }
+
+.padded{
+  padding: 10px 10px 10px 10px;
+}

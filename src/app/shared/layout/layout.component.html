@@ -20,7 +20,7 @@
     </button>
     <mat-menu #notificationMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
       <a mat-menu-item *ngIf="newStatusCount > 0">
-          <span>{{'New Order: ' + newStatusCount}}</span>
+        <span>{{'New Order: ' + newStatusCount}}</span>
       </a>
     </mat-menu>
 
@@ -142,8 +142,9 @@
         <!-- <mat-spinner class="spinner" [diameter]="50" *ngIf="showSpinner"></mat-spinner> -->
       </div>
 
-
-      <router-outlet></router-outlet>
+      <div class="padded">
+        <router-outlet></router-outlet>
+      </div>
 
     </mat-sidenav-content>
   </mat-sidenav-container>
