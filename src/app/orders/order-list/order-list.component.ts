@@ -128,15 +128,14 @@ export class OrderListComponent implements OnInit {
       this.search = event.target.value;
     }
     if (type == 'status'){
-      this.stat = event.value;
+      this.stat = event.target.value;
     }
     if (type == 'gateway'){
-      this.gateway = event.value;
+      this.gateway = event.target.value;
     }
   }
 
   clickSearch(){
-    console.log(this.search);
     if ((this.search != '') || (this.gateway != '') || (this.stat != '')){
       this.initializing = true;
       this.filteredPayments = [];
