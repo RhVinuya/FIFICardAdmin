@@ -1,0 +1,163 @@
+.main{
+    padding: 5px 5px 5px 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.main div{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.div-id{
+    width: 15%;
+}
+
+.div-user{
+    width: 15%;
+}
+
+.div-gateway{
+    width: 10%;
+}
+
+.div-payment{
+    width: 20%;
+}
+
+.div-status{
+    width: 14%;
+    text-align: center;
+}
+
+.div-total{
+    width: 8%;
+    text-align: right;
+}
+
+.div-date{
+    width: 15%;
+    text-align: right;
+}
+
+.div-expand{
+    width: 3%;
+    text-align: right;
+}
+
+.div-expand mat-icon{
+    cursor: pointer;
+}
+
+.my-status{
+    background: darkgray;
+    color: white;
+    padding: 10px;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.my-status-New
+{
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 16px;
+}   
+
+p{
+    color: rgba(0,0,0,.87);
+}
+
+.details{
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border-top: 1px solid rgba(0,0,0,.25);
+    gap: 10px;
+}
+
+.detail{
+    border: 1px solid rgba(0,0,0,.25);
+    border-radius: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 3px;
+}
+
+.details-hide{
+    height: 0px;
+    overflow: hidden;
+    border: none;
+}
+
+.divider{
+    height: 0px;
+    border-bottom: 1px solid gray;
+}
+
+.header{
+    padding: 0px 30px 0px 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.header p{
+    color: rgba(0,0,0,.50);
+    font-size: 12px;
+}
+
+.order-card{
+    width: 25%;
+}
+
+.order-card a{
+    font-weight: bold;
+    color: rgba(0,0,0,.87)
+}
+
+.order-sender{
+    width: 20%;
+}
+
+.order-receiver{
+    width: 20%;
+}
+
+.order-address{
+    width: 25%;
+}
+
+.order-sign{
+    text-align: center;
+    width: 7%;
+}
+
+.order-price{
+    text-align: right;
+    width: 8%;
+}
+
+.order-tool{
+    text-align: right;
+    width: 5%;
+}
+
+.order-tool a{
+    color: rgba(0,0,0,.86);
+}
+
+.spacer{
+    height: 10px;
+}

@@ -20,4 +20,5 @@ export class Order {
     public isPaid?: Boolean;
     public paymentId?: string;
     public withSignAndSend?: boolean;
+    public parentOrder?: string;
 }

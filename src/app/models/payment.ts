@@ -3,7 +3,7 @@ import Timestamp = firestore.Timestamp
 
 export class Payment {
     public id?: string;
-    public userId: string;
+    public user_id: string;
     public gateway: string;
     public orders: string[];
     public total: number;

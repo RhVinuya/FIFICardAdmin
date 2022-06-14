@@ -1,0 +1,73 @@
+<div class="main">
+    <div class="div-id">
+        <p>{{payment.id}}</p>
+    </div>
+    <div class="div-user">
+        <p *ngIf="user"><strong>{{user.displayName}}</strong></p>
+    </div>
+    <div class="div-gateway">
+        <p><strong>{{payment.gateway}}</strong></p>
+    </div>
+    <div class="div-payment">
+        <p *ngIf="payment.gateway == 'GCash'">Proof: <a href="{{proof}}" target="_blank"> {{payment.proof}}</a></p>
+        <p *ngIf="payment.gateway == 'PayPal'">Transaction Id: {{payment.transactionId}}</p>
+        <p *ngIf="payment.gateway == 'PayPal'">Payer Id: {{payment.payerId}}</p>
+        <p *ngIf="payment.gateway == 'PayPal'">Payer Email: {{payment.payerEmail}}</p>
+    </div>
+    <div class="div-status">
+        <label class="text-bold my-status my-status-{{payment.status}}" (click)="clickPaymentStatus()">{{payment.status}}</label>
+    </div>
+    <div class="div-total">
+        <p><strong>{{payment.total | number:'1.2-2'}}</strong></p>
+    </div>
+    <div class="div-date">
+        <p><strong>{{payment.created.toDate().toLocaleString()}}</strong></p>
+    </div>
+    <div class="div-expand">
+        <mat-icon (click)="clickExpand()" title="Expand to see the item(s)">{{expand?'expand_less':'expand_more'}}
+        </mat-icon>
+    </div>
+</div>
+<div class="detail {{expand?'':'details-hide'}}">
+    <div class="header">
+        <p style="width: 25%">ITEM</p>
+        <p style="width: 20%">SENDER</p>
+        <p style="width: 20%">RECEIVER</p>
+        <p style="width: 25%">ADDRESS</p>
+        <p style="width: 7%; text-align: center;">SIGN & SEND</p>
+        <p style="width: 8%; text-align: right;">AMOUNT</p>
+        <p style="width: 5%;"></p>
+    </div>
+
+    <div *ngFor="let item of items" class="details">
+        <div class="order-card">
+            <a [routerLink]="['/cards',item.card.id]" *ngIf="item.card" target="_blank">{{item.card.name}}</a>
+        </div>
+        <div class="order-sender">
+            <span *ngIf="item && item.order && !item.order.parentOrder"><strong>{{item.order.sender_name}}</strong></span><br />
+            <span *ngIf="item && item.order && !item.order.parentOrder">{{item.order.sender_email}}</span><br />
+            <span *ngIf="item && item.order && !item.order.parentOrder">{{item.order.sender_phone}}</span><br />
+        </div>
+        <div class="order-receiver">
+            <span *ngIf="item && item.order && !item.order.parentOrder"><strong>{{item.order.receiver_name}}</strong></span><br />
+            <span *ngIf="item && item.order && !item.order.parentOrder">{{item.order.receiver_email}}</span><br />
+            <span *ngIf="item && item.order && !item.order.parentOrder">{{item.order.receiver_phone}}</span><br />
+        </div>
+        <div class="order-address">
+            <span *ngIf="item && item.order && !item.order.parentOrder"><strong>{{item.order.address}}</strong></span>
+        </div>
+        <div class="order-sign">
+            <span *ngIf="item && item.order && !item.order.parentOrder">{{item.order.withSignAndSend?'Yes':'No'}}</span>
+        </div>
+        <div class="order-price">
+            <span *ngIf="item && item.order"><strong>{{item.order.card_price | number:'1.2-2'}}</strong></span>
+        </div>
+        <div class="order-tool">
+            <a title="Open Order" [routerLink]="['/orders', item.order.id]">
+                <mat-icon>open_in_new</mat-icon>
+            </a>
+        </div>
+    </div>
+    <div class="spacer"></div>
+</div>
+<div class="divider"></div>

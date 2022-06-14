@@ -4,7 +4,7 @@ import { Status } from 'src/app/models/status';
 import { StatusService } from './../../services/status.service';
 import { UploadService } from './../../services/upload.service';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { Payment } from 'src/app/models/payment';
 
 @Component({
@@ -17,6 +17,7 @@ export class PaymentStatusDialogComponent implements OnInit {
   uploadService: UploadService;
   statusService: StatusService;
   paymentService: PaymentService;
+  snackBar: MatSnackBar
   proof: string = '';
   statuses: Status[] = [];
   status: string;
@@ -25,6 +26,7 @@ export class PaymentStatusDialogComponent implements OnInit {
     private _uploadService: UploadService,
     private _statusService: StatusService,
     private _paymentService: PaymentService,
+    private _snackBar: MatSnackBar,
     private signAndSendDialogRef: MatDialogRef<PaymentStatusDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { payment: Payment }
   ) { 
@@ -32,6 +34,7 @@ export class PaymentStatusDialogComponent implements OnInit {
     this.uploadService = _uploadService;
     this.statusService = _statusService;
     this.paymentService = _paymentService;
+    this.snackBar = _snackBar;
   }
 
   ngOnInit() {
@@ -59,6 +62,7 @@ export class PaymentStatusDialogComponent implements OnInit {
   save(){
     this.payment.status = this.status;
     this.paymentService.updateStatus(this.payment.id, this.status);
+    this.snackBar.open("Payment Status Updated", "", { duration: 3000 });
   }
 
   close() {

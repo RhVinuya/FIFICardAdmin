@@ -12,4 +12,5 @@ export class User {
     public created?: Timestamp;
     public modified?: Timestamp;
     public uid?: string;
+    public displayName: string;
 }
