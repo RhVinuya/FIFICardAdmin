@@ -93,7 +93,7 @@ export class DataFixComponent implements OnInit {
           payment.status = order.status;
           payment.orders = [order.id];
           payment.total = Number(order.card_price);
-          payment.userId = order.user_id;
+          payment.user_id = order.user_id;
 
 
           this.addPayment(payment).then(paymentId => {
@@ -201,7 +201,7 @@ export class DataFixComponent implements OnInit {
         orders: payment.orders,
         status: payment.status,
         total: payment.total,
-        user_id: payment.userId
+        user_id: payment.user_id
       }).then(data => {
         resolve(data.id);
       })
