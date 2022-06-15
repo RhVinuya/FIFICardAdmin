@@ -5,18 +5,22 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { CardsService } from 'src/app/services/cards.service';
 import { MatDialog, MatDialogConfig, MatDialogRef, MatSnackBar } from '@angular/material';
 import { CdkDragDrop, CdkDragEnter, CdkDragMove, moveItemInArray, } from '@angular/cdk/drag-drop';
+import { SignAndSend } from 'src/app/models/sign-and-send';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 export class Image {
   public visible: boolean;
   public url: string;
   public name: string;
   public primary: boolean;
+  public signandsend: SignAndSend[];
 
   constructor(_url: string, _name: string) {
     this.url = _url;
     this.name = _name;
     this.visible = true;
     this.primary = false;
+    this.signandsend = [];
   }
 }
 
@@ -48,6 +52,8 @@ export class UploadComponent implements OnInit {
   uploadService: UploadService;
   snackBar: MatSnackBar;
 
+  confirmRef: MatDialogRef<ConfirmDialogComponent>;
+
   constructor(
     private _service: CardsService,
     private _uploadService: UploadService,
@@ -59,6 +65,33 @@ export class UploadComponent implements OnInit {
     this.snackBar = _snackBar;
     this.initalizing = true;
     this.withRecords = true;
+  }
+
+  ngOnInit() {
+    this.service.getImages(this.id).then(data => {
+      if (data != undefined) {
+        if (data.length > 0) {
+          data.forEach(image => {
+            this.urls.push(new Image('', image));
+            this.getAvailableImage(image).then(url => this.updateURL(image, url));
+            this.checkImageSignAndSend(image).then(value => this.updateSignAndSendFlag(image, value));
+          });
+
+          this.service.getPrimary(this.id).then(primary => {
+            this.setPrimary(primary);
+          })
+
+
+        }
+        else {
+          this.verifyImages();
+        }
+      }
+      else {
+        this.verifyImages();
+      }
+      this.initalizing = false;
+    });
   }
 
   drop(event: CdkDragDrop<Image[]>) {
@@ -108,31 +141,7 @@ export class UploadComponent implements OnInit {
     this.dragDropInfo = undefined;
   }
 
-  ngOnInit() {
-    this.service.getImages(this.id).then(data => {
-      if (data != undefined) {
-        if (data.length > 0) {
-          data.forEach(image => {
-            this.urls.push(new Image('', image));
-            this.getAvailableImage(image).then(url => this.updateURL(image, url));
-          });
-
-          this._service.getPrimary(this.id).then(primary => {
-            this.setPrimary(primary);
-          })
-        }
-        else {
-          this.verifyImages();
-        }
-      }
-      else {
-        this.verifyImages();
-      }
-      this.initalizing = false;
-    });
-  }
-
-  getAvailableImage(image): Promise<string> {
+  getAvailableImage(image: string): Promise<string> {
     return new Promise((resolve) => {
       this.uploadService.getDownloadURL(image + environment.imageSize.large).then(
         url => {
@@ -153,6 +162,24 @@ export class UploadComponent implements OnInit {
     this.urls.forEach(val => {
       if (name == val.name) {
         val.url = url;
+      }
+    });
+  }
+
+  checkImageSignAndSend(image: string): Promise<SignAndSend[]> {
+    return new Promise((resolve) => {
+      this.service.getSignAndSend(this.id, image).then(value => {
+        resolve(value);
+      }).catch(err => {
+        resolve([]);
+      })
+    });
+  }
+
+  updateSignAndSendFlag(name: string, signandsend: SignAndSend[]) {
+    this.urls.forEach(val => {
+      if (name == val.name) {
+        val.signandsend = signandsend;
       }
     });
   }
@@ -195,6 +222,21 @@ export class UploadComponent implements OnInit {
   }
 
   delete(image: Image) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      message: "Are you sure you want to delete this Image?"
+    }
+    this.confirmRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
+
+    this.confirmRef.afterClosed().subscribe(data => {
+      if (data) {
+        this.deleteImage(image);
+      }
+    });
+  }
+
+  deleteImage(image: Image){
+    this.clearSignAndSendData(image);
     image.visible = false;
     let thisIsPrimary = image.primary;
     let i: number = this.urls.indexOf(image);
@@ -270,9 +312,31 @@ export class UploadComponent implements OnInit {
         this.service.getSignAndSendCount(this.id).then(count => {
           this.service.updateSignAndSendFlag(this.id, count != 0);
         });
+        this.checkImageSignAndSend(image.name).then(value => this.updateSignAndSendFlag(image.name, value));
       });
-    
+
     });
   };
-} 
+
+  clearSignAndSend(image: Image) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      message: "Are you sure you want to clear the Sign & Send setup?"
+    }
+    this.confirmRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
+
+    this.confirmRef.afterClosed().subscribe(data => {
+      if (data) {
+        this.clearSignAndSendData(image);
+      }
+    });
+  }
+
+  clearSignAndSendData(image: Image) {
+    image.signandsend.forEach(value => {
+      this.service.deleteSignAndSend(this.id, value.id);
+    });
+    image.signandsend = [];
+  }
+}
 

@@ -1,8 +1,6 @@
 <div class="tools">
     <div class="data">
-        <div *ngIf="norecords == false">
-            Average Score: {{avarageRating | number:'.2-2'}}
-        </div>
+        <p *ngIf="norecords == false">Average Score: {{avarageRating | number:'.2-2'}}</p>
     </div>
     <div class="tool">
         <button mat-raised-button color="primary" (click)="addRating()">
@@ -11,9 +9,6 @@
         </button>
     </div>
 </div>
-
-
-
 
 <mat-divider></mat-divider>
 

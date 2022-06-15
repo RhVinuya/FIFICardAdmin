@@ -29,10 +29,21 @@
             (cdkDragEntered)="dragEntered($event)" (cdkDragMoved)="dragMoved($event)"
             (cdkDragDropped)="dragDropped($event)">
             <img mat-card-image src="{{url.url}}">
-            <mat-card-actions align="end">
-                <button mat-button *ngIf="!url.primary" (click)="changePrimary(url)">PRIMARY</button>
-                <button mat-button (click)="signAndSend(url)">SIGN & SEND</button>
-                <button mat-button (click)="delete(url)">DELETE</button>
+            <mat-card-actions>
+                <div class="item-actions">
+                    <div>
+                        <button mat-button [disabled]="url.primary" (click)="changePrimary(url)">PRIMARY</button>
+                    </div>
+                    <div class="allign-right">
+                        <button mat-button (click)="delete(url)">DELETE</button>
+                    </div>
+                    <div>
+                        <button mat-button (click)="signAndSend(url)">SIGN & SEND</button>
+                    </div>
+                    <div class="allign-right">
+                        <button mat-button [disabled]="url.signandsend.length == 0" (click)="clearSignAndSend(url)">CLEAR SIGN & SEND</button>
+                    </div>
+                </div>
             </mat-card-actions>
         </mat-card>
     </div>
