@@ -337,6 +337,9 @@ export class UploadComponent implements OnInit {
       this.service.deleteSignAndSend(this.id, value.id);
     });
     image.signandsend = [];
+    this.service.getSignAndSendCount(this.id).then(count => {
+      this.service.updateSignAndSendFlag(this.id, count != 0);
+    });
   }
 }
 
