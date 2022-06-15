@@ -9,13 +9,14 @@
         <p><strong>{{payment.gateway}}</strong></p>
     </div>
     <div class="div-payment">
-        <p *ngIf="payment.gateway == 'GCash'">Proof: <a href="{{proof}}" target="_blank"> {{payment.proof}}</a></p>
-        <p *ngIf="payment.gateway == 'PayPal'">Transaction Id: {{payment.transactionId}}</p>
-        <p *ngIf="payment.gateway == 'PayPal'">Payer Id: {{payment.payerId}}</p>
-        <p *ngIf="payment.gateway == 'PayPal'">Payer Email: {{payment.payerEmail}}</p>
+        <span *ngIf="payment.gateway == 'GCash'">Proof: <a href="{{proof}}" target="_blank">{{payment.proof}}</a></span>
+        <span *ngIf="payment.gateway == 'PayPal'">Transaction Id: {{payment.transactionId}}<br /></span>
+        <span *ngIf="payment.gateway == 'PayPal'">Payer Id: {{payment.payerId}}<br /></span>
+        <span *ngIf="payment.gateway == 'PayPal'">Payer Email: {{payment.payerEmail}}</span>
     </div>
     <div class="div-status">
-        <label class="text-bold my-status my-status-{{payment.status}}" (click)="clickPaymentStatus()">{{payment.status}}</label>
+        <label class="text-bold my-status my-status-{{payment.status}}"
+            (click)="clickPaymentStatus()">{{payment.status}}</label>
     </div>
     <div class="div-total">
         <p><strong>{{payment.total | number:'1.2-2'}}</strong></p>
@@ -44,12 +45,14 @@
             <a [routerLink]="['/cards',item.card.id]" *ngIf="item.card" target="_blank">{{item.card.name}}</a>
         </div>
         <div class="order-sender">
-            <span *ngIf="item && item.order && !item.order.parentOrder"><strong>{{item.order.sender_name}}</strong></span><br />
+            <span
+                *ngIf="item && item.order && !item.order.parentOrder"><strong>{{item.order.sender_name}}</strong></span><br />
             <span *ngIf="item && item.order && !item.order.parentOrder">{{item.order.sender_email}}</span><br />
             <span *ngIf="item && item.order && !item.order.parentOrder">{{item.order.sender_phone}}</span><br />
         </div>
         <div class="order-receiver">
-            <span *ngIf="item && item.order && !item.order.parentOrder"><strong>{{item.order.receiver_name}}</strong></span><br />
+            <span
+                *ngIf="item && item.order && !item.order.parentOrder"><strong>{{item.order.receiver_name}}</strong></span><br />
             <span *ngIf="item && item.order && !item.order.parentOrder">{{item.order.receiver_email}}</span><br />
             <span *ngIf="item && item.order && !item.order.parentOrder">{{item.order.receiver_phone}}</span><br />
         </div>

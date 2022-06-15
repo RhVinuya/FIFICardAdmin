@@ -1,53 +1,38 @@
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
   <div fxFlex="98%">
     <mat-card>
-      <mat-card-header>
-        <mat-card-title>
-          Cards
-        </mat-card-title>
-      </mat-card-header>
+      <div class="page-header">
+        <label>Cards</label>
+        <div>
+          <input type="search" placeholder="Search for Name, Description or Code" (change)="onChange('search', $event)">
+          <select (change)="onChange('event', $event)">
+            <option value="">Select Event</option>
+            <option *ngFor="let event of listOfEvents" value="{{event}}">{{event}}</option>
+          </select>
+          <select (change)="onChange('recipient', $event)">
+            <option value="">Select Recipient</option>
+            <option *ngFor="let recipient of listOfRecipients" value="{{recipient}}">{{recipient}}</option>
+          </select>
+          <select placeholder="Payment Status" (change)="onChange('status', $event)">
+            <option value="">Select Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="bestseller">Best Seller</option>
+            <option value="featured">Featured</option>
+            <option value="signandsend">Sign and Send</option>
+          </select>
+          <button mat-stroked-button (click)="clickSearch()">
+            <mat-icon>search</mat-icon>Search
+          </button>
+        </div>
+      </div>
       <hr />
-      <mat-card-actions align="end">
-        
-      </mat-card-actions>
       <mat-card-content>
-        <mat-card-actions align="end">
-          <mat-form-field class="search-param search" appearance="fill">
-            <mat-label>Search</mat-label>
-            <input type="search" matInput placeholder="Search for Name, Description or Code" (change)="onChange('search', $event)">
-          </mat-form-field>
-          <mat-form-field class="search-param" appearance="fill">
-            <mat-label>Event</mat-label>
-            <mat-select (selectionChange)="onChange('event', $event)">
-              <mat-option value="All">Select Event</mat-option>
-              <mat-option *ngFor="let event of listOfEvents" value="{{event}}">{{event}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="search-param" appearance="fill">
-            <mat-label>Recipient</mat-label>
-            <mat-select (selectionChange)="onChange('recipient', $event)">
-              <mat-option value="All">Select Recipient</mat-option>
-              <mat-option *ngFor="let recipient of listOfRecipients" value="{{recipient}}">{{recipient}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="search-param" appearance="fill">
-            <mat-label>Status</mat-label>
-            <mat-select (selectionChange)="onChange('status', $event)">
-              <mat-option value="All">Select Status</mat-option>
-              <mat-option value="active">Active</mat-option>
-              <mat-option value="inactive">Inactive</mat-option>
-              <mat-option value="bestseller">Best Seller</mat-option>
-              <mat-option value="featured">Featured</mat-option>
-              <mat-option value="signandsend">Sign and Send</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <section>
-            <button mat-raised-button class="button" (click)="clickSearch()"><mat-icon>search</mat-icon>Search</button>
-          </section>
-          <section>
-            <button mat-raised-button color="primary" class="button add-button" [routerLink]="['/cards', 'new']"><mat-icon>add</mat-icon>Create Card</button>
-          </section>
-        </mat-card-actions>
+        <div class="actions">
+          <button mat-stroked-button color="primary" class="button add-button" [routerLink]="['/cards', 'new']">
+            <mat-icon>add</mat-icon>Create Card
+          </button>
+        </div>
 
         <div class="container" fxLayout="row" fxLayoutAlign="center none animate" *ngIf="initalizing">
           <mat-spinner></mat-spinner>
@@ -61,6 +46,49 @@
           <mat-icon> </mat-icon>
         </div>
 
+        <div *ngIf="!initalizing && withRecords">
+          <div class="header">
+            <p style="width: 4%">CODE</p>
+            <p style="width: 20%">NAME</p>
+            <p style="width: 25%">DESCRIPTION</p>
+            <p style="width: 4%; text-align: right;">PRICE</p>
+            <p style="width: 5%; text-align: center;">STATUS</p>
+            <p style="width: 10%">EVENTS</p>
+            <p style="width: 10%">RECIPIENTS</p>
+            <p style="width: 5%; text-align: center;">SIGN & SEND</p>
+            <p style="width: 4%; text-align: right;">RATINGS</p>
+            <p style="width: 9%; text-align: center;">DATE</p>
+            <p style="width: 3%"></p>
+          </div>
+          <div *ngFor="let card of displayCards">
+            <app-card-thumb [card]="card"></app-card-thumb>
+          </div>
+        </div>
+
+        <div class="pagination" *ngIf="!initalizing && withRecords">
+          <label>ITEMS PER PAGE:</label>
+          <select [value]="limit" (change)="changeLimit($event)">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          <label>{{indexLabel}}</label>
+          <span (click)="first()" [class]="prevEnable==true?'page-tool':'page-tool-off'">
+            <mat-icon>first_page</mat-icon>
+          </span>
+          <span (click)="prev()" [class]="prevEnable==true?'page-tool':'page-tool-off'">
+            <mat-icon>chevron_left</mat-icon>
+          </span>
+          <span (click)="next()" [class]="nextEnable==true?'page-tool':'page-tool-off'">
+            <mat-icon>chevron_right</mat-icon>
+          </span>
+          <span (click)="last()" [class]="nextEnable==true?'page-tool':'page-tool-off'">
+            <mat-icon>last_page</mat-icon>
+          </span>
+        </div>
+
+        <!--
         <table mat-table [dataSource]="dataSource" *ngIf="withRecords && !initalizing" class="animate" matSort
           (matSortChange)="sortData($event)">
           <ng-container matColumnDef="code">
@@ -123,12 +151,13 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+      -->
       </mat-card-content>
-      <hr />
+      <!--<hr />
       <mat-card-footer>
         <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
           (page)="onPageChange($event)" aria-label="Select page"></mat-paginator>
-      </mat-card-footer>
+      </mat-card-footer>-->
     </mat-card>
 
   </div>

@@ -1,0 +1,67 @@
+.main {
+    padding: 0px 5px 0px 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid gray;
+}
+
+p{
+    color: rgba(0,0,0,.87);
+}
+
+.div-id{
+    width: 4%;
+}
+
+.div-name{
+    width: 20%;
+}
+
+.div-desc{
+    width: 25%;
+}
+
+.div-price{
+    width: 4%;
+    text-align: right;
+}
+
+.div-status{
+    width: 5%;
+    text-align: center;
+}
+
+.div-event{
+    width: 10%;
+}
+
+.div-recipient{
+    width: 10%;
+}
+
+.div-signandsend{
+    width: 5%;
+    text-align: center;
+}
+
+.div-ratings{
+    width: 4%;
+    text-align: right;
+}
+
+.div-date{
+    width: 9%;
+    text-align: right;
+}
+
+.div-action{
+    width: 3%;
+    text-align: right;
+}
+
+.div-action a{
+    color: rgba(0,0,0,.87);
+}
