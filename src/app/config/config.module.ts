@@ -8,6 +8,8 @@ import { DialogComponent } from './dialog/dialog.component';
 import { RecipientListComponent } from './recipient-list/recipient-list.component';
 import { StatusListComponent } from './status-list/status-list.component';
 import { RatingDialogComponent } from '../cards/rating-dialog/rating-dialog.component';
+import { ShippingFeeComponent } from './shipping-fee/shipping-fee.component';
+import { FeeComponent } from './shipping-fee/fee/fee.component';
 
 @NgModule({
   imports: [
@@ -20,7 +22,9 @@ import { RatingDialogComponent } from '../cards/rating-dialog/rating-dialog.comp
     EventListComponent,
     DialogComponent,
     RecipientListComponent,
-    StatusListComponent
+    StatusListComponent,
+    ShippingFeeComponent,
+    FeeComponent
   ],
   entryComponents: [
     DialogComponent

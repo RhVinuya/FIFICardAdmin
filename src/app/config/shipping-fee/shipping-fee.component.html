@@ -1,0 +1,5 @@
+<mat-card-actions align="end">
+    <button mat-raised-button color="primary" (click)="updateClick()" [disabled]="isSaving">{{isSaving?'Saving':'Update'}}</button>
+</mat-card-actions>
+
+<app-fee *ngFor="let fee of fees" [fee]="fee" (updateFee)="updateFee($event)"></app-fee>

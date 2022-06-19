@@ -1,0 +1,19 @@
+<div class="items">
+    <label class="item">{{fee.name}}</label>
+    <mat-form-field class="full-width" appearance="fill"  class="item">
+        <mat-label>Metro Manila Rate</mat-label>
+        <input matInput type="number" placeholder="Metro Manila Rate" value="{{fee.metromanila == 0?'':fee.metromanila}}" (keypress)="onKeyPressEvent($event)" (change)="onChangeEvent('metromanila', $event)">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill"  class="item">
+        <mat-label>Luzon Rate</mat-label>
+        <input matInput type="number" placeholder="Luzon Rate" value="{{fee.luzon == 0?'':fee.luzon}}" (keypress)="onKeyPressEvent($event)" (change)="onChangeEvent('luzon', $event)">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill"  class="item">
+        <mat-label>Visayas Rate</mat-label>
+        <input matInput type="number" placeholder="Visayas Rate" value="{{fee.visayas == 0?'':fee.visayas}}" (keypress)="onKeyPressEvent($event)" (change)="onChangeEvent('visayas', $event)">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill"  class="item">
+        <mat-label>Mindanao Rate</mat-label>
+        <input matInput type="number" placeholder="Mindanao Rate" value="{{fee.mindanao == 0?'':fee.mindanao}}" (keypress)="onKeyPressEvent($event)" (change)="onChangeEvent('mindanao', $event)">
+    </mat-form-field>
+</div>
