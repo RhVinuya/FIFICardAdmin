@@ -1,3 +1,5 @@
+import { Type } from './../../models/type';
+import { TypeService } from 'src/app/services/type.service';
 import { ConfirmDialogComponent } from './../../shared/confirm-dialog/confirm-dialog.component';
 import { Recipient } from 'src/app/models/recipient';
 import { RecipientService } from 'src/app/services/recipient.service';
@@ -39,12 +41,17 @@ export class CardComponent implements OnInit {
   fors: Recipient[] = [];
   recipients: string[] = [];
 
+  typeService: TypeService;
+  typeConfig: Type[] = [];
+  types: string[] = [];
+
   defaultCode: string = 'To be generated upon saving';
 
   constructor(
     private _service: CardsService,
     private _eventService: EventService,
     private _recipientService: RecipientService,
+    private _typeService: TypeService,
     private _activateRoute: ActivatedRoute,
     private _fb: FormBuilder,
     private _snackBar: MatSnackBar,
@@ -55,6 +62,7 @@ export class CardComponent implements OnInit {
     this.service = _service;
     this.eventService = _eventService;
     this.recipientService = _recipientService;
+    this.typeService = _typeService;
     this.activateRoute = _activateRoute;
     this.fb = _fb;
     this.snackBar = _snackBar;
@@ -98,6 +106,10 @@ export class CardComponent implements OnInit {
               this.recipients = [];
           }
 
+          this.types = data.types != undefined? data.types: [];
+
+          this.titleService.setTitle('Fibei Greetings - ' + data.name);
+
           this.cardForm.reset(
             {
               id: data.id,
@@ -119,6 +131,7 @@ export class CardComponent implements OnInit {
 
     this.getEvents();
     this.getRecipients();
+    this.getTypes();
   }
 
   onKeyPressEvent(event: any) {
@@ -139,11 +152,13 @@ export class CardComponent implements OnInit {
     if (!this.isSaving) {
       if (this.cardForm.valid) {
         this.isSaving = true;
+        console.log(this.cardForm.value);
         let card: Card = this.cardForm.value as Card;
         card.event = this.events.join(',');
         card.events = this.events;
         card.recipient = this.recipients.join(',');
         card.recipients = this.recipients;
+        card.types = this.types;
 
         this.verifyCardName(card).then(status => {
           if (!status) {
@@ -214,7 +229,6 @@ export class CardComponent implements OnInit {
 
   removeEvent(event: string): void {
     const index = this.events.indexOf(event);
-
     if (index >= 0) {
       this.events.splice(index, 1);
     }
@@ -222,8 +236,6 @@ export class CardComponent implements OnInit {
 
   addEvent(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
-
-    // Add our fruit
     if (value) {
       this.events.push(value);
     }
@@ -241,7 +253,6 @@ export class CardComponent implements OnInit {
 
   removeRecipient(recipient: string): void {
     const index = this.recipients.indexOf(recipient);
-
     if (index >= 0) {
       this.recipients.splice(index, 1);
     }
@@ -249,8 +260,6 @@ export class CardComponent implements OnInit {
 
   addRecipient(recipient: MatChipInputEvent): void {
     const value = (recipient.value || '').trim();
-
-    // Add our fruit
     if (value) {
       this.recipients.push(value);
     }
@@ -258,5 +267,30 @@ export class CardComponent implements OnInit {
 
   selectedRecipient(recipient: MatAutocompleteSelectedEvent): void {
     this.recipients.push(recipient.option.viewValue);
+  }
+
+  getTypes(){
+    this.typeService.getTypes().then(data => {
+      this.typeConfig = data;
+    })
+  }
+
+  removeType(type: string): void {
+    const index = this.types.indexOf(type);
+
+    if (index >= 0) {
+      this.types.splice(index, 1);
+    }
+  }
+
+  addType(type: MatChipInputEvent): void {
+    const value = (type.value || '').trim();
+    if (value) {
+      this.types.push(value);
+    }
+  }
+
+  selectedType(type: MatAutocompleteSelectedEvent): void {
+    this.types.push(type.option.viewValue);
   }
 }

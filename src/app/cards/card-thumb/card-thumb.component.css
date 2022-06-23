@@ -17,11 +17,15 @@ p{
 }
 
 .div-name{
-    width: 20%;
+    width: 15%;
+}
+
+.div-type{
+    width: 10%;
 }
 
 .div-desc{
-    width: 25%;
+    width: 20%;
 }
 
 .div-price{

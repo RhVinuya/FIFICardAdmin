@@ -62,6 +62,7 @@ export class CardsService {
                 this.db.collection('cards').add({
                     code: nextCode.toString(),
                     name: card.name.trim(),
+                    types: card.types,
                     description: card.description.trim(),
                     details: card.details.trim(),
                     price: Number(card.price),
@@ -87,6 +88,7 @@ export class CardsService {
         return this.db.collection('cards').doc(card.id).update({
             //code: card.code,
             name: card.name.trim(),
+            types: card.types,
             description: card.description.trim(),
             details: card.details.trim(),
             price: Number(card.price),

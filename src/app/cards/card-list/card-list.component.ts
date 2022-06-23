@@ -1,3 +1,4 @@
+import { TypeService } from 'src/app/services/type.service';
 import { SharedService } from './../../services/shared.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -9,6 +10,7 @@ import { PageEvent } from '@angular/material';
 import { firestore } from "firebase";
 import Timestamp = firestore.Timestamp;
 import { copyFileSync } from 'fs';
+import { Type } from 'src/app/models/type';
 
 @Component({
   selector: 'app-card-list',
@@ -17,6 +19,7 @@ import { copyFileSync } from 'fs';
 })
 export class CardListComponent implements OnInit {
   service: CardsService;
+  typeService: TypeService;
 
   cards: Card[] = [];
   filteredCards: Card[] = [];
@@ -30,6 +33,7 @@ export class CardListComponent implements OnInit {
   prevEnable: boolean = false;
 
   search: string = '';
+  type: string = '';
   event: string = '';
   recipient: string = '';
   status: string = '';
@@ -50,14 +54,18 @@ export class CardListComponent implements OnInit {
   listOfEvents: string[] = [];
   listOfRecipients: string[] = [];
 
+  listOfTypes: Type[] = [];
+
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
     private _service: CardsService,
     private _shared: SharedService,
+    private _typeService: TypeService,
     private titleService: Title
   ) {
     this.service = _service;
+    this.typeService = _typeService;
     this.shared = _shared;
     this.initalizing = true;
     this.withRecords = true;
@@ -69,6 +77,8 @@ export class CardListComponent implements OnInit {
     this.service.getNextCode().then(next => {
       console.log(next);
     })
+
+    this.getTypes();
 
     this.service.getCards().then(data => {
       this.cards = data;
@@ -83,6 +93,10 @@ export class CardListComponent implements OnInit {
       this.withRecords = false;
       this.initalizing = false;
     });
+  }
+
+  getTypes() {
+    this.typeService.getTypes().then(types => this.listOfTypes = types);
   }
 
   setIndexes() {
@@ -108,14 +122,14 @@ export class CardListComponent implements OnInit {
 
   generateList() {
     this.cards.forEach(card => {
-      if (card.events){
+      if (card.events) {
         card.events.forEach(event => {
           if (this.listOfEvents.indexOf(event.trim()) < 0) {
             this.listOfEvents.push(event.trim());
           }
         })
       }
-      if (card.recipients){
+      if (card.recipients) {
         card.recipients.forEach(recipient => {
           if (this.listOfRecipients.indexOf(recipient.trim()) < 0) {
             this.listOfRecipients.push(recipient.trim());
@@ -159,6 +173,8 @@ export class CardListComponent implements OnInit {
   onChange(type: string, event: any) {
     if (type == 'search')
       this.search = event.target.value;
+    if (type == 'type')
+      this.type = event.target.value;
     if (type == 'event')
       this.event = event.target.value;
     if (type == 'recipient')
@@ -168,15 +184,16 @@ export class CardListComponent implements OnInit {
   }
 
   clickSearch() {
-    console.log(this.search, this.event, this.recipient, this.status);
+    console.log(this.search, this.type, this.event, this.recipient, this.status);
 
     this.initalizing = true;
     this.withRecords = true;
 
-    if ((this.search != '') || (this.event != '') || (this.recipient != '') || (this.status != '')) {
+    if ((this.search != '') || (this.type != '') || (this.event != '') || (this.recipient != '') || (this.status != '')) {
       this.filteredCards = [];
       this.cards.forEach(card => {
         let isSearchMatch: boolean = false;
+        let isTypeMatch: boolean = false;
         let isEventMatch: boolean = false;
         let isRecipientMatch: boolean = false;
         let isStatus: boolean = false;
@@ -199,25 +216,30 @@ export class CardListComponent implements OnInit {
           isSearchMatch = true;
         }
 
-        if (this.event != '') {
-          let listOfEvents = card.event.split(',');
-          listOfEvents.forEach(_event => {
-            if (_event.trim() == this.event.trim()) {
-              isEventMatch = true;
+        if (this.type != '') {
+          if (card.types != undefined){
+            if (card.types.findIndex(x => x == this.type) >= 0 ){
+              isTypeMatch = true;
             }
-          });
+          }
+        }
+        else {
+          isTypeMatch = true;
+        }
+
+        if (this.event != '') {
+          if (card.event.split(',').findIndex(x => x.trim() == this.event.trim()) >= 0){
+            isEventMatch = true;
+          }
         }
         else {
           isEventMatch = true;
         }
 
         if (this.recipient != '') {
-          let listOfRecipients = card.recipient.split(',');
-          listOfRecipients.forEach(_recipient => {
-            if (_recipient.trim() == this.recipient.trim()) {
-              isRecipientMatch = true;
-            }
-          })
+          if (card.recipient.split(',').findIndex(x => x.trim() == this.recipient.trim()) >= 0){
+            isRecipientMatch = true;
+          }
         }
         else {
           isRecipientMatch = true;
@@ -244,7 +266,7 @@ export class CardListComponent implements OnInit {
           isStatus = true;
         }
 
-        if (isSearchMatch && isEventMatch && isRecipientMatch && isStatus) {
+        if (isSearchMatch && isTypeMatch && isEventMatch && isRecipientMatch && isStatus) {
           this.filteredCards.push(card);
         }
       });
@@ -252,15 +274,15 @@ export class CardListComponent implements OnInit {
       this.loadIndex(1);
       this.withRecords = this.filteredCards.length > 0;
     }
-    else{
-      if (this.filteredCards.length != this.cards.length){
+    else {
+      if (this.filteredCards.length != this.cards.length) {
         this.filteredCards = this.cards;
         this.setIndexes();
-        this.loadIndex(1);  
+        this.loadIndex(1);
         this.withRecords = this.filteredCards.length > 0;
       }
     }
-    
+
     this.initalizing = false;
   }
 }

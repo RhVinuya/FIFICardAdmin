@@ -5,6 +5,11 @@
     <div class="div-name">
         <p><strong>{{card.name}}</strong></p>
     </div>
+    <div class="div-type">
+        <p *ngIf="card.types">
+            <span *ngFor="let type of card.types">{{type}}<br/></span>
+        </p>
+    </div>
     <div class="div-desc">
         <p>{{card.description}}</p>
     </div>

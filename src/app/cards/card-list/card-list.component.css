@@ -12,7 +12,7 @@ th.mat-sort-header-sorted {
 }
 
 .search{
-    width: 500px;
+    width: 600px;
 }
 
 .mat-card-actions{
@@ -104,7 +104,7 @@ select{
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -122,7 +122,7 @@ select{
     color: rgba(0,0,0,.86);
     border: 1px solid #ccc;
     display: block;
-    width: 250px;
+    width: 350px;
 }
 
 .actions{

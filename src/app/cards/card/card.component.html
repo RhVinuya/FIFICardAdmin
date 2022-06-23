@@ -20,6 +20,26 @@
                         </mat-form-field>
 
                         <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Type of Card</mat-label>
+                            <mat-chip-list #typeList aria-label="Type of Card">
+                                <mat-chip *ngFor="let type of types" (removed)="removeType(type)">
+                                    {{type}}
+                                    <button matChipRemove>
+                                        <mat-icon>cancel</mat-icon>
+                                    </button>
+                                </mat-chip>
+                                <input placeholder="New type..." [matChipInputFor]="typeList"
+                                    [matAutocomplete]="auto2" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addType($event)">
+                            </mat-chip-list>
+                            <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectedType($event)">
+                                <mat-option *ngFor="let config of typeConfig" [value]="config.name">
+                                    {{config.name}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+
+                        <mat-form-field class="full-width" appearance="fill">
                             <mat-label>Description</mat-label>
                             <input matInput placeholder="Description" formControlName="description">
                         </mat-form-field>

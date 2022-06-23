@@ -21,4 +21,6 @@ export class Order {
     public paymentId?: string;
     public withSignAndSend?: boolean;
     public parentOrder?: string;
+    public count?: number;
+    public shipping_fee?: number;
 }

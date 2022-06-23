@@ -10,6 +10,7 @@ import { StatusListComponent } from './status-list/status-list.component';
 import { RatingDialogComponent } from '../cards/rating-dialog/rating-dialog.component';
 import { ShippingFeeComponent } from './shipping-fee/shipping-fee.component';
 import { FeeComponent } from './shipping-fee/fee/fee.component';
+import { TypeListComponent } from './type-list/type-list.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { FeeComponent } from './shipping-fee/fee/fee.component';
     RecipientListComponent,
     StatusListComponent,
     ShippingFeeComponent,
-    FeeComponent
+    FeeComponent,
+    TypeListComponent
   ],
   entryComponents: [
     DialogComponent

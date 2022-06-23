@@ -149,6 +149,16 @@ p{
     width: 8%;
 }
 
+.order-qty{
+    text-align: right;
+    width: 8%;
+}
+
+.order-shipping{
+    text-align: right;
+    width: 8%;
+}
+
 .order-tool{
     text-align: right;
     width: 5%;

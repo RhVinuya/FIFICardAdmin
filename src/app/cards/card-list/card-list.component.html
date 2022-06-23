@@ -5,6 +5,10 @@
         <label>Cards</label>
         <div>
           <input type="search" placeholder="Search for Name, Description or Code" (change)="onChange('search', $event)">
+          <select (change)="onChange('type', $event)">
+            <option value="">Select Type of Card</option>
+            <option *ngFor="let type of listOfTypes" value="{{type.name}}">{{type.name}}</option>
+          </select>
           <select (change)="onChange('event', $event)">
             <option value="">Select Event</option>
             <option *ngFor="let event of listOfEvents" value="{{event}}">{{event}}</option>
@@ -49,8 +53,9 @@
         <div *ngIf="!initalizing && withRecords">
           <div class="header">
             <p style="width: 4%">CODE</p>
-            <p style="width: 20%">NAME</p>
-            <p style="width: 25%">DESCRIPTION</p>
+            <p style="width: 15%">NAME</p>
+            <p style="width: 10%">TYPE</p>
+            <p style="width: 20%">DESCRIPTION</p>
             <p style="width: 4%; text-align: right;">PRICE</p>
             <p style="width: 5%; text-align: center;">STATUS</p>
             <p style="width: 10%">EVENTS</p>

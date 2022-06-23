@@ -37,6 +37,8 @@
         <p style="width: 25%; text-align: center;">ADDRESS</p>
         <p style="width: 7%; text-align: center;">SIGN & SEND</p>
         <p style="width: 8%; text-align: right;">AMOUNT</p>
+        <p style="width: 8%; text-align: right;">QTY</p>
+        <p style="width: 8%; text-align: right;">SHIPPING FEE</p>
         <p style="width: 5%;"></p>
     </div>
 
@@ -64,6 +66,12 @@
         </div>
         <div class="order-price">
             <span *ngIf="item && item.order"><strong>{{item.order.card_price | number:'1.2-2'}}</strong></span>
+        </div>
+        <div class="order-qty">
+            <span *ngIf="item && item.order"><strong>{{item.order.count==undefined?1:item.order.count}}</strong></span>
+        </div>
+        <div class="order-shipping">
+            <span *ngIf="item && item.order"><strong>{{item.order.shipping_fee==undefined?'Free':item.order.shipping_fee| number:'1.2-2'}}</strong></span>
         </div>
         <div class="order-tool">
             <a title="Open Order" [routerLink]="['/orders', item.order.id]">

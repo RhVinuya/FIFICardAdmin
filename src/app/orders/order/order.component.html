@@ -16,7 +16,9 @@
                             <p *ngIf="order && card"> <b>Card:</b> {{card.name!}}</p>
                         </section>
                         <section>
-                            <p *ngIf="order"> <b>Price:</b> {{order.card_price!.toFixed(2)}}</p>
+                            <p *ngIf="order"> <b>Price:</b> {{order.card_price | number:'1.2-2'}}</p>
+                            <p *ngIf="order"> <b>Quantity:</b> {{order.count==undefined?'0':order.count}}</p>
+                            <p *ngIf="order"> <b>Shipping Fee:</b> {{order.shipping_fee==undefined?'Free':order.shipping_fee | number:'1.2-2'}}</p>
                         </section>
                         <table>
                             <tr>
