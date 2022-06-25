@@ -55,4 +55,10 @@ export class StatusService {
         initial: status.initial
     }); 
   }
+
+  async updateName(status: Status): Promise<void>{
+    return this.db.collection('status').doc(status.id).update({
+      name: status.name
+    }); 
+  }
 }

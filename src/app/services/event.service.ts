@@ -66,4 +66,10 @@ export class EventService {
       isSticker: occasion.isSticker
     }); 
   }
+
+  async updateName(occasion: Occasion): Promise<void>{
+    return this.db.collection('events').doc(occasion.id).update({
+      name: occasion.name
+    }); 
+  }
 }

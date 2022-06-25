@@ -41,13 +41,14 @@ export class StatusListComponent implements OnInit {
   addEvent(){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      type: 'Status'
+      type: 'Status',
+      value: ''
     };
 
     this.eventDialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
     this.eventDialogRef.afterClosed().subscribe(data => {
-      let status: Status = new Status(data.label);
+      let status: Status = new Status(data);
       this.service.addStatus(status).then(id => {
         status.id = id;
         this.statuses.push(status);
@@ -84,4 +85,20 @@ export class StatusListComponent implements OnInit {
     });
   }
 
+  updateName(status: Status){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      type: 'Status',
+      value: status.name
+    };
+
+    this.eventDialogRef = this.dialog.open(DialogComponent, dialogConfig);
+
+    this.eventDialogRef.afterClosed().subscribe(data => {
+      if (data){
+        status.name = data;
+        this.service.updateName(status);
+      }
+    }); 
+  }
 }

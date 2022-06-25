@@ -41,13 +41,14 @@ export class RecipientListComponent implements OnInit {
   addEvent(){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      type: 'Recipient'
+      type: 'Recipient',
+      value: ''
     };
 
     this.eventDialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
     this.eventDialogRef.afterClosed().subscribe(data => {
-      let recipient: Recipient = new Recipient(data.label);
+      let recipient: Recipient = new Recipient(data);
       this.service.addRecipient(recipient).then(id => {
         recipient.id = id;
         this.recipients.push(recipient);
@@ -62,6 +63,23 @@ export class RecipientListComponent implements OnInit {
         duration: 3000
       });
     })
+  }
+
+  updateName(recipient: Recipient){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      type: 'Recipient',
+      value: recipient.name
+    };
+
+    this.eventDialogRef = this.dialog.open(DialogComponent, dialogConfig);
+
+    this.eventDialogRef.afterClosed().subscribe(data => {
+      if (data){
+        recipient.name = data;
+        this.service.updateName(recipient);
+      }
+    }); 
   }
 
 }

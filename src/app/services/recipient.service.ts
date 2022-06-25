@@ -48,4 +48,10 @@ export class RecipientService {
         active: recipient.active
     }); 
   }
+
+  async updateName(recipient: Recipient): Promise<void>{
+    return this.db.collection('recipients').doc(recipient.id).update({
+      name: recipient.name
+    }); 
+  }
 }

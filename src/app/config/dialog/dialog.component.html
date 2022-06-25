@@ -1,11 +1,9 @@
 <h2 mat-dialog-title>{{'Add ' + type}}</h2>
 <br/>
-<mat-dialog-content [formGroup]="form">
-  <mat-form-field appearance="fill">
-    <mat-label>{{type}}</mat-label>
-    <input matInput placeholder="{{type}}" formControlName="label">
-  </mat-form-field>
-</mat-dialog-content>
+<mat-form-field appearance="fill">
+  <mat-label>{{type}}</mat-label>
+  <input matInput placeholder="{{type}}" (change)="change($event)" value="{{value}}">
+</mat-form-field>
 <mat-dialog-actions align="end">
     <button class="mat-stroked-button mat-basic" (click)="close()">Cancel</button>
     <button class="mat-stroked-button mat-primary" (click)="save()">Save</button>

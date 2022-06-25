@@ -48,4 +48,10 @@ export class TypeService {
         active: type.active
     }); 
   }
+
+  async updateName(type: Type): Promise<void>{
+    return this.db.collection('cardtype').doc(type.id).update({
+      name: type.name
+    }); 
+  }
 }

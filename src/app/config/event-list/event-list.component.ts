@@ -42,13 +42,14 @@ export class EventListComponent implements OnInit {
   addEvent(){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      type: 'Event'
+      type: 'Event',
+      value: ''
     };
 
     this.eventDialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
     this.eventDialogRef.afterClosed().subscribe(data => {
-      let occasion: Occasion = new Occasion(data.label);
+      let occasion: Occasion = new Occasion(data);
       this.service.addEvent(occasion).then(id => {
         occasion.id = id;
         this.occasions.push(occasion);
@@ -87,5 +88,22 @@ export class EventListComponent implements OnInit {
         duration: 3000
       });
     })
+  }
+
+  updateName(ocassion: Occasion){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      type: 'Event',
+      value: ocassion.name
+    };
+
+    this.eventDialogRef = this.dialog.open(DialogComponent, dialogConfig);
+
+    this.eventDialogRef.afterClosed().subscribe(data => {
+      if (data){
+        ocassion.name = data;
+        this.service.updateName(ocassion);
+      }
+    }); 
   }
 }

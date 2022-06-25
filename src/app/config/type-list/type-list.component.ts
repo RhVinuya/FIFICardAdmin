@@ -41,13 +41,14 @@ export class TypeListComponent implements OnInit {
   addType(){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      type: 'Type of Card'
+      type: 'Type of Card',
+      value: ''
     };
 
     this.eventDialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
     this.eventDialogRef.afterClosed().subscribe(data => {
-      let type: Type = new Type(data.label);
+      let type: Type = new Type(data);
       this.service.addType(type).then(id => {
         type.id = id;
         this.types.push(type);
@@ -62,5 +63,22 @@ export class TypeListComponent implements OnInit {
         duration: 3000
       });
     })
+  }
+
+  updateName(type: Type){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      type: 'Type of Card',
+      value: type.name
+    };
+
+    this.eventDialogRef = this.dialog.open(DialogComponent, dialogConfig);
+
+    this.eventDialogRef.afterClosed().subscribe(data => {
+      if (data){
+        type.name = data;
+        this.service.updateName(type);
+      }
+    }); 
   }
 }

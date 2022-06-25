@@ -8,8 +8,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./dialog.component.css']
 })
 export class DialogComponent implements OnInit {
-  form: FormGroup;
   type: string;
+  value: string;
 
   constructor(
     private fb: FormBuilder,
@@ -17,17 +17,19 @@ export class DialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data
   ) { 
     this.type = data.type;
+    this.value = data.value;
   }
 
-  ngOnInit() {
-    this.form = this.fb.group({
-      label: ['', [Validators.required]]
-    });
+  ngOnInit() {}
+    
+
+  change(event: any){
+    this.type = event.target.value;
   }
 
   save() {
-    if (this.form.valid){
-      this.eventDialogRef.close(this.form.value);
+    if (this.type != ''){
+      this.eventDialogRef.close(this.type);
     }
   }
 
