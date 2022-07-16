@@ -74,10 +74,6 @@ export class CardListComponent implements OnInit {
   ngOnInit() {
     this.titleService.setTitle('Fibei Greetings - Cards');
 
-    this.service.getNextCode().then(next => {
-      console.log(next);
-    })
-
     this.getTypes();
 
     this.service.getCards().then(data => {
@@ -184,8 +180,6 @@ export class CardListComponent implements OnInit {
   }
 
   clickSearch() {
-    console.log(this.search, this.type, this.event, this.recipient, this.status);
-
     this.initalizing = true;
     this.withRecords = true;
 
@@ -217,8 +211,8 @@ export class CardListComponent implements OnInit {
         }
 
         if (this.type != '') {
-          if (card.types != undefined){
-            if (card.types.findIndex(x => x == this.type) >= 0 ){
+          if (card.types != undefined) {
+            if (card.types.findIndex(x => x == this.type) >= 0) {
               isTypeMatch = true;
             }
           }
@@ -228,7 +222,7 @@ export class CardListComponent implements OnInit {
         }
 
         if (this.event != '') {
-          if (card.event.split(',').findIndex(x => x.trim() == this.event.trim()) >= 0){
+          if (card.event.split(',').findIndex(x => x.trim() == this.event.trim()) >= 0) {
             isEventMatch = true;
           }
         }
@@ -237,7 +231,7 @@ export class CardListComponent implements OnInit {
         }
 
         if (this.recipient != '') {
-          if (card.recipient.split(',').findIndex(x => x.trim() == this.recipient.trim()) >= 0){
+          if (card.recipient.split(',').findIndex(x => x.trim() == this.recipient.trim()) >= 0) {
             isRecipientMatch = true;
           }
         }
@@ -283,6 +277,40 @@ export class CardListComponent implements OnInit {
       }
     }
 
+    this.initalizing = false;
+  }
+
+  duplicateClick() {
+    this.initalizing = true;
+    this.withRecords = true;
+    this.filteredCards = [];
+    let temp: string[] = [];
+    let code: string = '';
+
+    this.cards.forEach(card => {
+      if (card.code == code) {
+        temp.push(code);
+      }
+      else {
+        code = card.code;
+      }
+    });
+
+    if (temp.length > 0) {
+      this.cards.forEach(card => {
+        console.log(card.code);
+        if (temp.findIndex(x => x == card.code) >= 0) {
+          console.log(card);
+          this.filteredCards.push(card);
+        }
+      });
+    }
+
+    this.cards = this.filteredCards;
+
+    this.setIndexes();
+    this.loadIndex(1);
+    this.withRecords = this.filteredCards.length > 0;
     this.initalizing = false;
   }
 }

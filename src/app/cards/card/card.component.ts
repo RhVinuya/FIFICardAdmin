@@ -106,7 +106,7 @@ export class CardComponent implements OnInit {
               this.recipients = [];
           }
 
-          this.types = data.types != undefined? data.types: [];
+          this.types = data.types != undefined ? data.types : [];
 
           this.titleService.setTitle('Fibei Greetings - ' + data.name);
 
@@ -189,7 +189,7 @@ export class CardComponent implements OnInit {
 
           resolve(true);
         }
-        else{
+        else {
           resolve(false);
         }
 
@@ -269,7 +269,7 @@ export class CardComponent implements OnInit {
     this.recipients.push(recipient.option.viewValue);
   }
 
-  getTypes(){
+  getTypes() {
     this.typeService.getTypes().then(data => {
       this.typeConfig = data;
     })

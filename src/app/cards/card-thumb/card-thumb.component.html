@@ -7,7 +7,7 @@
     </div>
     <div class="div-type">
         <p *ngIf="card.types">
-            <span *ngFor="let type of card.types">{{type}}<br/></span>
+            <span *ngFor="let type of card.types">{{type}}<br /></span>
         </p>
     </div>
     <div class="div-desc">
@@ -21,12 +21,12 @@
     </div>
     <div class="div-event">
         <p *ngIf="card.events">
-            <span *ngFor="let event of card.events">{{event}}<br/></span>
+            <span *ngFor="let event of card.events">{{event}}<br /></span>
         </p>
     </div>
     <div class="div-recipient">
         <p *ngIf="card.recipients">
-            <span *ngFor="let recipient of card.recipients">{{recipient}}<br/></span>
+            <span *ngFor="let recipient of card.recipients">{{recipient}}<br /></span>
         </p>
     </div>
     <div class="div-signandsend">
@@ -42,5 +42,9 @@
         <a title="Open Card" [routerLink]="['/cards', card.id]">
             <mat-icon>open_in_new</mat-icon>
         </a>
+        <!--&nbsp;
+        <button type="button" [disabled]="isTriggered" (click)="generateNewCode()">G</button>
+        &nbsp;
+        <button type="button" [disabled]="isTriggered" (click)="deleteCard()">D</button>-->
     </div>
 </div>

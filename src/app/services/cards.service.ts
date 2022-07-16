@@ -24,7 +24,7 @@ export class CardsService {
 
     async getCards(): Promise<Card[]> {
         return new Promise((resolve, rejects) => {
-            this.db.collection('cards', ref => ref.orderBy('code', 'desc')).get() .subscribe(data => {
+            this.db.collection('cards', ref => ref.orderBy('code', 'desc')).get().subscribe(data => {
                 if (!data.empty) {
                     let cards: Card[] = [];
                     data.forEach(doc => {
@@ -105,12 +105,23 @@ export class CardsService {
         });
     }
 
-    async getCardByName(name: string): Promise<string>{
+    async updateNewCode(id: string, code: string): Promise<void> {
+        return this.db.collection('cards').doc(id).update({
+            code: code,
+            modified: Timestamp.now()
+        });
+    }
+
+    async deleteCard(id: string) {
+        this.db.collection('cards').doc(id).delete();
+    }
+
+    async getCardByName(name: string): Promise<string> {
         return new Promise((resolve, rejects) => {
             this.db.collection('cards', ref => ref.where("name", "==", name)).get().subscribe(data => {
                 if (!data.empty) {
                     data.forEach(doc => {
-                       resolve(doc.id);
+                        resolve(doc.id);
                     });
                 }
                 else {
@@ -118,7 +129,7 @@ export class CardsService {
                 }
             });
         })
-        
+
     }
 
     async getImages(id: string): Promise<string[]> {
@@ -177,20 +188,21 @@ export class CardsService {
 
     async getNextCode(): Promise<number> {
         return new Promise((resolve, rejects) => {
-            this.db.collection('cards', ref => ref.orderBy('code', 'desc')).get().subscribe(data => {
-                if (!data.empty) {
-                    data.forEach(doc => {
-                        let lastCard: Card = doc.data() as Card;
-                        resolve(Number(lastCard.code) + 1);
-                        return;
-                    })
-
-                }
-                else {
-                    resolve(100000);
+            this.db.collection('settings').doc('code').get().subscribe(doc => {
+                if (doc.exists) {
+                    let newCode: number = Number(doc.data().nextcode) + 1;
+                    this.updateNexCode(newCode).then(() => {
+                        resolve(Number(doc.data().nextcode));
+                    });
                 }
             });
         });
+    }
+
+    async updateNexCode(newCode: Number): Promise<void> {
+        return this.db.collection('settings').doc('code').update({
+            nextcode: newCode
+        })
     }
 
     async updateAverageRatings(id: string, ratings: number) {
@@ -255,7 +267,7 @@ export class CardsService {
                     let signAndSends: SignAndSend[] = [];
                     data.forEach(doc => {
                         let signAndSend: SignAndSend = doc.data() as SignAndSend;
-                        if (signAndSend.image == image){
+                        if (signAndSend.image == image) {
                             signAndSend.id = doc.id;
                             signAndSends.push(signAndSend);
                         }
@@ -298,7 +310,7 @@ export class CardsService {
         });
     }
 
-    async deleteSignAndSend(id: string, signId: string){
+    async deleteSignAndSend(id: string, signId: string) {
         return this.db.collection('cards').doc(id).collection('signandsend').doc(signId).delete();
     }
 
