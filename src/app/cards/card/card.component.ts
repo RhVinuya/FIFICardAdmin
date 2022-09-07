@@ -13,6 +13,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Card } from 'src/app/models/card';
 import { CardsService } from 'src/app/services/cards.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { TranslationService } from 'src/app/services/translation.service';
+import { Translation } from 'src/app/models/translation';
 
 @Component({
   selector: 'app-card',
@@ -45,6 +47,9 @@ export class CardComponent implements OnInit {
   typeConfig: Type[] = [];
   types: string[] = [];
 
+  translationService: TranslationService;
+  translation: Translation = new Translation();
+
   defaultCode: string = 'To be generated upon saving';
 
   constructor(
@@ -52,6 +57,7 @@ export class CardComponent implements OnInit {
     private _eventService: EventService,
     private _recipientService: RecipientService,
     private _typeService: TypeService,
+    private _translationService: TranslationService,
     private _activateRoute: ActivatedRoute,
     private _fb: FormBuilder,
     private _snackBar: MatSnackBar,
@@ -63,6 +69,7 @@ export class CardComponent implements OnInit {
     this.eventService = _eventService;
     this.recipientService = _recipientService;
     this.typeService = _typeService;
+    this.translationService = _translationService;
     this.activateRoute = _activateRoute;
     this.fb = _fb;
     this.snackBar = _snackBar;
@@ -123,15 +130,24 @@ export class CardComponent implements OnInit {
               featured: data.featured,
             }
           );
-        }).catch(reason => {
-        })
-
+          
+          this.translation.description = data.description!;
+          this.getTranslation(data.id);
+        });
       }
     });
 
     this.getEvents();
     this.getRecipients();
     this.getTypes();
+  }
+
+  getTranslation(id: string){
+    this.translationService.getTranslation(id).then(translation => {
+      this.translation = translation;
+    }).catch(err => {
+      this.translationService.createTranslation(id, this.translation);
+    });
   }
 
   onKeyPressEvent(event: any) {
@@ -203,12 +219,20 @@ export class CardComponent implements OnInit {
     this.isSaving = true;
     if (card.id) {
       this.service.updateCard(card).then(() => {
+        if (this.translation.description != card.description){
+          this.translation.description = card.description;
+          this.translationService.updateTranslation(card.id!, this.translation);
+        }
+        
         this.isSaving = false;
         this.snackBar.open("Card Updated", "", { duration: 3000 });
       });
     }
     else {
       this.service.addCard(card).then(id => {
+        this.translation.description = card.description;
+        this.translationService.createTranslation(card.id, this.translation);
+
         this.isSaving = false;
         this.router.navigate(['/cards/' + id]).then(navigated => {
           if (navigated) {

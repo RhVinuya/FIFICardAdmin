@@ -23,6 +23,7 @@ export class Card{
     public primary?: string;
     public ratings?: number;    
     public signAndSend?: boolean;
+    public orders: string[] = [];
 
     public search_name: string;
     public search_description: string
