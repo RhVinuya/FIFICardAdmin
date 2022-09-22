@@ -1,3 +1,4 @@
+import { ExportExcelService } from './../../services/export-excel.service';
 import { TypeService } from 'src/app/services/type.service';
 import { SharedService } from './../../services/shared.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -6,10 +7,6 @@ import { CardsService } from 'src/app/services/cards.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Card } from 'src/app/models/card';
-import { PageEvent } from '@angular/material';
-import { firestore } from "firebase";
-import Timestamp = firestore.Timestamp;
-import { copyFileSync } from 'fs';
 import { Type } from 'src/app/models/type';
 
 @Component({
@@ -20,6 +17,7 @@ import { Type } from 'src/app/models/type';
 export class CardListComponent implements OnInit {
   service: CardsService;
   typeService: TypeService;
+  exportService: ExportExcelService;
 
   cards: Card[] = [];
   filteredCards: Card[] = [];
@@ -62,11 +60,13 @@ export class CardListComponent implements OnInit {
     private _service: CardsService,
     private _shared: SharedService,
     private _typeService: TypeService,
+    private _exportService: ExportExcelService,
     private titleService: Title
   ) {
     this.service = _service;
     this.typeService = _typeService;
     this.shared = _shared;
+    this.exportService = _exportService;
     this.initalizing = true;
     this.withRecords = true;
   }
@@ -312,5 +312,9 @@ export class CardListComponent implements OnInit {
     this.loadIndex(1);
     this.withRecords = this.filteredCards.length > 0;
     this.initalizing = false;
+  }
+
+  export() {
+    this.exportService.exportCard(this.filteredCards);
   }
 }
