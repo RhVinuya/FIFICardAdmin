@@ -26,10 +26,9 @@ export class ShippingFeeComponent implements OnInit {
     this.loadShippingFee();
   }
 
-  loadShippingFee(){
+  loadShippingFee() {
     this.shippingService.getShippingFees().then(fees => {
       this.fees = fees;
-      console.log(fees);
     }).catch(err => {
       this.fees.push(new Fee('Card'));
       this.fees.push(new Fee('Gift'));
@@ -38,25 +37,25 @@ export class ShippingFeeComponent implements OnInit {
     })
   }
 
-  updateFee(event: Fee){
+  updateFee(event: Fee) {
     let index: number = this.fees.findIndex(x => x.name == event.name);
-    if (index < 0){
+    if (index < 0) {
       this.fees[index].metromanila = event.metromanila;
       this.fees[index].luzon = event.luzon;
       this.fees[index].visayas = event.visayas;
       this.fees[index].mindanao = event.mindanao;
     }
-  }  
+  }
 
-  updateClick(){
+  updateClick() {
     this.isSaving = true;
     this.fees.forEach(fee => {
-      if (fee.id == undefined){
+      if (fee.id == undefined) {
         this.shippingService.addShippingFee(fee).then(id => {
           fee.id = id;
         })
       }
-      else{
+      else {
         this.shippingService.updateShippingFee(fee);
       }
     })

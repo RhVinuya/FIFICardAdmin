@@ -20,7 +20,7 @@ export class StatusListComponent implements OnInit {
     private _service: StatusService,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog
-  ) { 
+  ) {
     this.service = _service;
     this.snackBar = _snackBar;
   }
@@ -29,7 +29,7 @@ export class StatusListComponent implements OnInit {
     this.loadEvents();
   }
 
-  loadEvents(){
+  loadEvents() {
     this.service.getStatuses().then(data => {
       this.statuses = data;
       this.dataSource.data = this.statuses;
@@ -38,9 +38,10 @@ export class StatusListComponent implements OnInit {
     });
   }
 
-  addEvent(){
+  addEvent() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
+      action: 'Add',
       type: 'Status',
       value: ''
     };
@@ -54,21 +55,20 @@ export class StatusListComponent implements OnInit {
         this.statuses.push(status);
         this.dataSource.data = this.statuses;
       })
-    });    
+    });
   }
 
-  onActive(status: Status){
-    this.service.updateActive(status).then(()=> {
-      this.snackBar.open(`Status ${status.active? 'Active' : 'Inactive'}`, "", {
+  onActive(status: Status) {
+    this.service.updateActive(status).then(() => {
+      this.snackBar.open(`Status ${status.active ? 'Active' : 'Inactive'}`, "", {
         duration: 3000
       });
     })
   }
 
-  onInitialChange(id: string)
-  {
+  onInitialChange(id: string) {
     this.statuses.forEach(data => {
-      if (data.id == id){
+      if (data.id == id) {
         data.initial = true;
         this.service.updateInitial(data).then(() => {
           this.snackBar.open('Status updated', "", {
@@ -76,8 +76,8 @@ export class StatusListComponent implements OnInit {
           });
         })
       }
-      else{
-        if (data.initial){
+      else {
+        if (data.initial) {
           data.initial = false;
           this.service.updateInitial(data).then();
         }
@@ -85,9 +85,10 @@ export class StatusListComponent implements OnInit {
     });
   }
 
-  updateName(status: Status){
+  updateName(status: Status) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
+      action: 'Update',
       type: 'Status',
       value: status.name
     };
@@ -95,10 +96,10 @@ export class StatusListComponent implements OnInit {
     this.eventDialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
     this.eventDialogRef.afterClosed().subscribe(data => {
-      if (data){
+      if (data) {
         status.name = data;
         this.service.updateName(status);
       }
-    }); 
+    });
   }
 }

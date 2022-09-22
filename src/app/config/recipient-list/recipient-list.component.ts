@@ -20,7 +20,7 @@ export class RecipientListComponent implements OnInit {
     private _service: RecipientService,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog
-  ) { 
+  ) {
     this.service = _service;
     this.snackBar = _snackBar;
   }
@@ -29,7 +29,7 @@ export class RecipientListComponent implements OnInit {
     this.loadEvents();
   }
 
-  loadEvents(){
+  loadEvents() {
     this.service.getRecipients().then(data => {
       this.recipients = data;
       this.dataSource.data = this.recipients;
@@ -38,9 +38,10 @@ export class RecipientListComponent implements OnInit {
     });
   }
 
-  addEvent(){
+  addEvent() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
+      action: 'Add',
       type: 'Recipient',
       value: ''
     };
@@ -54,20 +55,21 @@ export class RecipientListComponent implements OnInit {
         this.recipients.push(recipient);
         this.dataSource.data = this.recipients;
       })
-    });    
+    });
   }
 
-  onActive(recipient: Recipient){
-    this.service.updateActive(recipient).then(()=> {
-      this.snackBar.open(`Recipient ${recipient.active? 'Active' : 'Inactive'}`, "", {
+  onActive(recipient: Recipient) {
+    this.service.updateActive(recipient).then(() => {
+      this.snackBar.open(`Recipient ${recipient.active ? 'Active' : 'Inactive'}`, "", {
         duration: 3000
       });
     })
   }
 
-  updateName(recipient: Recipient){
+  updateName(recipient: Recipient) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
+      action: 'Update',
       type: 'Recipient',
       value: recipient.name
     };
@@ -75,11 +77,11 @@ export class RecipientListComponent implements OnInit {
     this.eventDialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
     this.eventDialogRef.afterClosed().subscribe(data => {
-      if (data){
+      if (data) {
         recipient.name = data;
         this.service.updateName(recipient);
       }
-    }); 
+    });
   }
 
 }

@@ -20,7 +20,7 @@ export class TypeListComponent implements OnInit {
     private _service: TypeService,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog
-  ) { 
+  ) {
     this.service = _service;
     this.snackBar = _snackBar;
   }
@@ -29,7 +29,7 @@ export class TypeListComponent implements OnInit {
     this.loadTypes();
   }
 
-  loadTypes(){
+  loadTypes() {
     this.service.getTypes().then(data => {
       this.types = data;
       this.dataSource.data = this.types;
@@ -38,9 +38,10 @@ export class TypeListComponent implements OnInit {
     });
   }
 
-  addType(){
+  addType() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
+      action: 'Add',
       type: 'Type of Card',
       value: ''
     };
@@ -54,20 +55,21 @@ export class TypeListComponent implements OnInit {
         this.types.push(type);
         this.dataSource.data = this.types;
       })
-    });    
+    });
   }
 
-  onActive(type: Type){
-    this.service.updateActive(type).then(()=> {
-      this.snackBar.open(`Status ${type.active? 'Active' : 'Inactive'}`, "", {
+  onActive(type: Type) {
+    this.service.updateActive(type).then(() => {
+      this.snackBar.open(`Status ${type.active ? 'Active' : 'Inactive'}`, "", {
         duration: 3000
       });
     })
   }
 
-  updateName(type: Type){
+  updateName(type: Type) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
+      action: 'Update',
       type: 'Type of Card',
       value: type.name
     };
@@ -75,10 +77,10 @@ export class TypeListComponent implements OnInit {
     this.eventDialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
     this.eventDialogRef.afterClosed().subscribe(data => {
-      if (data){
-        type.name = data;
-        this.service.updateName(type);
+      if (data) {
+        type.name = data[0];
+        this.service.updateType(type);
       }
-    }); 
+    });
   }
 }

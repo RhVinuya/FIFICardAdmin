@@ -90,7 +90,7 @@ export class UsersService {
 
   async getUserByEmail(email: string): Promise<User>{
     return new Promise((resolve, rejects) => {
-      this.db.collection('users').ref.where("email","==",email).where("image","==",email).get().then(value => {
+      this.db.collection('users').ref.where("email","==",email).get().then(value => {
         let user: User = value.docs[0].data() as User;
         resolve(user);
       }).catch(reason => {

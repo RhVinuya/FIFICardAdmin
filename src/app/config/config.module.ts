@@ -11,6 +11,8 @@ import { RatingDialogComponent } from '../cards/rating-dialog/rating-dialog.comp
 import { ShippingFeeComponent } from './shipping-fee/shipping-fee.component';
 import { FeeComponent } from './shipping-fee/fee/fee.component';
 import { TypeListComponent } from './type-list/type-list.component';
+import { TypeUpgradeComponent } from './type-upgrade/type-upgrade.component';
+import { UpgradeDialogComponent } from './type-upgrade/upgrade-dialog/upgrade-dialog.component';
 
 @NgModule({
   imports: [
@@ -26,10 +28,13 @@ import { TypeListComponent } from './type-list/type-list.component';
     StatusListComponent,
     ShippingFeeComponent,
     FeeComponent,
-    TypeListComponent
+    TypeListComponent,
+    TypeUpgradeComponent,
+    UpgradeDialogComponent
   ],
   entryComponents: [
-    DialogComponent
+    DialogComponent,
+    UpgradeDialogComponent
   ]
 })
 export class ConfigModule { }

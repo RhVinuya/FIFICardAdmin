@@ -21,7 +21,7 @@ export class EventListComponent implements OnInit {
     private _service: EventService,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog
-  ) { 
+  ) {
     this.service = _service;
     this.snackBar = _snackBar;
   }
@@ -30,7 +30,7 @@ export class EventListComponent implements OnInit {
     this.loadEvents();
   }
 
-  loadEvents(){
+  loadEvents() {
     this.service.getEvents().then(data => {
       this.occasions = data;
       this.dataSource.data = this.occasions;
@@ -39,9 +39,10 @@ export class EventListComponent implements OnInit {
     });
   }
 
-  addEvent(){
+  addEvent() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
+      action: 'Add',
       type: 'Event',
       value: ''
     };
@@ -55,44 +56,45 @@ export class EventListComponent implements OnInit {
         this.occasions.push(occasion);
         this.dataSource.data = this.occasions;
       })
-    });    
+    });
   }
 
-  onActive(ocassion: Occasion){
-    this.service.updateActive(ocassion).then(()=> {
-      this.snackBar.open(`Event ${ocassion.active? 'Active' : 'Inactive'}`, "", {
+  onActive(ocassion: Occasion) {
+    this.service.updateActive(ocassion).then(() => {
+      this.snackBar.open(`Event ${ocassion.active ? 'Active' : 'Inactive'}`, "", {
         duration: 3000
       });
     })
   }
 
-  onIsGift(ocassion: Occasion){
-    this.service.updateIsGift(ocassion).then(()=> {
+  onIsGift(ocassion: Occasion) {
+    this.service.updateIsGift(ocassion).then(() => {
       this.snackBar.open("Updated", "", {
         duration: 3000
       });
     })
   }
 
-  onIsCreations(ocassion: Occasion){
-    this.service.updateIsCreations(ocassion).then(()=> {
+  onIsCreations(ocassion: Occasion) {
+    this.service.updateIsCreations(ocassion).then(() => {
       this.snackBar.open("Updated", "", {
         duration: 3000
       });
     })
   }
 
-  onIsSticker(ocassion: Occasion){
-    this.service.updateIsSticker(ocassion).then(()=> {
+  onIsSticker(ocassion: Occasion) {
+    this.service.updateIsSticker(ocassion).then(() => {
       this.snackBar.open("Updated", "", {
         duration: 3000
       });
     })
   }
 
-  updateName(ocassion: Occasion){
+  updateName(ocassion: Occasion) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
+      action: 'Update',
       type: 'Event',
       value: ocassion.name
     };
@@ -100,10 +102,10 @@ export class EventListComponent implements OnInit {
     this.eventDialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
     this.eventDialogRef.afterClosed().subscribe(data => {
-      if (data){
+      if (data) {
         ocassion.name = data;
         this.service.updateName(ocassion);
       }
-    }); 
+    });
   }
 }

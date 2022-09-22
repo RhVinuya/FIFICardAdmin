@@ -34,3 +34,11 @@ th.mat-sort-header-sorted {
     padding-left: 10px !important;
     padding-right: 10px !important;
 }
+
+.right { 
+    text-align: right 
+}
+
+.center{
+    text-align: center;
+}

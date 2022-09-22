@@ -8,6 +8,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./dialog.component.css']
 })
 export class DialogComponent implements OnInit {
+  action: string;
   type: string;
   value: string;
 
@@ -15,21 +16,22 @@ export class DialogComponent implements OnInit {
     private fb: FormBuilder,
     private eventDialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) data
-  ) { 
+  ) {
+    this.action = data.action;
     this.type = data.type;
     this.value = data.value;
   }
 
-  ngOnInit() {}
-    
+  ngOnInit() { }
 
-  change(event: any){
-    this.type = event.target.value;
+
+  change(event: any) {
+    this.value = event.target.value;
   }
 
   save() {
-    if (this.type != ''){
-      this.eventDialogRef.close(this.type);
+    if (this.value != '') {
+      this.eventDialogRef.close(this.value);
     }
   }
 
