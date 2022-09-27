@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Card } from 'src/app/models/card';
 import { CardsService } from 'src/app/services/cards.service';
 
@@ -8,17 +8,25 @@ import { CardsService } from 'src/app/services/cards.service';
   styleUrls: ['./card-thumb.component.css']
 })
 export class CardThumbComponent implements OnInit {
-  @Input() card: Card;
+  @Input() set setCard(value: Card) {
+    this.card = value;
+  }
+  @Output() statusevent: EventEmitter<Card> = new EventEmitter<Card>();
+
   service: CardsService;
-  isTriggered: boolean = false;
 
   constructor(
     private _service: CardsService
   ) {
-    this.service = _service
+    this.service = _service;
   }
 
+  card: Card;
+  isTriggered: boolean = false;
+  status: boolean = false;
+
   ngOnInit() {
+    this.status = this.card!.active!;
     this.selfFixing();
   }
 
@@ -54,4 +62,8 @@ export class CardThumbComponent implements OnInit {
     })
   }
 
+  updateStatus(event: any) {
+    this.card.active = event.checked;
+    this.statusevent.emit(this.card);
+  }
 }

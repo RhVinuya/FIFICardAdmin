@@ -17,7 +17,8 @@
         <p><strong>{{card.price | number:'1.2-2'}}</strong></p>
     </div>
     <div class="div-status">
-        <p>{{card.active?'Active':'Inactive'}}</p>
+        <!--<p>{{card.active?'Active':'Inactive'}}</p>-->
+        <mat-slide-toggle color="primary" [(ngModel)]="card.active" (change)="updateStatus($event)" #toggleElement> {{card.active?'Active':'Inactive'}}</mat-slide-toggle>
     </div>
     <div class="div-event">
         <p *ngIf="card.events">

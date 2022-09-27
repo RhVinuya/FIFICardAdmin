@@ -71,6 +71,8 @@ export class CardListComponent implements OnInit {
     this.withRecords = true;
   }
 
+  statusChangeList: Card[] = [];
+
   ngOnInit() {
     this.titleService.setTitle('Fibei Greetings - Cards');
 
@@ -316,5 +318,37 @@ export class CardListComponent implements OnInit {
 
   export() {
     this.exportService.exportCard(this.filteredCards);
+  }
+
+  updateStatus(data: Card) {
+    this.addWatchList(data);
+  }
+
+  updateAllStatus(event: any) {
+    this.displayCards.forEach(card => {
+      if (card.active != event.checked) {
+        card.active = event.checked;
+        this.addWatchList(card);
+      }
+    });
+  }
+
+  addWatchList(card: Card) {
+    let statusChange = this.statusChangeList.find(x => x.id == card.id);
+    if (!statusChange) {
+      this.statusChangeList.push(card);
+    }
+  }
+
+  runUpdateStatus() {
+    this.statusChangeList.forEach(status => {
+      let card = this.displayCards.find(x => x.id == status.id);
+      if (card) {
+        this.service.updateStatus(card.id!, card.active!);
+        this.cards.find(y => y.id == card.id!)!.active = card.active;
+      }
+    });
+
+    this.statusChangeList = [];
   }
 }

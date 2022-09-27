@@ -173,6 +173,13 @@ export class CardsService {
         })
     }
 
+    async updateStatus(id: string, status: boolean) {
+        this.db.collection('cards').doc(id).update({
+            active: status,
+            modified: Timestamp.now()
+        })
+    }
+
     async deactivate(id: string) {
         this.db.collection('cards').doc(id).update({
             active: false,

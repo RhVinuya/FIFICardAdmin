@@ -34,16 +34,16 @@ p{
 }
 
 .div-status{
-    width: 5%;
+    width: 9%;
     text-align: center;
 }
 
 .div-event{
-    width: 10%;
+    width: 8%;
 }
 
 .div-recipient{
-    width: 10%;
+    width: 8%;
 }
 
 .div-signandsend{
@@ -69,3 +69,4 @@ p{
 .div-action a{
     color: rgba(0,0,0,.87);
 }
+
